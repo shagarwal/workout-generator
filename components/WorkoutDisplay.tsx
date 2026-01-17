@@ -1,0 +1,337 @@
+'use client';
+
+import React, { useState } from 'react';
+import { WorkoutPlan } from '@/lib/types';
+import { ExternalLink, Copy, RefreshCw, ChevronDown, ChevronUp, Save } from 'lucide-react';
+
+interface WorkoutDisplayProps {
+  plan: WorkoutPlan;
+  onRegenerate: () => void;
+  onCopyToClipboard: () => void;
+  onSave: () => void;
+}
+
+export default function WorkoutDisplay({ plan, onRegenerate, onCopyToClipboard, onSave }: WorkoutDisplayProps) {
+  return (
+    <div className="space-y-6">
+      {/* Summary Card */}
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-8 space-y-6 border border-gray-700">
+        <div className="flex items-center gap-3">
+          <div className="h-1 w-12 bg-gradient-to-r from-lime-400 to-lime-500 rounded-full"></div>
+          <h2 className="text-2xl font-black text-white">{plan.summary.title.toUpperCase()}</h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <span className="font-bold text-lime-400 block mb-1">MUSCLES</span>
+            <p className="text-gray-200 font-medium">{plan.summary.muscles}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <span className="font-bold text-lime-400 block mb-1">EQUIPMENT</span>
+            <p className="text-gray-200 font-medium">{plan.summary.equipment}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <span className="font-bold text-lime-400 block mb-1">INTENSITY</span>
+            <p className="text-gray-200 font-medium capitalize">{plan.summary.intensity}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <span className="font-bold text-lime-400 block mb-1">STYLE</span>
+            <p className="text-gray-200 font-medium capitalize">{plan.summary.workoutStyle}</p>
+          </div>
+          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 sm:col-span-2">
+            <span className="font-bold text-lime-400 block mb-1">SPLIT</span>
+            <p className="text-gray-200 font-medium">
+              Cardio {plan.summary.cardioPercent}% / Weights {plan.summary.weightsPercent}%
+            </p>
+          </div>
+        </div>
+
+        {/* AMRAP Instructions */}
+        {plan.summary.workoutStyle === 'amrap' && (
+          <div className="bg-orange-900/20 border border-orange-500/30 rounded-xl p-4">
+            <p className="text-orange-200 text-sm font-medium">
+              <span className="font-bold">AMRAP Instructions:</span> Complete as many rounds as possible of the main workout exercises in the allotted time. Move continuously with minimal rest between exercises. Track your total rounds completed!
+            </p>
+          </div>
+        )}
+
+        {/* Superset Instructions */}
+        {plan.summary.workoutStyle === 'superset' && (
+          <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-4">
+            <p className="text-purple-200 text-sm font-medium">
+              <span className="font-bold">Superset Instructions:</span> Exercises marked with 🔗 are paired together. Perform them back-to-back with no rest, then rest before the next pair.
+            </p>
+          </div>
+        )}
+
+        {/* Circuit Instructions */}
+        {plan.summary.workoutStyle === 'circuit' && (
+          <div className="bg-orange-900/20 border border-orange-500/30 rounded-xl p-4">
+            <p className="text-orange-200 text-sm font-medium">
+              <span className="font-bold">Circuit Instructions:</span> Each circuit contains 3-5 exercises. Do 1 set of each exercise in order with minimal rest (15-30s), then repeat the entire circuit for the specified number of rounds before moving to the next circuit.
+            </p>
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="grid grid-cols-3 gap-3 pt-2">
+          <button
+            onClick={onRegenerate}
+            className="flex items-center justify-center gap-2 px-4 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 touch-manipulation shadow-lg hover:scale-105 active:scale-95"
+          >
+            <RefreshCw size={18} />
+            REGENERATE
+          </button>
+          <button
+            onClick={onSave}
+            className="flex items-center justify-center gap-2 px-4 py-4 bg-gradient-to-r from-lime-400 to-lime-500 text-gray-900 rounded-xl font-bold hover:from-lime-500 hover:to-lime-600 transition-all duration-200 touch-manipulation shadow-lg hover:scale-105 active:scale-95"
+          >
+            <Save size={18} />
+            SAVE
+          </button>
+          <button
+            onClick={onCopyToClipboard}
+            className="flex items-center justify-center gap-2 px-4 py-4 bg-gray-800 text-gray-200 rounded-xl font-bold hover:bg-gray-750 border border-gray-700 transition-all duration-200 touch-manipulation hover:scale-105 active:scale-95"
+          >
+            <Copy size={18} />
+            COPY
+          </button>
+        </div>
+      </div>
+
+      {/* Stretching Section (Pre-Workout) */}
+      {plan.sections.stretching.items.length > 0 && (
+        <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-2xl shadow-2xl p-6 border border-blue-500/30">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full"></div>
+            <h3 className="text-2xl font-black text-blue-100">{plan.sections.stretching.title.toUpperCase()}</h3>
+          </div>
+          <div className="space-y-4">
+            {plan.sections.stretching.items.map((item, index) => (
+              <ExerciseCard key={index} item={item} isInCircuit={false} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Main Workout Section */}
+      <WorkoutSection section={plan.sections.main} workoutStyle={plan.summary.workoutStyle} />
+    </div>
+  );
+}
+
+function WorkoutSection({ section, workoutStyle }: { section: { title: string; items: any[] }, workoutStyle?: string }) {
+  // Group exercises by circuit if applicable
+  if (workoutStyle === 'circuit') {
+    const circuits: { [key: string]: any[] } = {};
+    section.items.forEach(item => {
+      if (item.circuitId) {
+        if (!circuits[item.circuitId]) {
+          circuits[item.circuitId] = [];
+        }
+        circuits[item.circuitId].push(item);
+      }
+    });
+
+    return (
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-6 border border-gray-700">
+        <div className="flex items-center gap-3">
+          <div className="h-1 w-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full"></div>
+          <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
+        </div>
+
+        {Object.entries(circuits).map(([circuitId, exercises], idx) => (
+          <div key={circuitId} className="bg-orange-900/20 border-2 border-orange-500/30 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-black text-orange-400">CIRCUIT {idx + 1}</h4>
+              <span className="text-sm font-bold text-orange-300 bg-orange-900/40 px-3 py-1 rounded-lg">
+                {exercises[0].circuitRounds} ROUNDS
+              </span>
+            </div>
+            <p className="text-xs text-orange-200/80 mb-4">Complete all exercises, then repeat for {exercises[0].circuitRounds} total rounds</p>
+            <div className="space-y-2">
+              {exercises.map((item, index) => (
+                <ExerciseCard key={index} item={item} isInCircuit={true} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // AMRAP - group all exercises as one repeatable round
+  if (workoutStyle === 'amrap' && section.items[0]?.circuitId === 'amrap-round') {
+    return (
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-4 border border-gray-700">
+        <div className="flex items-center gap-3">
+          <div className="h-1 w-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full"></div>
+          <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
+        </div>
+
+        <div className="bg-red-900/20 border-2 border-red-500/30 rounded-xl p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="text-lg font-black text-red-400">AMRAP - AS MANY ROUNDS AS POSSIBLE</h4>
+          </div>
+          <p className="text-xs text-red-200/80 mb-4">Complete all exercises in order, then repeat as many times as possible in the allotted time. No rest between exercises!</p>
+          <div className="space-y-2">
+            {section.items.map((item, index) => (
+              <ExerciseCard key={index} item={item} isInCircuit={true} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Traditional/Superset - display exercises individually
+  return (
+    <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-4 border border-gray-700">
+      <div className="flex items-center gap-3">
+        <div className="h-1 w-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full"></div>
+        <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
+      </div>
+
+      <div className="space-y-3">
+        {section.items.map((item, index) => (
+          <ExerciseCard key={index} item={item} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ExerciseCard({ item, isInCircuit = false }: { item: any, isInCircuit?: boolean }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Simplified display for circuits and AMRAP
+  if (isInCircuit) {
+    return (
+      <div className="bg-gray-800/30 border border-gray-600/50 rounded-lg p-3 hover:bg-gray-800/50 transition-all">
+        <div className="flex justify-between items-center gap-3">
+          <div className="flex-1">
+            <h4 className="font-bold text-gray-100 text-sm">{item.name}</h4>
+            <p className="text-xs text-gray-400 mt-0.5 font-medium">{item.target}</p>
+          </div>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="px-2 py-1 bg-blue-500/10 text-blue-400 border border-blue-400/30 rounded text-xs font-bold hover:bg-blue-500/20 transition-all"
+          >
+            {isExpanded ? 'Hide' : 'Info'}
+          </button>
+        </div>
+
+        {isExpanded && item.instructions && (
+          <div className="mt-3 pt-3 border-t border-gray-700">
+            <ol className="text-xs text-gray-300 space-y-1 list-decimal list-inside">
+              {item.instructions.map((step: string, idx: number) => (
+                <li key={idx}>{step}</li>
+              ))}
+            </ol>
+            {item.youtubeUrl && (
+              <a
+                href={item.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 mt-2 text-xs text-blue-400 hover:text-blue-300 font-medium"
+              >
+                <ExternalLink size={12} />
+                Video
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Full display for traditional/superset workouts
+  return (
+    <div className="border border-gray-700 bg-gray-800/50 rounded-xl overflow-hidden hover:border-gray-600 transition-all">
+      {/* Collapsed Header */}
+      <div className="p-4">
+        <div className="flex justify-between items-start gap-3">
+          <div className="flex-1">
+            <h4 className="font-bold text-gray-100">{item.name}</h4>
+            <div className="text-sm text-gray-400 mt-1 space-y-0.5 font-medium">
+              <p>
+                {item.sets > 1 ? `${item.sets} sets × ` : ''}
+                {item.target}
+              </p>
+              {item.restSeconds !== undefined && item.restSeconds > 0 && (
+                <p className="text-gray-500">Rest: {item.restSeconds}s</p>
+              )}
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className={`
+              flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
+              ${isExpanded
+                ? 'bg-lime-400/10 text-lime-400 border border-lime-400/30'
+                : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
+              }
+            `}
+          >
+            {isExpanded ? (
+              <>
+                <ChevronUp size={16} />
+                Hide
+              </>
+            ) : (
+              <>
+                <ChevronDown size={16} />
+                How to
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Expanded Content */}
+      {isExpanded && (
+        <div className="border-t border-gray-700 bg-gray-900/50 p-5 space-y-5">
+          {/* Instructions */}
+          {item.instructions && item.instructions.length > 0 && (
+            <div>
+              <h5 className="font-bold text-lime-400 mb-3 flex items-center gap-2">
+                <div className="h-1 w-6 bg-lime-400 rounded-full"></div>
+                INSTRUCTIONS
+              </h5>
+              <ol className="list-decimal list-inside space-y-2 text-sm text-gray-300">
+                {item.instructions.map((instruction: string, idx: number) => (
+                  <li key={idx} className="leading-relaxed">{instruction}</li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {/* Image */}
+          {item.imageUrl && (
+            <div>
+              <img
+                src={item.imageUrl}
+                alt={item.name}
+                className="w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700"
+              />
+            </div>
+          )}
+
+          {/* YouTube Link */}
+          <div className="flex justify-center">
+            <a
+              href={item.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl text-sm font-bold hover:from-red-700 hover:to-red-800 transition-all duration-200 touch-manipulation shadow-lg hover:scale-105 active:scale-95"
+            >
+              <ExternalLink size={18} />
+              WATCH VIDEO
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

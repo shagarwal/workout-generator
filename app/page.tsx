@@ -220,7 +220,7 @@ export default function Home() {
       return sectionText;
     };
 
-    text += formatSection(workoutPlan.sections.warmup);
+    text += formatSection(workoutPlan.sections.stretching);
     text += '\n';
     text += formatSection(workoutPlan.sections.main);
     text += '\n';

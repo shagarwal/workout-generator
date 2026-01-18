@@ -12,7 +12,7 @@ export const exerciseLibrary: Exercise[] = [
     muscles: ['Chest'],
     equipment: ['Barbell', 'Bench'],
     type: 'weights',
-    difficulty: 'intermediate',
+    difficulty: 'beginner',
     defaultRepRange: '6-10',
     youtubeQuery: 'https://www.youtube.com/watch?v=rT7DgCr-3pg',
     instructions: [

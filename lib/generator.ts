@@ -416,7 +416,7 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
             mainItems.push({
               name: ex.name,
               sets: 1,
-              target: ex.defaultRepRange,
+              target: `${ex.defaultRepRange} reps`,
               restSeconds: circuitRest,
               youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
               instructions: ex.instructions,
@@ -432,7 +432,7 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
           mainItems.push({
             name: circuitExercises[0].name,
             sets: sets,
-            target: circuitExercises[0].defaultRepRange,
+            target: `${circuitExercises[0].defaultRepRange} reps`,
             restSeconds: restSeconds,
             youtubeUrl: getYoutubeUrl(circuitExercises[0].youtubeQuery),
             instructions: circuitExercises[0].instructions,
@@ -481,7 +481,7 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
       mainItems.push({
         name: `${index % 2 === 0 ? '🔗 ' : ''}${ex.name}`,
         sets: sets,
-        target: ex.defaultRepRange,
+        target: `${ex.defaultRepRange} reps`,
         restSeconds: isLastInPair ? supersetRest : 0, // No rest between pair, rest after
         youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
         instructions: ex.instructions,
@@ -538,7 +538,7 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
       mainItems.push({
         name: ex.name,
         sets: sets,
-        target: ex.defaultRepRange,
+        target: `${ex.defaultRepRange} reps`,
         restSeconds: restSeconds,
         youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
         instructions: ex.instructions,

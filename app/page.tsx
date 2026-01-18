@@ -292,7 +292,7 @@ export default function Home() {
             label="Muscle Groups"
             options={muscleOptions}
             selected={selectedMuscles}
-            onChange={setSelectedMuscles}
+            onChange={selected => setSelectedMuscles(selected as MuscleGroup[])}
           />
 
           {/* Equipment Selection */}

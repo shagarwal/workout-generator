@@ -223,8 +223,6 @@ export default function Home() {
     text += formatSection(workoutPlan.sections.stretching);
     text += '\n';
     text += formatSection(workoutPlan.sections.main);
-    text += '\n';
-    text += formatSection(workoutPlan.sections.cooldown);
 
     navigator.clipboard.writeText(text).then(() => {
       alert('Workout copied to clipboard!');

@@ -78,6 +78,47 @@ export default function Home() {
   const [showSavedWorkouts, setShowSavedWorkouts] = useState<boolean>(false);
   const [showSaveModal, setShowSaveModal] = useState<boolean>(false);
 
+  // Load shared workout from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const shortId = params.get('w');
+    const workoutParam = params.get('workout'); // Legacy support
+
+    const loadWorkout = async () => {
+      try {
+        let plan: WorkoutPlan | null = null;
+
+        if (shortId) {
+          // Load from short ID
+          const response = await fetch(`/api/share?id=${shortId}`);
+          if (response.ok) {
+            const data = await response.json();
+            plan = data.workout;
+          }
+        } else if (workoutParam) {
+          // Legacy: Load from full URL parameter
+          plan = JSON.parse(decodeURIComponent(workoutParam)) as WorkoutPlan;
+        }
+
+        if (plan) {
+          setWorkoutPlan(plan);
+
+          // Scroll to results after a short delay
+          setTimeout(() => {
+            document.getElementById('workout-results')?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }, 500);
+        }
+      } catch (error) {
+        console.error('Failed to load shared workout:', error);
+      }
+    };
+
+    loadWorkout();
+  }, []);
+
   // Auto-select equipment based on location
   useEffect(() => {
     if (!location) return;
@@ -194,8 +235,32 @@ export default function Home() {
     }, 500);
   };
 
-  const handleRegenerate = () => {
-    handleGenerate();
+  const handleShare = async () => {
+    if (!workoutPlan) return;
+
+    try {
+      // Call API to create short link
+      const response = await fetch('/api/share', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(workoutPlan),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create share link');
+      }
+
+      const { shortId } = await response.json();
+      const shareUrl = `${window.location.origin}${window.location.pathname}?w=${shortId}`;
+
+      // Copy to clipboard
+      await navigator.clipboard.writeText(shareUrl);
+      alert('Share link copied to clipboard! Anyone with this link can view this exact workout.');
+    } catch (error) {
+      alert('Failed to create share link. Please try again.');
+    }
   };
 
   const handleCopyToClipboard = () => {
@@ -401,9 +466,9 @@ export default function Home() {
           <div id="workout-results">
             <WorkoutDisplay
               plan={workoutPlan}
-              onRegenerate={handleRegenerate}
               onCopyToClipboard={handleCopyToClipboard}
               onSave={handleSaveWorkout}
+              onShare={handleShare}
             />
           </div>
         )}

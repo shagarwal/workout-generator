@@ -2,16 +2,16 @@
 
 import React, { useState } from 'react';
 import { WorkoutPlan } from '@/lib/types';
-import { ExternalLink, Copy, RefreshCw, ChevronDown, ChevronUp, Save } from 'lucide-react';
+import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2 } from 'lucide-react';
 
 interface WorkoutDisplayProps {
   plan: WorkoutPlan;
-  onRegenerate: () => void;
   onCopyToClipboard: () => void;
   onSave: () => void;
+  onShare: () => void;
 }
 
-export default function WorkoutDisplay({ plan, onRegenerate, onCopyToClipboard, onSave }: WorkoutDisplayProps) {
+export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShare }: WorkoutDisplayProps) {
   return (
     <div className="space-y-6">
       {/* Summary Card */}
@@ -76,18 +76,18 @@ export default function WorkoutDisplay({ plan, onRegenerate, onCopyToClipboard, 
         {/* Action Buttons */}
         <div className="grid grid-cols-3 gap-3 pt-2">
           <button
-            onClick={onRegenerate}
-            className="flex items-center justify-center gap-2 px-4 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 touch-manipulation shadow-lg hover:scale-105 active:scale-95"
-          >
-            <RefreshCw size={18} />
-            REGENERATE
-          </button>
-          <button
             onClick={onSave}
             className="flex items-center justify-center gap-2 px-4 py-4 bg-gradient-to-r from-lime-400 to-lime-500 text-gray-900 rounded-xl font-bold hover:from-lime-500 hover:to-lime-600 transition-all duration-200 touch-manipulation shadow-lg hover:scale-105 active:scale-95"
           >
             <Save size={18} />
             SAVE
+          </button>
+          <button
+            onClick={onShare}
+            className="flex items-center justify-center gap-2 px-4 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-bold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 touch-manipulation shadow-lg hover:scale-105 active:scale-95"
+          >
+            <Share2 size={18} />
+            SHARE
           </button>
           <button
             onClick={onCopyToClipboard}

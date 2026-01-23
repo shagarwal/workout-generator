@@ -221,7 +221,9 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
       throw new Error('Failed to save performance');
     }
 
+    // Close tracker and auto-expand history
     setShowPerformanceTracker(false);
+    setShowHistory(true);
   };
 
   const handleDeleteEntry = async (entryId: string) => {

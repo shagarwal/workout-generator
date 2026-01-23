@@ -79,13 +79,9 @@ export default function ExerciseHistory({
   return (
     <div className="mt-3 p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <History className="w-4 h-4 text-blue-400" />
-          <h4 className="font-bold text-blue-400">Performance History</h4>
-        </div>
         <button
           onClick={onClose}
-          className="p-1 hover:bg-gray-700 rounded transition-colors"
+          className="p-1 hover:bg-gray-700 rounded transition-colors ml-auto"
           aria-label="Close"
         >
           <X className="w-4 h-4 text-gray-400" />
@@ -118,81 +114,56 @@ export default function ExerciseHistory({
         </>
       ) : (
         <>
-          {/* Summary Stats */}
-          <div className="grid grid-cols-2 gap-3 p-3 bg-gray-900 rounded-lg">
-            <div>
-              <p className="text-xs text-gray-400">Personal Record</p>
-              <p className="text-lg font-bold text-lime-400">
-                {history.personalRecord} lbs
-              </p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-400">Total Sessions</p>
-              <p className="text-lg font-bold text-blue-400">
-                {history.totalSessions}
-              </p>
-            </div>
-          </div>
-
-          {/* Top 5 Weights */}
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-lime-400" />
-              <h5 className="text-sm font-bold text-gray-200">
-                Top 5 Highest Weights
-              </h5>
-            </div>
-
-            <div className="space-y-2">
-              {history.topWeights.map((entry, index) => (
-                <div
-                  key={entry.id}
-                  className="flex items-center justify-between p-2 bg-gray-900 rounded-lg border border-gray-700"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${
-                        index === 0
-                          ? 'bg-yellow-500 text-gray-900'
-                          : index === 1
-                          ? 'bg-gray-400 text-gray-900'
-                          : index === 2
-                          ? 'bg-orange-600 text-white'
-                          : 'bg-gray-700 text-gray-300'
-                      }`}
-                    >
-                      {index + 1}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-white">
-                        {entry.weight} lbs
-                        <span className="text-gray-400 font-normal ml-2">
-                          × {entry.reps} reps
-                        </span>
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {entry.sets} {entry.sets === 1 ? 'set' : 'sets'} •{' '}
-                        {formatDate(entry.date)}
-                      </p>
-                    </div>
+          {/* Clean list of top 5 weights */}
+          <div className="space-y-2">
+            {history.topWeights.map((entry, index) => (
+              <div
+                key={entry.id}
+                className="flex items-center justify-between p-2 bg-gray-900 rounded-lg border border-gray-700"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${
+                      index === 0
+                        ? 'bg-yellow-500 text-gray-900'
+                        : index === 1
+                        ? 'bg-gray-400 text-gray-900'
+                        : index === 2
+                        ? 'bg-orange-600 text-white'
+                        : 'bg-gray-700 text-gray-300'
+                    }`}
+                  >
+                    {index + 1}
                   </div>
-                  {onDeleteEntry && (
-                    <button
-                      onClick={() => handleDelete(entry.id)}
-                      disabled={deletingId === entry.id}
-                      className="p-1.5 hover:bg-red-600/20 hover:text-red-400 text-gray-500 rounded transition-colors disabled:opacity-50"
-                      aria-label="Delete entry"
-                    >
-                      {deletingId === entry.id ? (
-                        <div className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin"></div>
-                      ) : (
-                        <Trash2 className="w-4 h-4" />
-                      )}
-                    </button>
-                  )}
+                  <div>
+                    <p className="text-sm font-bold text-white">
+                      {entry.weight} lbs
+                      <span className="text-gray-400 font-normal ml-2">
+                        × {entry.reps} reps
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {entry.sets} {entry.sets === 1 ? 'set' : 'sets'} •{' '}
+                      {formatDate(entry.date)}
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
+                {onDeleteEntry && (
+                  <button
+                    onClick={() => handleDelete(entry.id)}
+                    disabled={deletingId === entry.id}
+                    className="p-1.5 hover:bg-red-600/20 hover:text-red-400 text-gray-500 rounded transition-colors disabled:opacity-50"
+                    aria-label="Delete entry"
+                  >
+                    {deletingId === entry.id ? (
+                      <div className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      <Trash2 className="w-4 h-4" />
+                    )}
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Add New Entry Button */}

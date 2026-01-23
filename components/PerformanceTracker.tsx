@@ -66,8 +66,7 @@ export default function PerformanceTracker({
         })
       }
 
-      // Show success feedback
-      alert('Performance saved to your account!')
+      // Close tracker - parent will auto-expand history
       onClose()
     } catch (error) {
       console.error('Error saving performance:', error)

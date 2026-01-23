@@ -313,23 +313,23 @@ export default function Home() {
     <div className="min-h-screen pb-12">
       {/* Sticky Header */}
       <header className="sticky top-0 z-10 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-700 shadow-2xl">
-        <div className="max-w-4xl mx-auto px-4 py-5">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-lime-400 to-lime-500 rounded-lg">
-                <Dumbbell size={28} className="text-gray-900" strokeWidth={2.5} />
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-5">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-gradient-to-br from-lime-400 to-lime-500 rounded-lg">
+                <Dumbbell size={24} className="sm:w-7 sm:h-7 text-gray-900" strokeWidth={2.5} />
               </div>
               <div>
-                <h1 className="text-2xl font-black text-white tracking-tight">WORKOUT BUILDER</h1>
-                <p className="text-xs text-gray-400 font-medium">Build your perfect routine</p>
+                <h1 className="text-lg sm:text-2xl font-black text-white tracking-tight">WORKOUT BUILDER</h1>
+                <p className="text-xs text-gray-400 font-medium hidden sm:block">Build your perfect routine</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={() => setShowSavedWorkouts(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-200 rounded-lg font-bold hover:bg-gray-750 border border-gray-700 transition-all"
+                className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 bg-gray-800 text-gray-200 rounded-lg font-bold text-sm hover:bg-gray-750 border border-gray-700 transition-all"
               >
-                <FolderOpen size={18} />
+                <FolderOpen size={16} className="sm:w-[18px] sm:h-[18px]" />
                 <span className="hidden sm:inline">SAVED</span>
               </button>
               <AuthButton />
@@ -338,9 +338,9 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
         {/* Input Card */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-8 space-y-8 border border-gray-700">
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-4 sm:p-8 space-y-6 sm:space-y-8 border border-gray-700">
           <div className="flex items-center gap-3">
             <div className="h-1 w-12 bg-gradient-to-r from-lime-400 to-lime-500 rounded-full"></div>
             <h2 className="text-2xl font-black text-white">CONFIGURE</h2>
@@ -390,7 +390,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setStretchingOnly(!stretchingOnly)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   stretchingOnly
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
                     : 'bg-gray-800 text-gray-400 border border-gray-700 hover:bg-gray-750'

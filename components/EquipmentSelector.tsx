@@ -48,7 +48,7 @@ export default function EquipmentSelector({
               onClick={() => toggleEquipment(equipment)}
               disabled={disabled}
               className={`
-                px-4 py-2.5 rounded-lg text-sm font-medium transition-all touch-manipulation
+                px-3 sm:px-4 py-2.5 rounded-lg text-sm font-medium transition-all touch-manipulation min-h-[44px]
                 ${selected.includes(equipment)
                   ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg scale-105'
                   : disabled
@@ -64,7 +64,7 @@ export default function EquipmentSelector({
             <button
               type="button"
               onClick={() => setShowAllWeight(!showAllWeight)}
-              className="px-4 py-2.5 rounded-lg text-sm font-medium bg-gray-800 text-lime-400 hover:bg-gray-750 border border-gray-700 transition-all touch-manipulation flex items-center gap-1.5"
+              className="px-3 sm:px-4 py-2.5 rounded-lg text-sm font-medium bg-gray-800 text-lime-400 hover:bg-gray-750 border border-gray-700 transition-all touch-manipulation flex items-center gap-1.5 min-h-[44px]"
             >
               {showAllWeight ? (
                 <>
@@ -93,7 +93,7 @@ export default function EquipmentSelector({
               onClick={() => toggleEquipment(equipment)}
               disabled={disabled}
               className={`
-                px-4 py-2.5 rounded-lg text-sm font-medium transition-all touch-manipulation
+                px-3 sm:px-4 py-2.5 rounded-lg text-sm font-medium transition-all touch-manipulation min-h-[44px]
                 ${selected.includes(equipment)
                   ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg scale-105'
                   : disabled
@@ -109,7 +109,7 @@ export default function EquipmentSelector({
             <button
               type="button"
               onClick={() => setShowAllCardio(!showAllCardio)}
-              className="px-4 py-2.5 rounded-lg text-sm font-medium bg-gray-800 text-lime-400 hover:bg-gray-750 border border-gray-700 transition-all touch-manipulation flex items-center gap-1.5"
+              className="px-3 sm:px-4 py-2.5 rounded-lg text-sm font-medium bg-gray-800 text-lime-400 hover:bg-gray-750 border border-gray-700 transition-all touch-manipulation flex items-center gap-1.5 min-h-[44px]"
             >
               {showAllCardio ? (
                 <>

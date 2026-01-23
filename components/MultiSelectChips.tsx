@@ -31,7 +31,7 @@ export default function MultiSelectChips({ label, options, selected, onChange }:
               type="button"
               onClick={() => toggleOption(option)}
               className={`
-                relative px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 touch-manipulation
+                relative px-3 sm:px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 touch-manipulation min-h-[44px]
                 ${isSelected
                   ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg scale-105'
                   : 'bg-gray-800 text-gray-300 hover:bg-gray-750 border border-gray-700'

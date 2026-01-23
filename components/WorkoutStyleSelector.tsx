@@ -62,7 +62,7 @@ export default function WorkoutStyleSelector({ value, onChange }: WorkoutStyleSe
                 type="button"
                 onClick={() => onChange(option.value)}
                 className={`
-                  relative p-3 rounded-lg transition-all duration-200 touch-manipulation text-left w-full
+                  relative p-3 sm:p-3.5 rounded-lg transition-all duration-200 touch-manipulation text-left w-full min-h-[52px]
                   ${isSelected
                     ? `bg-gradient-to-br ${option.color} text-white shadow-lg scale-105 border-2 border-white/20`
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-750 border border-gray-700'

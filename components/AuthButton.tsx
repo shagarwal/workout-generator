@@ -17,8 +17,8 @@ export default function AuthButton() {
 
   if (session) {
     return (
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-2 bg-gray-700 rounded-lg">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 px-2 sm:px-3 py-2 bg-gray-700 rounded-lg">
           {session.user.image ? (
             <img
               src={session.user.image}
@@ -28,16 +28,16 @@ export default function AuthButton() {
           ) : (
             <User className="w-5 h-5 text-lime-400" />
           )}
-          <span className="text-sm text-gray-200">
+          <span className="hidden md:inline text-sm text-gray-200">
             {session.user.name || session.user.email}
           </span>
         </div>
         <button
           onClick={() => signOut()}
-          className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium"
         >
           <LogOut className="w-4 h-4" />
-          <span>Sign Out</span>
+          <span className="hidden sm:inline">Sign Out</span>
         </button>
       </div>
     )
@@ -46,10 +46,11 @@ export default function AuthButton() {
   return (
     <button
       onClick={() => signIn('google')}
-      className="flex items-center gap-2 px-4 py-2 bg-lime-400 hover:bg-lime-500 text-gray-900 font-semibold rounded-lg transition-colors"
+      className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-lime-400 hover:bg-lime-500 text-gray-900 font-semibold rounded-lg transition-colors text-sm"
     >
       <LogIn className="w-4 h-4" />
-      <span>Sign in with Google</span>
+      <span className="hidden sm:inline">Sign in with Google</span>
+      <span className="sm:hidden">Sign in</span>
     </button>
   )
 }

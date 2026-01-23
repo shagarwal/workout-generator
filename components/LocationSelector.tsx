@@ -33,7 +33,7 @@ export default function LocationSelector({ value, onChange }: LocationSelectorPr
               key={location.id}
               onClick={() => onChange(location.id)}
               className={`
-                relative p-4 rounded-xl transition-all duration-200 touch-manipulation
+                relative p-3 sm:p-4 rounded-xl transition-all duration-200 touch-manipulation min-h-[80px]
                 ${isSelected
                   ? `bg-gradient-to-br ${location.color} text-white shadow-lg scale-105`
                   : 'bg-gray-800 text-gray-400 hover:bg-gray-750 border border-gray-700'
@@ -41,7 +41,7 @@ export default function LocationSelector({ value, onChange }: LocationSelectorPr
               `}
             >
               <div className="flex flex-col items-center gap-2">
-                <Icon size={28} strokeWidth={2} />
+                <Icon size={24} className="sm:w-7 sm:h-7" strokeWidth={2} />
                 <span className="text-sm font-bold">{location.label}</span>
               </div>
               {isSelected && (

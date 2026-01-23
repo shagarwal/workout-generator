@@ -29,7 +29,7 @@ export default function IntensitySelector({ value, onChange }: IntensitySelector
               type="button"
               onClick={() => onChange(option.value)}
               className={`
-                relative px-4 py-4 rounded-xl transition-all duration-200 touch-manipulation
+                relative px-3 sm:px-4 py-3 sm:py-4 rounded-xl transition-all duration-200 touch-manipulation min-h-[80px]
                 ${isSelected
                   ? `bg-gradient-to-br ${option.color} text-white shadow-lg scale-105`
                   : 'bg-gray-800 text-gray-400 hover:bg-gray-750 border border-gray-700'

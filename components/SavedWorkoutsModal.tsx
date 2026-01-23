@@ -2,13 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { WorkoutPlan } from '@/lib/types';
-import { X, Trash2, Calendar } from 'lucide-react';
+import { X, Trash2, Calendar, Cloud, HardDrive } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 interface SavedWorkout {
   id: string;
   name: string;
   plan: WorkoutPlan;
   savedAt: string;
+  source?: 'local' | 'cloud';
 }
 
 interface SavedWorkoutsModalProps {
@@ -19,24 +21,84 @@ interface SavedWorkoutsModalProps {
 
 export default function SavedWorkoutsModal({ isOpen, onClose, onLoad }: SavedWorkoutsModalProps) {
   const [savedWorkouts, setSavedWorkouts] = useState<SavedWorkout[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (isOpen) {
       loadSavedWorkouts();
     }
-  }, [isOpen]);
+  }, [isOpen, session]);
 
-  const loadSavedWorkouts = () => {
-    const saved = localStorage.getItem('savedWorkouts');
-    if (saved) {
-      setSavedWorkouts(JSON.parse(saved));
+  const loadSavedWorkouts = async () => {
+    setIsLoading(true);
+    try {
+      const allWorkouts: SavedWorkout[] = [];
+
+      // Load from database if authenticated
+      if (session) {
+        const response = await fetch('/api/workouts');
+        if (response.ok) {
+          const data = await response.json();
+          const cloudWorkouts = data.workouts.map((w: any) => ({
+            ...w,
+            savedAt: new Date(w.savedAt).toISOString(),
+            source: 'cloud' as const,
+          }));
+          allWorkouts.push(...cloudWorkouts);
+        }
+      }
+
+      // Always load from localStorage as well
+      const saved = localStorage.getItem('savedWorkouts');
+      if (saved) {
+        const localWorkouts = JSON.parse(saved).map((w: any) => ({
+          ...w,
+          source: 'local' as const,
+        }));
+        allWorkouts.push(...localWorkouts);
+      }
+
+      // Sort by date, newest first
+      allWorkouts.sort((a, b) =>
+        new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime()
+      );
+
+      setSavedWorkouts(allWorkouts);
+    } catch (error) {
+      console.error('Error loading workouts:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDelete = (id: string) => {
-    const updated = savedWorkouts.filter(w => w.id !== id);
-    setSavedWorkouts(updated);
-    localStorage.setItem('savedWorkouts', JSON.stringify(updated));
+  const handleDelete = async (id: string, source: 'local' | 'cloud' | undefined) => {
+    setDeletingId(id);
+    try {
+      if (source === 'cloud') {
+        // Delete from database
+        const response = await fetch(`/api/workouts?id=${id}`, {
+          method: 'DELETE',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to delete workout');
+        }
+      } else {
+        // Delete from localStorage
+        const updated = savedWorkouts.filter(w => w.id !== id);
+        const localWorkouts = updated.filter(w => w.source === 'local');
+        localStorage.setItem('savedWorkouts', JSON.stringify(localWorkouts));
+      }
+
+      // Refresh the list
+      await loadSavedWorkouts();
+    } catch (error) {
+      console.error('Error deleting workout:', error);
+      alert('Failed to delete workout');
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   const handleLoadWorkout = (plan: WorkoutPlan) => {
@@ -67,21 +129,36 @@ export default function SavedWorkoutsModal({ isOpen, onClose, onLoad }: SavedWor
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
-          {savedWorkouts.length === 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="w-8 h-8 border-4 border-lime-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : savedWorkouts.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-gray-400 text-lg">No saved workouts yet</p>
-              <p className="text-gray-500 text-sm mt-2">Generate and save a workout to see it here</p>
+              <p className="text-gray-500 text-sm mt-2">
+                {session
+                  ? 'Generate and save a workout to see it here'
+                  : 'Sign in to save workouts to your account'}
+              </p>
             </div>
           ) : (
             <div className="space-y-3">
               {savedWorkouts.map(workout => (
                 <div
-                  key={workout.id}
+                  key={`${workout.source}-${workout.id}`}
                   className="bg-gray-800/50 border border-gray-700 rounded-xl p-4 hover:border-gray-600 transition-all"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h3 className="font-bold text-white text-lg mb-2">{workout.name}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-bold text-white text-lg">{workout.name}</h3>
+                        {workout.source === 'cloud' ? (
+                          <Cloud size={14} className="text-blue-400" title="Saved to account" />
+                        ) : (
+                          <HardDrive size={14} className="text-gray-500" title="Saved locally" />
+                        )}
+                      </div>
                       <div className="space-y-1 text-sm">
                         <p className="text-gray-400">
                           <span className="text-lime-400 font-semibold">Muscles:</span> {workout.plan.summary.muscles}
@@ -103,11 +180,18 @@ export default function SavedWorkoutsModal({ isOpen, onClose, onLoad }: SavedWor
                         Load
                       </button>
                       <button
-                        onClick={() => handleDelete(workout.id)}
-                        className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg font-medium text-sm hover:bg-red-600 hover:text-white transition-all flex items-center gap-1.5"
+                        onClick={() => handleDelete(workout.id, workout.source)}
+                        disabled={deletingId === workout.id}
+                        className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg font-medium text-sm hover:bg-red-600 hover:text-white transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <Trash2 size={14} />
-                        Delete
+                        {deletingId === workout.id ? (
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                          <>
+                            <Trash2 size={14} />
+                            Delete
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>

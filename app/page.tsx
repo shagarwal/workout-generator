@@ -15,6 +15,7 @@ import EquipmentSelector from '@/components/EquipmentSelector';
 import WorkoutStyleSelector from '@/components/WorkoutStyleSelector';
 import SavedWorkoutsModal from '@/components/SavedWorkoutsModal';
 import SaveWorkoutModal from '@/components/SaveWorkoutModal';
+import AuthButton from '@/components/AuthButton';
 import { Dumbbell, Zap, FolderOpen } from 'lucide-react';
 
 const muscleOptions: MuscleGroup[] = [
@@ -313,7 +314,7 @@ export default function Home() {
       {/* Sticky Header */}
       <header className="sticky top-0 z-10 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-700 shadow-2xl">
         <div className="max-w-4xl mx-auto px-4 py-5">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-gradient-to-br from-lime-400 to-lime-500 rounded-lg">
                 <Dumbbell size={28} className="text-gray-900" strokeWidth={2.5} />
@@ -323,13 +324,16 @@ export default function Home() {
                 <p className="text-xs text-gray-400 font-medium">Build your perfect routine</p>
               </div>
             </div>
-            <button
-              onClick={() => setShowSavedWorkouts(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-200 rounded-lg font-bold hover:bg-gray-750 border border-gray-700 transition-all"
-            >
-              <FolderOpen size={18} />
-              <span className="hidden sm:inline">SAVED</span>
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowSavedWorkouts(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-200 rounded-lg font-bold hover:bg-gray-750 border border-gray-700 transition-all"
+              >
+                <FolderOpen size={18} />
+                <span className="hidden sm:inline">SAVED</span>
+              </button>
+              <AuthButton />
+            </div>
           </div>
         </div>
       </header>

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { WorkoutPlan } from '@/lib/types';
 import { X, Save } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 interface SaveWorkoutModalProps {
   isOpen: boolean;
@@ -12,28 +13,59 @@ interface SaveWorkoutModalProps {
 
 export default function SaveWorkoutModal({ isOpen, onClose, workoutPlan }: SaveWorkoutModalProps) {
   const [workoutName, setWorkoutName] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const { data: session } = useSession();
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!workoutName.trim()) {
       alert('Please enter a workout name');
       return;
     }
 
-    const savedWorkouts = JSON.parse(localStorage.getItem('savedWorkouts') || '[]');
+    setIsSaving(true);
 
-    const newWorkout = {
-      id: Date.now().toString(),
-      name: workoutName.trim(),
-      plan: workoutPlan,
-      savedAt: new Date().toISOString(),
-    };
+    try {
+      if (session) {
+        // Save to database for authenticated users
+        const response = await fetch('/api/workouts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: workoutName.trim(),
+            plan: workoutPlan,
+          }),
+        });
 
-    savedWorkouts.push(newWorkout);
-    localStorage.setItem('savedWorkouts', JSON.stringify(savedWorkouts));
+        if (!response.ok) {
+          throw new Error('Failed to save workout');
+        }
 
-    setWorkoutName('');
-    onClose();
-    alert('Workout saved successfully!');
+        alert('Workout saved to your account!');
+      } else {
+        // Save to localStorage for non-authenticated users
+        const savedWorkouts = JSON.parse(localStorage.getItem('savedWorkouts') || '[]');
+
+        const newWorkout = {
+          id: Date.now().toString(),
+          name: workoutName.trim(),
+          plan: workoutPlan,
+          savedAt: new Date().toISOString(),
+        };
+
+        savedWorkouts.push(newWorkout);
+        localStorage.setItem('savedWorkouts', JSON.stringify(savedWorkouts));
+
+        alert('Workout saved locally! Sign in to save across devices.');
+      }
+
+      setWorkoutName('');
+      onClose();
+    } catch (error) {
+      console.error('Error saving workout:', error);
+      alert('Failed to save workout. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -95,10 +127,20 @@ export default function SaveWorkoutModal({ isOpen, onClose, workoutPlan }: SaveW
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-lime-400 to-lime-500 text-gray-900 rounded-xl font-bold hover:from-lime-500 hover:to-lime-600 transition-all shadow-lg"
+              disabled={isSaving}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-lime-400 to-lime-500 text-gray-900 rounded-xl font-bold hover:from-lime-500 hover:to-lime-600 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save size={18} />
-              Save
+              {isSaving ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-gray-900 border-t-transparent rounded-full animate-spin"></div>
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Save size={18} />
+                  Save
+                </>
+              )}
             </button>
           </div>
         </div>

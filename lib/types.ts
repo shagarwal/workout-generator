@@ -112,3 +112,51 @@ export interface WorkoutPlan {
     main: WorkoutSection;
   };
 }
+
+// User and Authentication types
+export interface UserProfile {
+  id: string;
+  email: string | null;
+  name: string | null;
+  image: string | null;
+  createdAt: Date;
+}
+
+// Saved workout for authenticated users
+export interface SavedUserWorkout {
+  id: string;
+  userId: string;
+  name: string;
+  plan: WorkoutPlan;
+  savedAt: Date;
+}
+
+// Performance tracking for exercises
+export interface WorkoutPerformance {
+  id: string;
+  userId: string;
+  exerciseName: string;
+  exerciseId?: string | null;
+  weight: number;
+  reps: number;
+  sets: number;
+  date: Date;
+  workoutId?: string | null;
+  notes?: string | null;
+}
+
+// Exercise history summary (top 5 weights)
+export interface ExerciseHistoryEntry {
+  weight: number;
+  reps: number;
+  sets: number;
+  date: Date;
+  id: string;
+}
+
+export interface ExerciseHistory {
+  exerciseName: string;
+  topWeights: ExerciseHistoryEntry[];
+  totalSessions: number;
+  personalRecord: number;
+}

@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { WorkoutPlan } from '@/lib/types';
-import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2 } from 'lucide-react';
+import { WorkoutPlan, WorkoutPerformance } from '@/lib/types';
+import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2, TrendingUp, Dumbbell } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import PerformanceTracker from './PerformanceTracker';
+import ExerciseHistory from './ExerciseHistory';
 
 interface WorkoutDisplayProps {
   plan: WorkoutPlan;
@@ -108,7 +111,7 @@ export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShar
           </div>
           <div className="space-y-4">
             {plan.sections.stretching.items.map((item, index) => (
-              <ExerciseCard key={index} item={item} isInCircuit={false} />
+              <ExerciseCard key={index} item={item} isInCircuit={false} showPerformanceTracking={false} />
             ))}
           </div>
         </div>
@@ -201,27 +204,83 @@ function WorkoutSection({ section, workoutStyle }: { section: { title: string; i
   );
 }
 
-function ExerciseCard({ item, isInCircuit = false }: { item: any, isInCircuit?: boolean }) {
+function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = true }: { item: any, isInCircuit?: boolean, showPerformanceTracking?: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showPerformanceTracker, setShowPerformanceTracker] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const { data: session } = useSession();
+
+  const handleSavePerformance = async (performance: Omit<WorkoutPerformance, 'id' | 'userId' | 'date'>) => {
+    const response = await fetch('/api/performance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(performance),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save performance');
+    }
+
+    setShowPerformanceTracker(false);
+  };
+
+  const handleDeleteEntry = async (entryId: string) => {
+    const response = await fetch(`/api/performance?id=${entryId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete entry');
+    }
+  };
 
   // Simplified display for circuits and AMRAP
   if (isInCircuit) {
     return (
       <div className="bg-gray-800/30 border border-gray-600/50 rounded-lg p-3 hover:bg-gray-800/50 transition-all">
-        <div className="flex justify-between items-center gap-3">
+        <div className="flex justify-between items-center gap-2">
           <div className="flex-1">
             <h4 className="font-bold text-gray-100 text-sm">{item.name}</h4>
             <p className="text-xs text-gray-400 mt-0.5 font-medium">{item.target}</p>
           </div>
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="px-2 py-1 bg-blue-500/10 text-blue-400 border border-blue-400/30 rounded text-xs font-bold hover:bg-blue-500/20 transition-all"
-          >
-            {isExpanded ? 'Hide' : 'Info'}
-          </button>
+          <div className="flex gap-1.5">
+            <button
+              onClick={() => {
+                setIsExpanded(!isExpanded);
+                if (isExpanded) {
+                  setShowHistory(false);
+                  setShowPerformanceTracker(false);
+                }
+              }}
+              className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                isExpanded && !showHistory && !showPerformanceTracker
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
+              }`}
+            >
+              Info
+            </button>
+            {session && showPerformanceTracking && (
+              <button
+                onClick={() => {
+                  setShowHistory(!showHistory);
+                  setIsExpanded(false);
+                  setShowPerformanceTracker(false);
+                }}
+                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                  showHistory
+                    ? 'bg-lime-500 text-gray-900'
+                    : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
+                }`}
+              >
+                Log
+              </button>
+            )}
+          </div>
         </div>
 
-        {isExpanded && item.instructions && (
+        {/* Instructions Section */}
+        {isExpanded && !showHistory && !showPerformanceTracker && item.instructions && (
           <div className="mt-3 pt-3 border-t border-gray-700">
             <ol className="text-xs text-gray-300 space-y-1 list-decimal list-inside">
               {item.instructions.map((step: string, idx: number) => (
@@ -239,6 +298,32 @@ function ExerciseCard({ item, isInCircuit = false }: { item: any, isInCircuit?: 
                 Video
               </a>
             )}
+          </div>
+        )}
+
+        {/* Performance History Section */}
+        {showHistory && (
+          <div className="mt-3 pt-3 border-t border-gray-700">
+            <ExerciseHistory
+              exerciseName={item.name}
+              onClose={() => setShowHistory(false)}
+              onDeleteEntry={handleDeleteEntry}
+              onAddNew={() => {
+                setShowHistory(false);
+                setShowPerformanceTracker(true);
+              }}
+            />
+          </div>
+        )}
+
+        {/* New Entry Form */}
+        {showPerformanceTracker && (
+          <div className="mt-3 pt-3 border-t border-gray-700">
+            <PerformanceTracker
+              exerciseName={item.name}
+              onSave={handleSavePerformance}
+              onClose={() => setShowPerformanceTracker(false)}
+            />
           </div>
         )}
       </div>
@@ -264,33 +349,51 @@ function ExerciseCard({ item, isInCircuit = false }: { item: any, isInCircuit?: 
             </div>
           </div>
 
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className={`
-              flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
-              ${isExpanded
-                ? 'bg-lime-400/10 text-lime-400 border border-lime-400/30'
-                : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
-              }
-            `}
-          >
-            {isExpanded ? (
-              <>
-                <ChevronUp size={16} />
-                Hide
-              </>
-            ) : (
-              <>
-                <ChevronDown size={16} />
-                How to
-              </>
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                setIsExpanded(!isExpanded);
+                if (isExpanded) {
+                  setShowHistory(false);
+                  setShowPerformanceTracker(false);
+                }
+              }}
+              className={`
+                flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
+                ${isExpanded && !showHistory && !showPerformanceTracker
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
+                }
+              `}
+            >
+              <ChevronDown size={16} />
+              Info
+            </button>
+            {session && showPerformanceTracking && (
+              <button
+                onClick={() => {
+                  setShowHistory(!showHistory);
+                  setIsExpanded(false);
+                  setShowPerformanceTracker(false);
+                }}
+                className={`
+                  flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
+                  ${showHistory
+                    ? 'bg-lime-500 text-gray-900'
+                    : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
+                  }
+                `}
+              >
+                <Dumbbell size={16} />
+                Log
+              </button>
             )}
-          </button>
+          </div>
         </div>
       </div>
 
-      {/* Expanded Content */}
-      {isExpanded && (
+      {/* Instructions Section */}
+      {isExpanded && !showHistory && !showPerformanceTracker && (
         <div className="border-t border-gray-700 bg-gray-900/50 p-5 space-y-5">
           {/* Instructions */}
           {item.instructions && item.instructions.length > 0 && (
@@ -330,6 +433,32 @@ function ExerciseCard({ item, isInCircuit = false }: { item: any, isInCircuit?: 
               WATCH VIDEO
             </a>
           </div>
+        </div>
+      )}
+
+      {/* Performance History Section */}
+      {showHistory && (
+        <div className="border-t border-gray-700 bg-gray-900/50 p-5">
+          <ExerciseHistory
+            exerciseName={item.name}
+            onClose={() => setShowHistory(false)}
+            onDeleteEntry={handleDeleteEntry}
+            onAddNew={() => {
+              setShowHistory(false);
+              setShowPerformanceTracker(true);
+            }}
+          />
+        </div>
+      )}
+
+      {/* New Entry Form */}
+      {showPerformanceTracker && (
+        <div className="border-t border-gray-700 bg-gray-900/50 p-5">
+          <PerformanceTracker
+            exerciseName={item.name}
+            onSave={handleSavePerformance}
+            onClose={() => setShowPerformanceTracker(false)}
+          />
         </div>
       )}
     </div>

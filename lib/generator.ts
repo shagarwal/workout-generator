@@ -55,6 +55,18 @@ function filterExercisesByEquipment(exercises: Exercise[], userEquipment: string
     if (ex.equipment.length === 0) return true; // No equipment needed
     if (ex.equipment.includes('Bodyweight')) return true; // Bodyweight is always available
 
+    // Smith machine can substitute for Barbell + Bench combinations
+    const hasSmithMachine = userEquipment.includes('Smith machine');
+    const needsBarbell = ex.equipment.includes('Barbell');
+    const needsBench = ex.equipment.includes('Bench');
+
+    if (hasSmithMachine && needsBarbell && needsBench) {
+      // Smith machine can do barbell+bench exercises
+      // Check if all OTHER equipment (besides barbell and bench) is available
+      const otherEquipment = ex.equipment.filter(eq => eq !== 'Barbell' && eq !== 'Bench');
+      return otherEquipment.every(eq => userEquipment.includes(eq));
+    }
+
     // Check if all required equipment is in user's list
     return ex.equipment.every(eq => userEquipment.includes(eq));
   });
@@ -442,31 +454,19 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
       }
     }
 
-    // CARDIO CIRCUIT LAST - if there's cardio, make it short intervals
+    // CARDIO SEPARATE - if there's cardio, add it AFTER circuits as traditional cardio
+    // In circuits, we want minimal equipment changes, so cardio machines don't fit well
+    // Instead, add cardio as a traditional finisher after the weight circuits
     if (cardioExercises.length > 0) {
-      const cardioCircuitId = 'circuit-cardio';
-      // Calculate rounds for cardio based on available time
-      const timePerCardioExercise = 60 + circuitRest; // 60s work + rest
-      const availableCardioSeconds = cardioMinutes * 60;
-      const cardioRounds = Math.max(1, Math.floor(availableCardioSeconds / (cardioExercises.length * timePerCardioExercise)));
-
       cardioExercises.forEach(ex => {
-        let cardioTarget = ex.defaultRepRange;
-        // Convert long cardio to short intervals for circuits
-        if (cardioTarget.includes('min') || cardioTarget.includes('sec')) {
-          cardioTarget = '45-60s'; // Short cardio bursts in circuits
-        }
-
         mainItems.push({
           name: ex.name,
           sets: 1,
-          target: cardioTarget,
-          restSeconds: circuitRest,
+          target: ex.defaultRepRange,
+          restSeconds: 60,
           youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
           instructions: ex.instructions,
           imageUrl: ex.imageUrl,
-          circuitId: cardioCircuitId,
-          circuitRounds: cardioRounds,
         });
       });
     }

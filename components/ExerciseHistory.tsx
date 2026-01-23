@@ -97,12 +97,25 @@ export default function ExerciseHistory({
           <div className="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : !history || history.topWeights.length === 0 ? (
-        <div className="text-center py-4">
-          <p className="text-sm text-gray-400">No performance data yet</p>
-          <p className="text-xs text-gray-500 mt-1">
-            Log your first workout to track progress
-          </p>
-        </div>
+        <>
+          <div className="text-center py-4">
+            <p className="text-sm text-gray-400">No performance data yet</p>
+            <p className="text-xs text-gray-500 mt-1">
+              Log your first workout to track progress
+            </p>
+          </div>
+
+          {/* Add New Entry Button */}
+          {onAddNew && (
+            <button
+              onClick={onAddNew}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-lime-400 to-lime-500 text-gray-900 rounded-lg font-bold hover:from-lime-500 hover:to-lime-600 transition-all shadow-lg"
+            >
+              <TrendingUp className="w-4 h-4" />
+              Add New Entry
+            </button>
+          )}
+        </>
       ) : (
         <>
           {/* Summary Stats */}

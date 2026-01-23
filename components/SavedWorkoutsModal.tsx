@@ -154,9 +154,13 @@ export default function SavedWorkoutsModal({ isOpen, onClose, onLoad }: SavedWor
                       <div className="flex items-center gap-2 mb-2">
                         <h3 className="font-bold text-white text-lg">{workout.name}</h3>
                         {workout.source === 'cloud' ? (
-                          <Cloud size={14} className="text-blue-400" title="Saved to account" />
+                          <span title="Saved to account">
+                            <Cloud size={14} className="text-blue-400" />
+                          </span>
                         ) : (
-                          <HardDrive size={14} className="text-gray-500" title="Saved locally" />
+                          <span title="Saved locally">
+                            <HardDrive size={14} className="text-gray-500" />
+                          </span>
                         )}
                       </div>
                       <div className="space-y-1 text-sm">

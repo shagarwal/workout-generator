@@ -66,6 +66,8 @@ export default function PerformanceTracker({
         })
       }
 
+      // Show success feedback
+      alert('Performance saved to your account!')
       onClose()
     } catch (error) {
       console.error('Error saving performance:', error)
@@ -156,22 +158,14 @@ export default function PerformanceTracker({
         />
       </div>
 
-      <div className="flex gap-2">
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-lime-400 hover:bg-lime-500 text-gray-900 font-bold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <Save className="w-4 h-4" />
-          {isSaving ? 'Saving...' : 'Save Performance'}
-        </button>
-        <button
-          onClick={onClose}
-          className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded transition-colors"
-        >
-          Cancel
-        </button>
-      </div>
+      <button
+        onClick={handleSave}
+        disabled={isSaving}
+        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-lime-400 to-lime-500 hover:from-lime-500 hover:to-lime-600 text-gray-900 font-bold rounded-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <Save className="w-4 h-4" />
+        {isSaving ? 'Saving to Account...' : 'Save to My Account'}
+      </button>
     </div>
   )
 }

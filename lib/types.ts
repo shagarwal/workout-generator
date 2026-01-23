@@ -29,7 +29,12 @@ export type WeightEquipment =
   | 'Shoulder press machine'
   | 'Pec deck machine'
   | 'Hack squat machine'
-  | 'Calf raise machine';
+  | 'Calf raise machine'
+  | 'Back extension machine'
+  | 'Weight plate'
+  | 'Medicine ball'
+  | 'Battle ropes'
+  | 'Sled';
 
 // Cardio Equipment
 export type CardioEquipment =

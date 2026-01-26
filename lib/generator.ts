@@ -6,6 +6,30 @@ function getYoutubeUrl(url: string): string {
   return url;
 }
 
+// Helper to create a WorkoutItem from an Exercise with all metadata
+function createWorkoutItem(
+  ex: Exercise,
+  sets: number,
+  target: string,
+  restSeconds?: number,
+  circuitId?: string,
+  circuitRounds?: number
+): WorkoutItem {
+  return {
+    name: ex.name,
+    sets,
+    target,
+    restSeconds,
+    youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
+    instructions: ex.instructions,
+    imageUrl: ex.imageUrl,
+    muscles: ex.muscles,
+    exerciseId: ex.id,
+    circuitId,
+    circuitRounds,
+  };
+}
+
 function getRestTime(intensity: Intensity): number {
   switch (intensity) {
     case 'easy':
@@ -286,14 +310,7 @@ function generateMuscleStretchSession(
       ? `${holdTime} (${setsPerStretch} rounds)`
       : holdTime;
 
-    return {
-      name: ex.name,
-      sets: setsPerStretch,
-      target: target,
-      youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-      instructions: ex.instructions,
-      imageUrl: ex.imageUrl,
-    };
+    return createWorkoutItem(ex, setsPerStretch, target);
   });
 }
 
@@ -425,31 +442,25 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
           const circuitId = `circuit-${circuitNum}`;
 
           circuitExercises.forEach(ex => {
-            mainItems.push({
-              name: ex.name,
-              sets: 1,
-              target: `${ex.defaultRepRange} reps`,
-              restSeconds: circuitRest,
-              youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-              instructions: ex.instructions,
-              imageUrl: ex.imageUrl,
-              circuitId: circuitId,
-              circuitRounds: rounds,
-            });
+            mainItems.push(createWorkoutItem(
+              ex,
+              1,
+              `${ex.defaultRepRange} reps`,
+              circuitRest,
+              circuitId,
+              rounds
+            ));
           });
 
           circuitNum++;
         } else if (circuitExercises.length === 1) {
           // Single exercise - add as traditional set instead
-          mainItems.push({
-            name: circuitExercises[0].name,
-            sets: sets,
-            target: `${circuitExercises[0].defaultRepRange} reps`,
-            restSeconds: restSeconds,
-            youtubeUrl: getYoutubeUrl(circuitExercises[0].youtubeQuery),
-            instructions: circuitExercises[0].instructions,
-            imageUrl: circuitExercises[0].imageUrl,
-          });
+          mainItems.push(createWorkoutItem(
+            circuitExercises[0],
+            sets,
+            `${circuitExercises[0].defaultRepRange} reps`,
+            restSeconds
+          ));
         }
       }
     }
@@ -459,15 +470,7 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
     // Instead, add cardio as a traditional finisher after the weight circuits
     if (cardioExercises.length > 0) {
       cardioExercises.forEach(ex => {
-        mainItems.push({
-          name: ex.name,
-          sets: 1,
-          target: ex.defaultRepRange,
-          restSeconds: 60,
-          youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-          instructions: ex.instructions,
-          imageUrl: ex.imageUrl,
-        });
+        mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 60));
       });
     }
 
@@ -478,28 +481,20 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
     // Weights first - mark pairs
     weightExercises.forEach((ex, index) => {
       const isLastInPair = index % 2 === 1;
-      mainItems.push({
-        name: `${index % 2 === 0 ? '🔗 ' : ''}${ex.name}`,
-        sets: sets,
-        target: `${ex.defaultRepRange} reps`,
-        restSeconds: isLastInPair ? supersetRest : 0, // No rest between pair, rest after
-        youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-        instructions: ex.instructions,
-        imageUrl: ex.imageUrl,
-      });
+      const item = createWorkoutItem(
+        ex,
+        sets,
+        `${ex.defaultRepRange} reps`,
+        isLastInPair ? supersetRest : 0
+      );
+      // Add superset marker to name
+      item.name = `${index % 2 === 0 ? '🔗 ' : ''}${ex.name}`;
+      mainItems.push(item);
     });
 
     // Then cardio
     cardioExercises.forEach(ex => {
-      mainItems.push({
-        name: ex.name,
-        sets: 1,
-        target: ex.defaultRepRange,
-        restSeconds: 45,
-        youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-        instructions: ex.instructions,
-        imageUrl: ex.imageUrl,
-      });
+      mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 45));
     });
 
   } else if (workoutStyle === 'amrap') {
@@ -517,17 +512,14 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
         specificReps = `${Math.round((low + high) / 2)} reps`;
       }
 
-      mainItems.push({
-        name: ex.name,
-        sets: 1,
-        target: specificReps,
-        restSeconds: 0,
-        youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-        instructions: ex.instructions,
-        imageUrl: ex.imageUrl,
-        circuitId: 'amrap-round', // Group all exercises as one AMRAP round
-        circuitRounds: 0, // 0 means "as many as possible"
-      });
+      mainItems.push(createWorkoutItem(
+        ex,
+        1,
+        specificReps,
+        0,
+        'amrap-round',
+        0
+      ));
     });
 
   } else {
@@ -535,28 +527,17 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
     // WEIGHTS FIRST: Add all weight exercises before cardio
     // Research shows lifting first optimizes strength performance and reduces injury risk
     weightExercises.forEach(ex => {
-      mainItems.push({
-        name: ex.name,
-        sets: sets,
-        target: `${ex.defaultRepRange} reps`,
-        restSeconds: restSeconds,
-        youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-        instructions: ex.instructions,
-        imageUrl: ex.imageUrl,
-      });
+      mainItems.push(createWorkoutItem(
+        ex,
+        sets,
+        `${ex.defaultRepRange} reps`,
+        restSeconds
+      ));
     });
 
     // CARDIO SECOND: Add cardio after weights for optimal fat burning
     cardioExercises.forEach(ex => {
-      mainItems.push({
-        name: ex.name,
-        sets: 1,
-        target: ex.defaultRepRange,
-        restSeconds: 60,
-        youtubeUrl: getYoutubeUrl(ex.youtubeQuery),
-        instructions: ex.instructions,
-        imageUrl: ex.imageUrl,
-      });
+      mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 60));
     });
   }
 

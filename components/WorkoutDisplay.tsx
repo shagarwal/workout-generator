@@ -1,20 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
-import { WorkoutPlan, WorkoutPerformance } from '@/lib/types';
-import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2, TrendingUp, Dumbbell } from 'lucide-react';
+import { WorkoutPlan, WorkoutPerformance, WorkoutItem, Exercise } from '@/lib/types';
+import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2, TrendingUp, Dumbbell, RefreshCw } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import PerformanceTracker from './PerformanceTracker';
 import ExerciseHistory from './ExerciseHistory';
+import ExerciseSwapModal from './ExerciseSwapModal';
 
 interface WorkoutDisplayProps {
   plan: WorkoutPlan;
   onCopyToClipboard: () => void;
   onSave: () => void;
   onShare: () => void;
+  onSwapExercise?: (sectionKey: 'stretching' | 'main', index: number, newExercise: Exercise) => void;
 }
 
-export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShare }: WorkoutDisplayProps) {
+export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShare, onSwapExercise }: WorkoutDisplayProps) {
   return (
     <div className="space-y-6">
       {/* Summary Card */}
@@ -111,28 +113,38 @@ export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShar
           </div>
           <div className="space-y-4">
             {plan.sections.stretching.items.map((item, index) => (
-              <ExerciseCard key={index} item={item} isInCircuit={false} showPerformanceTracking={false} />
+              <ExerciseCard
+                key={index}
+                item={item}
+                isInCircuit={false}
+                showPerformanceTracking={false}
+                onSwap={onSwapExercise ? (newExercise) => onSwapExercise('stretching', index, newExercise) : undefined}
+              />
             ))}
           </div>
         </div>
       )}
 
       {/* Main Workout Section */}
-      <WorkoutSection section={plan.sections.main} workoutStyle={plan.summary.workoutStyle} />
+      <WorkoutSection section={plan.sections.main} workoutStyle={plan.summary.workoutStyle} onSwapExercise={onSwapExercise} />
     </div>
   );
 }
 
-function WorkoutSection({ section, workoutStyle }: { section: { title: string; items: any[] }, workoutStyle?: string }) {
+function WorkoutSection({ section, workoutStyle, onSwapExercise }: {
+  section: { title: string; items: any[] },
+  workoutStyle?: string,
+  onSwapExercise?: (sectionKey: 'stretching' | 'main', index: number, newExercise: Exercise) => void
+}) {
   // Group exercises by circuit if applicable
   if (workoutStyle === 'circuit') {
-    const circuits: { [key: string]: any[] } = {};
-    section.items.forEach(item => {
+    const circuits: { [key: string]: { item: any; originalIndex: number }[] } = {};
+    section.items.forEach((item, index) => {
       if (item.circuitId) {
         if (!circuits[item.circuitId]) {
           circuits[item.circuitId] = [];
         }
-        circuits[item.circuitId].push(item);
+        circuits[item.circuitId].push({ item, originalIndex: index });
       }
     });
 
@@ -143,18 +155,23 @@ function WorkoutSection({ section, workoutStyle }: { section: { title: string; i
           <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
         </div>
 
-        {Object.entries(circuits).map(([circuitId, exercises], idx) => (
+        {Object.entries(circuits).map(([circuitId, exerciseData], idx) => (
           <div key={circuitId} className="bg-orange-900/20 border-2 border-orange-500/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-lg font-black text-orange-400">CIRCUIT {idx + 1}</h4>
               <span className="text-sm font-bold text-orange-300 bg-orange-900/40 px-3 py-1 rounded-lg">
-                {exercises[0].circuitRounds} ROUNDS
+                {exerciseData[0].item.circuitRounds} ROUNDS
               </span>
             </div>
-            <p className="text-xs text-orange-200/80 mb-4">Complete all exercises, then repeat for {exercises[0].circuitRounds} total rounds</p>
+            <p className="text-xs text-orange-200/80 mb-4">Complete all exercises, then repeat for {exerciseData[0].item.circuitRounds} total rounds</p>
             <div className="space-y-2">
-              {exercises.map((item, index) => (
-                <ExerciseCard key={index} item={item} isInCircuit={true} />
+              {exerciseData.map(({ item, originalIndex }) => (
+                <ExerciseCard
+                  key={originalIndex}
+                  item={item}
+                  isInCircuit={true}
+                  onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', originalIndex, newExercise) : undefined}
+                />
               ))}
             </div>
           </div>
@@ -179,7 +196,12 @@ function WorkoutSection({ section, workoutStyle }: { section: { title: string; i
           <p className="text-xs text-red-200/80 mb-4">Complete all exercises in order, then repeat as many times as possible in the allotted time. No rest between exercises!</p>
           <div className="space-y-2">
             {section.items.map((item, index) => (
-              <ExerciseCard key={index} item={item} isInCircuit={true} />
+              <ExerciseCard
+                key={index}
+                item={item}
+                isInCircuit={true}
+                onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', index, newExercise) : undefined}
+              />
             ))}
           </div>
         </div>
@@ -197,17 +219,27 @@ function WorkoutSection({ section, workoutStyle }: { section: { title: string; i
 
       <div className="space-y-3">
         {section.items.map((item, index) => (
-          <ExerciseCard key={index} item={item} />
+          <ExerciseCard
+            key={index}
+            item={item}
+            onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', index, newExercise) : undefined}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = true }: { item: any, isInCircuit?: boolean, showPerformanceTracking?: boolean }) {
+function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = true, onSwap }: {
+  item: any,
+  isInCircuit?: boolean,
+  showPerformanceTracking?: boolean,
+  onSwap?: (newExercise: Exercise) => void
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPerformanceTracker, setShowPerformanceTracker] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [showSwapModal, setShowSwapModal] = useState(false);
   const { data: session } = useSession();
 
   const handleSavePerformance = async (performance: Omit<WorkoutPerformance, 'id' | 'userId' | 'date'>) => {
@@ -244,42 +276,66 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
           <div className="flex-1">
             <h4 className="font-bold text-gray-100 text-sm">{item.name}</h4>
             <p className="text-xs text-gray-400 mt-0.5 font-medium">{item.target}</p>
+            {item.muscles && item.muscles.length > 0 && (
+              <p className="text-xs text-gray-500 mt-0.5">{item.muscles.join(', ')}</p>
+            )}
           </div>
-          <div className="flex gap-1.5">
-            <button
-              onClick={() => {
-                setIsExpanded(!isExpanded);
-                if (isExpanded) {
-                  setShowHistory(false);
-                  setShowPerformanceTracker(false);
-                }
-              }}
-              className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                isExpanded && !showHistory && !showPerformanceTracker
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
-              }`}
-            >
-              Info
-            </button>
-            {session && showPerformanceTracking && (
+          <div className="flex flex-col gap-1.5">
+            <div className="flex gap-1.5">
               <button
                 onClick={() => {
-                  setShowHistory(!showHistory);
-                  setIsExpanded(false);
-                  setShowPerformanceTracker(false);
+                  setIsExpanded(!isExpanded);
+                  if (isExpanded) {
+                    setShowHistory(false);
+                    setShowPerformanceTracker(false);
+                  }
                 }}
                 className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                  showHistory
-                    ? 'bg-lime-500 text-gray-900'
-                    : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
+                  isExpanded && !showHistory && !showPerformanceTracker
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
                 }`}
               >
-                Log
+                Info
+              </button>
+              {session && showPerformanceTracking && (
+                <button
+                  onClick={() => {
+                    setShowHistory(!showHistory);
+                    setIsExpanded(false);
+                    setShowPerformanceTracker(false);
+                  }}
+                  className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                    showHistory
+                      ? 'bg-lime-500 text-gray-900'
+                      : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
+                  }`}
+                >
+                  Log
+                </button>
+              )}
+            </div>
+            {onSwap && (
+              <button
+                onClick={() => setShowSwapModal(true)}
+                className="px-2 py-1 rounded text-xs font-bold transition-all bg-orange-500/10 text-orange-400 border border-orange-400/30 hover:bg-orange-500/20 flex items-center justify-center gap-1"
+              >
+                <RefreshCw size={10} />
+                Swap
               </button>
             )}
           </div>
         </div>
+
+        {/* Swap Modal */}
+        {onSwap && (
+          <ExerciseSwapModal
+            isOpen={showSwapModal}
+            onClose={() => setShowSwapModal(false)}
+            onSelect={onSwap}
+            currentExerciseName={item.name}
+          />
+        )}
 
         {/* Instructions Section */}
         {isExpanded && !showHistory && !showPerformanceTracker && item.instructions && (
@@ -345,54 +401,75 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
                 {item.sets > 1 ? `${item.sets} sets × ` : ''}
                 {item.target}
               </p>
-              {item.restSeconds !== undefined && item.restSeconds > 0 && (
-                <p className="text-gray-500">Rest: {item.restSeconds}s</p>
+              {item.muscles && item.muscles.length > 0 && (
+                <p className="text-gray-500">{item.muscles.join(', ')}</p>
               )}
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <button
-              onClick={() => {
-                setIsExpanded(!isExpanded);
-                if (isExpanded) {
-                  setShowHistory(false);
-                  setShowPerformanceTracker(false);
-                }
-              }}
-              className={`
-                flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
-                ${isExpanded && !showHistory && !showPerformanceTracker
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
-                }
-              `}
-            >
-              <ChevronDown size={16} />
-              Info
-            </button>
-            {session && showPerformanceTracking && (
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
               <button
                 onClick={() => {
-                  setShowHistory(!showHistory);
-                  setIsExpanded(false);
-                  setShowPerformanceTracker(false);
+                  setIsExpanded(!isExpanded);
+                  if (isExpanded) {
+                    setShowHistory(false);
+                    setShowPerformanceTracker(false);
+                  }
                 }}
                 className={`
                   flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
-                  ${showHistory
-                    ? 'bg-lime-500 text-gray-900'
-                    : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
+                  ${isExpanded && !showHistory && !showPerformanceTracker
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-blue-500/10 text-blue-400 border border-blue-400/30 hover:bg-blue-500/20'
                   }
                 `}
               >
-                <Dumbbell size={16} />
-                Log
+                <ChevronDown size={16} />
+                Info
+              </button>
+              {session && showPerformanceTracking && (
+                <button
+                  onClick={() => {
+                    setShowHistory(!showHistory);
+                    setIsExpanded(false);
+                    setShowPerformanceTracker(false);
+                  }}
+                  className={`
+                    flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
+                    ${showHistory
+                      ? 'bg-lime-500 text-gray-900'
+                      : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
+                    }
+                  `}
+                >
+                  <Dumbbell size={16} />
+                  Log
+                </button>
+              )}
+            </div>
+            {onSwap && (
+              <button
+                onClick={() => setShowSwapModal(true)}
+                className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all touch-manipulation bg-orange-500/10 text-orange-400 border border-orange-400/30 hover:bg-orange-500/20"
+              >
+                <RefreshCw size={12} />
+                Swap
               </button>
             )}
           </div>
         </div>
       </div>
+
+      {/* Swap Modal */}
+      {onSwap && (
+        <ExerciseSwapModal
+          isOpen={showSwapModal}
+          onClose={() => setShowSwapModal(false)}
+          onSelect={onSwap}
+          currentExerciseName={item.name}
+        />
+      )}
 
       {/* Instructions Section */}
       {isExpanded && !showHistory && !showPerformanceTracker && (

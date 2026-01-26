@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MuscleGroup, Equipment, WeightEquipment, CardioEquipment, Intensity, WorkoutStyle, WorkoutInputs, WorkoutPlan } from '@/lib/types';
+import { MuscleGroup, Equipment, WeightEquipment, CardioEquipment, Intensity, WorkoutStyle, WorkoutInputs, WorkoutPlan, Exercise, WorkoutItem } from '@/lib/types';
 import { generateWorkoutPlan } from '@/lib/generator';
 import { exerciseLibrary } from '@/lib/exercises';
 import MultiSelectChips from '@/components/MultiSelectChips';
@@ -161,11 +161,22 @@ export default function Home() {
 
     // Get unique equipment from those exercises
     const relevantEquipmentSet = new Set<Equipment>();
+    let hasBarbellBenchExercise = false;
+
     relevantExercises.forEach(exercise => {
       exercise.equipment.forEach(eq => {
         relevantEquipmentSet.add(eq as Equipment);
       });
+      // Check if any exercise uses Barbell + Bench (Smith machine can substitute)
+      if (exercise.equipment.includes('Barbell') && exercise.equipment.includes('Bench')) {
+        hasBarbellBenchExercise = true;
+      }
     });
+
+    // If there are Barbell+Bench exercises, Smith machine is also relevant
+    if (hasBarbellBenchExercise) {
+      relevantEquipmentSet.add('Smith machine');
+    }
 
     // Always include bodyweight and cardio equipment
     relevantEquipmentSet.add('Bodyweight');
@@ -307,6 +318,41 @@ export default function Home() {
         block: 'start',
       });
     }, 100);
+  };
+
+  const handleSwapExercise = (sectionKey: 'stretching' | 'main', index: number, newExercise: Exercise) => {
+    if (!workoutPlan) return;
+
+    // Create a new workout item from the exercise
+    const newItem: WorkoutItem = {
+      name: newExercise.name,
+      sets: workoutPlan.sections[sectionKey].items[index].sets,
+      target: workoutPlan.sections[sectionKey].items[index].target,
+      restSeconds: workoutPlan.sections[sectionKey].items[index].restSeconds,
+      youtubeUrl: newExercise.youtubeQuery,
+      instructions: newExercise.instructions,
+      imageUrl: newExercise.imageUrl,
+      muscles: newExercise.muscles,
+      exerciseId: newExercise.id,
+      circuitId: workoutPlan.sections[sectionKey].items[index].circuitId,
+      circuitRounds: workoutPlan.sections[sectionKey].items[index].circuitRounds,
+    };
+
+    // Update the workout plan with the new exercise
+    const updatedPlan = {
+      ...workoutPlan,
+      sections: {
+        ...workoutPlan.sections,
+        [sectionKey]: {
+          ...workoutPlan.sections[sectionKey],
+          items: workoutPlan.sections[sectionKey].items.map((item, i) =>
+            i === index ? newItem : item
+          ),
+        },
+      },
+    };
+
+    setWorkoutPlan(updatedPlan);
   };
 
   return (
@@ -473,6 +519,7 @@ export default function Home() {
               onCopyToClipboard={handleCopyToClipboard}
               onSave={handleSaveWorkout}
               onShare={handleShare}
+              onSwapExercise={handleSwapExercise}
             />
           </div>
         )}

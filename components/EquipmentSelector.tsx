@@ -22,7 +22,7 @@ export default function EquipmentSelector({
   const [showAllWeight, setShowAllWeight] = useState(false);
   const [showAllCardio, setShowAllCardio] = useState(false);
 
-  const commonWeight: WeightEquipment[] = ['Bodyweight', 'Dumbbells', 'Barbell', 'Bench'];
+  const commonWeight: WeightEquipment[] = ['Bodyweight', 'Dumbbells', 'Barbell', 'Bench', 'Smith machine'];
   const visibleWeight = showAllWeight ? weightEquipment : weightEquipment.filter(eq => commonWeight.includes(eq));
   const hiddenWeightCount = weightEquipment.length - visibleWeight.length;
 

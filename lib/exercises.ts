@@ -236,7 +236,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press back up focusing on triceps',
       'Fully extend arms at top'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'chest-dips',
@@ -335,7 +335,7 @@ export const exerciseLibrary: Exercise[] = [
       'Target upper chest fibers',
       'Lower with control to start'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'cable-crossover',
@@ -478,7 +478,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Lower slowly and repeat'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'dumbbell-pullover',
@@ -575,7 +575,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pause briefly at top',
       'Lower slowly to starting position'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // Machine Back
@@ -653,7 +653,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on upper back engagement',
       'Return with control'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // Cable Back
@@ -693,7 +693,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Return slowly to starting position'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -737,7 +737,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower bar to upper chest',
       'Keep back against pad'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'barbell-upright-row',
@@ -834,7 +834,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pause briefly at top',
       'Lower with control to starting position'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'rear-delt-fly',
@@ -853,7 +853,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on rear deltoids',
       'Lower slowly and repeat'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // Machine Shoulders
@@ -938,7 +938,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps at top',
       'Lower bar slowly to starting position'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'ez-bar-curl',
@@ -1167,7 +1167,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps and forearms at top',
       'Lower under control maintaining tension'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: '21s-curl',
@@ -1186,7 +1186,7 @@ export const exerciseLibrary: Exercise[] = [
       'Minimal rest between each 7-rep set',
       'Creates intense bicep pump'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -1229,7 +1229,7 @@ export const exerciseLibrary: Exercise[] = [
       'Extend arms back to starting position',
       'Control weight carefully throughout'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'overhead-tricep-extension',
@@ -1287,7 +1287,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze triceps at bottom',
       'Return to starting position with control'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'cable-overhead-extension',
@@ -1306,7 +1306,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep upper arms still',
       'Return to bent position slowly'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'rope-pushdown',
@@ -1325,7 +1325,7 @@ export const exerciseLibrary: Exercise[] = [
       'Fully extend arms and squeeze',
       'Control rope back to starting position'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'bench-dips',
@@ -1382,7 +1382,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press bar straight back up',
       'Combines skull crusher and close grip bench'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'tate-press',
@@ -1401,7 +1401,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press dumbbells back up',
       'Maintain dumbbell orientation throughout'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'reverse-grip-pushdown',
@@ -1420,7 +1420,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on medial tricep head',
       'Return with control to starting position'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -1482,7 +1482,7 @@ export const exerciseLibrary: Exercise[] = [
       'Go as deep as mobility allows',
       'Drive through heels to stand'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'bulgarian-split-squat',
@@ -1542,7 +1542,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back to starting position',
       'Alternate legs or complete one side first'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'leg-press',
@@ -1680,7 +1680,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower weight slowly with control',
       'Keep hips pressed down throughout'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'seated-leg-curl',
@@ -1699,7 +1699,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to starting position slowly',
       'Keep back firmly against pad'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'nordic-curl',
@@ -1718,7 +1718,7 @@ export const exerciseLibrary: Exercise[] = [
       'Catch yourself with hands when needed',
       'Push off ground to return to start'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -1801,7 +1801,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep core tight and torso still',
       'Return leg with control'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'cable-pull-through',
@@ -1820,7 +1820,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive hips forward squeezing glutes',
       'Stand tall at top of movement'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'kettlebell-swing',
@@ -1858,7 +1858,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes at top',
       'Lower hips with control'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'smith-machine-hip-thrust',
@@ -1877,7 +1877,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes at top',
       'Lower with control and repeat'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'frog-pump',
@@ -1896,7 +1896,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pulse at top for reps',
       'Keep constant tension on glutes'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'donkey-kicks',
@@ -1936,7 +1936,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glute at top',
       'Lower with control and repeat'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'banded-glute-bridge',
@@ -1955,7 +1955,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes hard at top',
       'Lower hips back down slowly'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'sumo-deadlift',
@@ -1974,7 +1974,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on pushing knees out',
       'Lower bar with control to ground'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -2137,7 +2137,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower legs slowly with control',
       'Keep lower back pressed to floor'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'hanging-leg-raise',
@@ -2194,7 +2194,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pull wheel back to starting position',
       'Maintain straight line with body'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'deadbug',
@@ -2213,7 +2213,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to start and alternate sides',
       'Move slowly with control'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -2295,7 +2295,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower back to shoulder then ground',
       'Repeat for reps then switch arms'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ========================================
@@ -2319,7 +2319,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep core engaged',
       'Adjust speed and incline as needed'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'treadmill-incline-walk',
@@ -2338,7 +2338,7 @@ export const exerciseLibrary: Exercise[] = [
       'Use rails only for balance if needed',
       'Maintain steady breathing'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'treadmill-sprint',
@@ -2357,7 +2357,7 @@ export const exerciseLibrary: Exercise[] = [
       'Recover for 60-90 seconds',
       'Repeat for desired intervals'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stationary-bike',
@@ -2376,7 +2376,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pedal smoothly in circles',
       'Adjust resistance as needed'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'assault-bike',
@@ -2395,7 +2395,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain for interval duration',
       'Rest between intervals'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'rowing-machine',
@@ -2414,7 +2414,7 @@ export const exerciseLibrary: Exercise[] = [
       'Use legs first, then back, then arms',
       'Maintain smooth rhythmic motion'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'elliptical',
@@ -2433,7 +2433,7 @@ export const exerciseLibrary: Exercise[] = [
       'Adjust resistance for challenge',
       'Maintain steady pace'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stair-climber',
@@ -2452,7 +2452,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain consistent pace',
       'Adjust speed as needed'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'jump-rope',
@@ -2571,7 +2571,7 @@ export const exerciseLibrary: Exercise[] = [
       'Switch to side-to-side swings',
       'Repeat on other leg'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'cat-cow-stretch',
@@ -2590,7 +2590,7 @@ export const exerciseLibrary: Exercise[] = [
       'Breathe deeply with each movement',
       'Feel spine mobilizing'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'worlds-greatest-stretch',
@@ -2647,7 +2647,7 @@ export const exerciseLibrary: Exercise[] = [
       'Reverse direction',
       'Increase range of motion gradually'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'childs-pose',
@@ -2685,7 +2685,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep knees together',
       'Hold for time then switch legs'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'hamstring-stretch',
@@ -2704,7 +2704,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hold position breathing deeply',
       'Switch to other leg'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'shoulder-dislocations',
@@ -2723,7 +2723,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to starting position',
       'Gradually narrow grip over time'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= CHEST STRETCHES =============
@@ -2744,7 +2744,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch across chest and shoulder',
       'Hold and breathe deeply'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-chest-corner',
@@ -2763,7 +2763,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch across entire chest',
       'Breathe and relax shoulders'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-chest-lying',
@@ -2782,7 +2782,7 @@ export const exerciseLibrary: Exercise[] = [
       'Take deep breaths',
       'Feel chest opening'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= BACK STRETCHES =============
@@ -2803,7 +2803,7 @@ export const exerciseLibrary: Exercise[] = [
       'Breathe deeply',
       'Feel lower back stretching'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-back-cat-cow',
@@ -2822,7 +2822,7 @@ export const exerciseLibrary: Exercise[] = [
       'Coordinate with breathing',
       'Feel entire spine mobilizing'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-back-thread-needle',
@@ -2841,7 +2841,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel twist through upper back',
       'Hold and breathe'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-back-seated-twist',
@@ -2860,7 +2860,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep spine tall',
       'Breathe into the twist'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= SHOULDER STRETCHES =============
@@ -2881,7 +2881,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in shoulder',
       'Hold steady'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-shoulder-overhead-tricep',
@@ -2900,7 +2900,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in tricep and shoulder',
       'Breathe evenly'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-shoulder-sleeper',
@@ -2919,7 +2919,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel deep shoulder stretch',
       'Hold gently'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= LEG STRETCHES =============
@@ -2940,7 +2940,7 @@ export const exerciseLibrary: Exercise[] = [
       'Stand tall and balanced',
       'Feel stretch in quad'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-leg-seated-hamstring',
@@ -2959,7 +2959,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hinge from hips',
       'Feel stretch in hamstring'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-leg-standing-calf',
@@ -2978,7 +2978,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in calf',
       'Keep back leg straight'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-leg-pigeon',
@@ -2997,7 +2997,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lean forward for deeper stretch',
       'Feel stretch in hip and glute'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-leg-figure-four',
@@ -3016,7 +3016,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in glute and hip',
       'Breathe deeply'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= GLUTE STRETCHES =============
@@ -3037,7 +3037,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in glute',
       'Hold and breathe'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-glute-supine',
@@ -3056,7 +3056,7 @@ export const exerciseLibrary: Exercise[] = [
       'Relax head and shoulders',
       'Feel stretch in glute'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= CORE STRETCHES =============
@@ -3077,7 +3077,7 @@ export const exerciseLibrary: Exercise[] = [
       'Arch back gently',
       'Feel stretch in abs'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-core-side-bend',
@@ -3096,7 +3096,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch along side',
       'Breathe into stretch'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-core-lying-twist',
@@ -3115,7 +3115,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep shoulders flat',
       'Feel stretch in spine and core'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= BICEP/TRICEP STRETCHES =============
@@ -3136,7 +3136,7 @@ export const exerciseLibrary: Exercise[] = [
       'Gently turn body away',
       'Feel stretch in bicep'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-tricep-overhead',
@@ -3155,7 +3155,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep shoulders down',
       'Feel stretch in tricep'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
 
   // ============= FULL BODY STRETCHES =============
@@ -3176,7 +3176,7 @@ export const exerciseLibrary: Exercise[] = [
       'Relax head between arms',
       'Feel stretch through whole body'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-fullbody-standing-forward-fold',
@@ -3195,7 +3195,7 @@ export const exerciseLibrary: Exercise[] = [
       'Bend knees slightly if needed',
       'Feel stretch in hamstrings and back'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'stretch-fullbody-worlds-greatest',
@@ -3272,7 +3272,7 @@ export const exerciseLibrary: Exercise[] = [
       'Step down with control',
       'Alternate legs'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
     unilateral: true,
   },
   {
@@ -3292,7 +3292,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back to center',
       'Alternate sides'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'legs-barbell-good-mornings',
@@ -3349,7 +3349,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes at top',
       'Control the descent'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'legs-tibialis-raise',
@@ -3368,7 +3368,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Feel tension in front of shins'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'legs-jumping-lunges',
@@ -3387,7 +3387,7 @@ export const exerciseLibrary: Exercise[] = [
       'Absorb impact with control',
       'Maintain upright posture'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'back-rack-pulls',
@@ -3406,7 +3406,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Lower with control'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'back-inverted-row',
@@ -3464,7 +3464,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to chest',
       'Keep core engaged'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'chest-dumbbell-floor-press',
@@ -3502,7 +3502,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to chest',
       'Maintain squeeze throughout'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'back-superman-hold',
@@ -3540,7 +3540,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return with control',
       'Keep torso stable'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
     unilateral: true,
   },
   {
@@ -3560,7 +3560,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain straight body',
       'Control the movement'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'shoulders-cuban-press',
@@ -3579,7 +3579,7 @@ export const exerciseLibrary: Exercise[] = [
       'Reverse the movement',
       'Control throughout'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'shoulders-plate-front-raise',
@@ -3598,7 +3598,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Avoid swinging'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'arms-waiters-curl',
@@ -3617,7 +3617,7 @@ export const exerciseLibrary: Exercise[] = [
       'Curl back to start',
       'Feel squeeze in biceps'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'arms-bodyweight-tricep-extension',
@@ -3636,7 +3636,7 @@ export const exerciseLibrary: Exercise[] = [
       'Extend arms to push back',
       'Keep elbows tucked'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'core-pallof-press',
@@ -3674,7 +3674,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Keep movements smooth'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'core-hollow-body-hold',
@@ -3712,7 +3712,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Avoid excessive swinging'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'core-windshield-wipers',
@@ -3731,7 +3731,7 @@ export const exerciseLibrary: Exercise[] = [
       'Control the movement',
       'Maintain core tension'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'fullbody-turkish-get-up',
@@ -3770,7 +3770,7 @@ export const exerciseLibrary: Exercise[] = [
       'Take small, quick steps',
       'Maintain posture'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'fullbody-battle-ropes',
@@ -3789,7 +3789,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep core engaged',
       'Maintain consistent rhythm'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'fullbody-wall-balls',
@@ -3846,7 +3846,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep hips low',
       'Maintain steady pace'
     ],
-    imageUrl: '' // TODO: needs image,
+    imageUrl: '', // TODO: needs image
   },
   {
     id: 'fullbody-power-clean',

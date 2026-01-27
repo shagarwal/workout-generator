@@ -23,7 +23,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press the bar back up explosively until arms are fully extended',
       'Repeat for desired reps, maintaining control throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/barbell-bench-press.jpg',
   },
   {
     id: 'incline-barbell-bench',
@@ -42,7 +42,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press bar up until arms fully extended',
       'Keep shoulder blades retracted throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=800',
+    imageUrl: '/exercise-images/incline-barbell-bench.jpg',
   },
   {
     id: 'decline-barbell-bench',
@@ -61,7 +61,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press explosively back to start position',
       'Maintain stability throughout movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800',
+    imageUrl: '/exercise-images/decline-barbell-bench.jpg',
   },
   {
     id: 'close-grip-bench',
@@ -80,7 +80,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press up focusing on tricep contraction',
       'Lock out arms at top of movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '/exercise-images/close-grip-bench.jpg',
   },
 
   // Dumbbell Chest
@@ -101,7 +101,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep elbows at 45-degree angle',
       'Maintain tension throughout movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/dumbbell-bench-press.jpg',
   },
   {
     id: 'incline-dumbbell-press',
@@ -120,7 +120,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control back to shoulders',
       'Keep core engaged throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800',
+    imageUrl: '/exercise-images/incline-dumbbell-press.jpg',
   },
   {
     id: 'decline-dumbbell-press',
@@ -139,7 +139,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control back to chest',
       'Keep core braced throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/decline-dumbbell-press.jpg',
   },
   {
     id: 'dumbbell-fly',
@@ -158,7 +158,7 @@ export const exerciseLibrary: Exercise[] = [
       'Bring dumbbells back together above chest',
       'Keep same elbow angle throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/dumbbell-fly.jpg',
   },
   {
     id: 'incline-dumbbell-fly',
@@ -177,7 +177,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in upper chest',
       'Squeeze dumbbells back together at top'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/incline-dumbbell-fly.jpg',
   },
 
   // Bodyweight Chest
@@ -198,7 +198,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back up to starting position',
       'Maintain proper form throughout the movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '/exercise-images/push-ups.jpg',
   },
   {
     id: 'decline-push-ups',
@@ -217,7 +217,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back up explosively',
       'Maintain core engagement throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=800',
+    imageUrl: '/exercise-images/decline-push-ups.jpg',
   },
   {
     id: 'diamond-push-ups',
@@ -236,7 +236,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press back up focusing on triceps',
       'Fully extend arms at top'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'chest-dips',
@@ -255,7 +255,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press back up to starting position',
       'Keep shoulders down and back'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534367990352-3bdc8c83c63e?w=800',
+    imageUrl: '/exercise-images/chest-dips.jpg',
   },
 
   // Machine Chest
@@ -276,7 +276,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return with control to starting position',
       'Keep shoulder blades retracted'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800',
+    imageUrl: '/exercise-images/chest-press-machine.gif',
   },
   {
     id: 'pec-deck',
@@ -295,7 +295,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return slowly to starting position',
       'Keep back against pad throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=800',
+    imageUrl: '/exercise-images/pec-deck.jpg',
   },
 
   // Cable Chest
@@ -316,7 +316,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze chest at peak contraction',
       'Return with control to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/cable-chest-fly.gif',
   },
   {
     id: 'low-cable-fly',
@@ -335,7 +335,7 @@ export const exerciseLibrary: Exercise[] = [
       'Target upper chest fibers',
       'Lower with control to start'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'cable-crossover',
@@ -354,7 +354,7 @@ export const exerciseLibrary: Exercise[] = [
       'Cross hands at bottom for extra squeeze',
       'Return to starting position with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/cable-crossover.jpg',
   },
 
   // ========================================
@@ -379,7 +379,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive through heels, extend hips and knees simultaneously',
       'Stand tall with shoulders back, then lower bar with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=800',
+    imageUrl: '/exercise-images/deadlift.jpg',
   },
   {
     id: 'bent-over-barbell-row',
@@ -398,7 +398,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together at top',
       'Lower with control back to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800',
+    imageUrl: '/exercise-images/bent-over-barbell-row.jpg',
   },
   {
     id: 'pendlay-row',
@@ -417,7 +417,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower bar completely to ground between reps',
       'Reset position and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/pendlay-row.jpg',
   },
 
   {
@@ -437,7 +437,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep elbows close to body',
       'Lower with control and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1578762560042-46ad127c95ea?w=800',
+    imageUrl: '/exercise-images/t-bar-row-machine.jpg',
   },
 
   // Dumbbell Back
@@ -459,7 +459,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep elbow close to body',
       'Lower with control and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/one-arm-dumbbell-row.jpg',
   },
   {
     id: 'chest-supported-row',
@@ -478,7 +478,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Lower slowly and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'dumbbell-pullover',
@@ -497,7 +497,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in lats and chest',
       'Pull dumbbell back to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/dumbbell-pullover.jpg',
   },
   {
     id: 'dumbbell-shrug',
@@ -516,7 +516,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower shoulders back down slowly',
       'Avoid rolling shoulders'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/dumbbell-shrug.jpg',
   },
 
   // Bodyweight Back
@@ -537,7 +537,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower yourself with control',
       'Fully extend arms at bottom'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '/exercise-images/pull-ups.gif',
   },
   {
     id: 'chin-ups',
@@ -556,7 +556,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control to full extension',
       'Avoid swinging or kipping'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/chin-ups.gif',
   },
   {
     id: 'neutral-grip-pull-up',
@@ -575,7 +575,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pause briefly at top',
       'Lower slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // Machine Back
@@ -596,7 +596,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Return bar slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519505907962-0a6cb0167c73?w=800',
+    imageUrl: '/exercise-images/lat-pulldown.jpg',
   },
   {
     id: 'close-grip-lat-pulldown',
@@ -615,7 +615,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze lats at bottom',
       'Control weight back to top'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1578762560042-46ad127c95ea?w=800',
+    imageUrl: '/exercise-images/close-grip-lat-pulldown.jpg',
   },
   {
     id: 'seated-cable-row',
@@ -634,7 +634,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep elbows close and squeeze shoulder blades',
       'Extend arms back to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/seated-cable-row.jpg',
   },
   {
     id: 'wide-grip-seated-row',
@@ -653,7 +653,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on upper back engagement',
       'Return with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // Cable Back
@@ -674,7 +674,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel lats contract throughout',
       'Return bar slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800',
+    imageUrl: '/exercise-images/straight-arm-pulldown.jpg',
   },
   {
     id: 'face-pulls',
@@ -693,7 +693,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Return slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -718,7 +718,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower bar to collarbone with control',
       'Keep core tight throughout movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800',
+    imageUrl: '/exercise-images/overhead-press.gif',
   },
   {
     id: 'seated-barbell-press',
@@ -737,7 +737,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower bar to upper chest',
       'Keep back against pad'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'barbell-upright-row',
@@ -756,7 +756,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pause at top with elbows above hands',
       'Lower slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/barbell-upright-row.jpg',
   },
 
   // Dumbbell Shoulders
@@ -777,7 +777,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower dumbbells to shoulders with control',
       'Keep core engaged throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/dumbbell-shoulder-press.jpg',
   },
   {
     id: 'arnold-press',
@@ -796,7 +796,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to starting position',
       'Move smoothly through rotation'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/arnold-press.jpg',
   },
   {
     id: 'lateral-raises',
@@ -815,7 +815,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lead with elbows not hands',
       'Lower slowly back to sides'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/lateral-raises.jpg',
   },
   {
     id: 'front-raises',
@@ -834,7 +834,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pause briefly at top',
       'Lower with control to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'rear-delt-fly',
@@ -853,7 +853,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on rear deltoids',
       'Lower slowly and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // Machine Shoulders
@@ -874,7 +874,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower handles back to shoulder level',
       'Keep core engaged throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800',
+    imageUrl: '/exercise-images/shoulder-press-machine.jpg',
   },
 
   // Cable Shoulders
@@ -895,7 +895,7 @@ export const exerciseLibrary: Exercise[] = [
       'Control cable back to starting position',
       'Repeat for reps then switch sides'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/cable-lateral-raise.jpg',
   },
   {
     id: 'cable-front-raise',
@@ -914,7 +914,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control back to side',
       'Maintain constant tension from cable'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800',
+    imageUrl: '/exercise-images/cable-front-raise.jpg',
   },
 
   // ========================================
@@ -938,7 +938,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps at top',
       'Lower bar slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1581009137042-c552e485697a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'ez-bar-curl',
@@ -957,7 +957,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hold briefly then lower slowly',
       'Maintain controlled movement throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=800',
+    imageUrl: '/exercise-images/ez-bar-curl.jpg',
   },
   {
     id: 'preacher-curl',
@@ -976,7 +976,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower bar until arms fully extended',
       'Avoid letting elbows lift off pad'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/preacher-curl.jpg',
   },
   {
     id: 'dumbbell-curl',
@@ -995,7 +995,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps at top',
       'Lower with control back to start'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/dumbbell-curl.jpg',
   },
   {
     id: 'hammer-curl',
@@ -1014,7 +1014,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze at top of movement',
       'Lower slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/hammer-curl.jpg',
   },
   {
     id: 'incline-dumbbell-curl',
@@ -1033,7 +1033,7 @@ export const exerciseLibrary: Exercise[] = [
       'Get full stretch at bottom',
       'Squeeze biceps hard at top'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/incline-dumbbell-curl.jpg',
   },
   {
     id: 'concentration-curl',
@@ -1053,7 +1053,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep upper arm stationary',
       'Lower slowly and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=800',
+    imageUrl: '/exercise-images/concentration-curl.jpg',
   },
   {
     id: 'cable-curl',
@@ -1072,7 +1072,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps under constant tension',
       'Lower slowly maintaining tension'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/cable-curl.jpg',
   },
   {
     id: 'spider-curl',
@@ -1091,7 +1091,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps at top',
       'Lower slowly to full extension'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800',
+    imageUrl: '/exercise-images/spider-curl.jpg',
   },
   {
     id: 'drag-curl',
@@ -1110,7 +1110,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps at top',
       'Lower bar dragging down torso'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800',
+    imageUrl: '/exercise-images/drag-curl.jpg',
   },
   {
     id: 'zottman-curl',
@@ -1129,7 +1129,7 @@ export const exerciseLibrary: Exercise[] = [
       'Rotate back to palms up at bottom',
       'Repeat the curl and rotation'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/zottman-curl.jpg',
   },
   {
     id: 'reverse-curl',
@@ -1148,7 +1148,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on forearms and brachialis',
       'Lower with control to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=800',
+    imageUrl: '/exercise-images/reverse-curl.jpg',
   },
   {
     id: 'cable-rope-curl',
@@ -1167,7 +1167,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze biceps and forearms at top',
       'Lower under control maintaining tension'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: '21s-curl',
@@ -1186,7 +1186,7 @@ export const exerciseLibrary: Exercise[] = [
       'Minimal rest between each 7-rep set',
       'Creates intense bicep pump'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1581009137042-c552e485697a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -1210,7 +1210,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press back up until arms fully extended',
       'Keep elbows tucked throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '/exercise-images/tricep-dips.jpg',
   },
   {
     id: 'skull-crushers',
@@ -1229,7 +1229,7 @@ export const exerciseLibrary: Exercise[] = [
       'Extend arms back to starting position',
       'Control weight carefully throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'overhead-tricep-extension',
@@ -1248,7 +1248,7 @@ export const exerciseLibrary: Exercise[] = [
       'Extend arms back to overhead position',
       'Keep upper arms still throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/overhead-tricep-extension.jpg',
   },
   {
     id: 'dumbbell-kickback',
@@ -1268,7 +1268,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze tricep at full extension',
       'Return to starting position slowly'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/dumbbell-kickback.jpg',
   },
   {
     id: 'cable-tricep-pushdown',
@@ -1287,7 +1287,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze triceps at bottom',
       'Return to starting position with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'cable-overhead-extension',
@@ -1306,7 +1306,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep upper arms still',
       'Return to bent position slowly'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'rope-pushdown',
@@ -1325,7 +1325,7 @@ export const exerciseLibrary: Exercise[] = [
       'Fully extend arms and squeeze',
       'Control rope back to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'bench-dips',
@@ -1344,7 +1344,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back up to starting position',
       'Keep back close to bench'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '/exercise-images/bench-dips.jpg',
   },
   {
     id: 'overhead-rope-extension',
@@ -1363,7 +1363,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze triceps at full extension',
       'Lower rope behind head with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=800',
+    imageUrl: '/exercise-images/overhead-rope-extension.jpg',
   },
   {
     id: 'jm-press',
@@ -1382,7 +1382,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press bar straight back up',
       'Combines skull crusher and close grip bench'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'tate-press',
@@ -1401,7 +1401,7 @@ export const exerciseLibrary: Exercise[] = [
       'Press dumbbells back up',
       'Maintain dumbbell orientation throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'reverse-grip-pushdown',
@@ -1420,7 +1420,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on medial tricep head',
       'Return with control to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -1444,7 +1444,7 @@ export const exerciseLibrary: Exercise[] = [
       'Go down until thighs parallel to floor',
       'Drive through heels to stand back up'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800',
+    imageUrl: '/exercise-images/barbell-squat.jpg',
   },
   {
     id: 'front-squat',
@@ -1463,7 +1463,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive up through heels',
       'Maintain upright position throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '/exercise-images/front-squat.jpg',
   },
   {
     id: 'goblet-squat',
@@ -1482,7 +1482,7 @@ export const exerciseLibrary: Exercise[] = [
       'Go as deep as mobility allows',
       'Drive through heels to stand'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'bulgarian-split-squat',
@@ -1502,7 +1502,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive through front heel to stand',
       'Complete all reps then switch legs'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/bulgarian-split-squat.jpg',
   },
   {
     id: 'walking-lunges',
@@ -1522,7 +1522,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push off front foot to next lunge',
       'Continue walking forward alternating legs'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/walking-lunges.jpg',
   },
   {
     id: 'dumbbell-lunges',
@@ -1542,7 +1542,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back to starting position',
       'Alternate legs or complete one side first'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'leg-press',
@@ -1561,7 +1561,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push through heels to extend legs',
       'Do not lock knees at top'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800',
+    imageUrl: '/exercise-images/leg-press.gif',
   },
   {
     id: 'hack-squat',
@@ -1580,7 +1580,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive through heels to extend',
       'Keep back against pad throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=800',
+    imageUrl: '/exercise-images/hack-squat.jpg',
   },
   {
     id: 'leg-extension',
@@ -1599,7 +1599,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower weight slowly with control',
       'Do not swing or use momentum'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/leg-extension.jpg',
   },
   {
     id: 'sissy-squat',
@@ -1618,7 +1618,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push through toes to return up',
       'Hold onto support if needed for balance'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/sissy-squat.jpg',
   },
 
   // ========================================
@@ -1642,7 +1642,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in hamstrings',
       'Drive hips forward to return to standing'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=800',
+    imageUrl: '/exercise-images/romanian-deadlift.gif',
   },
   {
     id: 'dumbbell-rdl',
@@ -1661,7 +1661,7 @@ export const exerciseLibrary: Exercise[] = [
       'Go until you feel hamstring stretch',
       'Return to standing by squeezing glutes'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/dumbbell-rdl.jpg',
   },
   {
     id: 'leg-curl',
@@ -1680,7 +1680,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower weight slowly with control',
       'Keep hips pressed down throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1519505907962-0a6cb0167c73?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'seated-leg-curl',
@@ -1699,7 +1699,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to starting position slowly',
       'Keep back firmly against pad'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'nordic-curl',
@@ -1718,7 +1718,7 @@ export const exerciseLibrary: Exercise[] = [
       'Catch yourself with hands when needed',
       'Push off ground to return to start'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -1742,7 +1742,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes hard at top',
       'Lower hips back down with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800',
+    imageUrl: '/exercise-images/hip-thrust.png',
   },
   {
     id: 'glute-bridge',
@@ -1761,7 +1761,7 @@ export const exerciseLibrary: Exercise[] = [
       'Create straight line from knees to shoulders',
       'Lower hips back down slowly'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '/exercise-images/glute-bridge.jpg',
   },
   {
     id: 'single-leg-glute-bridge',
@@ -1781,7 +1781,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep hips level throughout',
       'Lower with control and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/single-leg-glute-bridge.jpg',
   },
   {
     id: 'cable-kickback',
@@ -1801,7 +1801,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep core tight and torso still',
       'Return leg with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'cable-pull-through',
@@ -1820,7 +1820,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive hips forward squeezing glutes',
       'Stand tall at top of movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'kettlebell-swing',
@@ -1839,7 +1839,7 @@ export const exerciseLibrary: Exercise[] = [
       'Swing kettlebell to shoulder height',
       'Let momentum carry weight, control descent'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/kettlebell-swing.jpg',
   },
   {
     id: 'dumbbell-hip-thrust',
@@ -1858,7 +1858,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes at top',
       'Lower hips with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'smith-machine-hip-thrust',
@@ -1877,7 +1877,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes at top',
       'Lower with control and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'frog-pump',
@@ -1896,7 +1896,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pulse at top for reps',
       'Keep constant tension on glutes'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'donkey-kicks',
@@ -1916,7 +1916,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower knee back to starting position',
       'Complete all reps then switch sides'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/donkey-kicks.jpg',
   },
   {
     id: 'fire-hydrants',
@@ -1936,7 +1936,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glute at top',
       'Lower with control and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'banded-glute-bridge',
@@ -1955,7 +1955,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes hard at top',
       'Lower hips back down slowly'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'sumo-deadlift',
@@ -1974,7 +1974,7 @@ export const exerciseLibrary: Exercise[] = [
       'Focus on pushing knees out',
       'Lower bar with control to ground'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -1998,7 +1998,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze calves at top',
       'Lower slowly to starting position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682772747-f16d3ea162c3?w=800',
+    imageUrl: '/exercise-images/standing-calf-raise.jpg',
   },
   {
     id: 'seated-calf-raise',
@@ -2017,7 +2017,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze calves at peak contraction',
       'Lower with control for stretch'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/seated-calf-raise.jpg',
   },
 
   // ========================================
@@ -2041,7 +2041,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hold position for time',
       'Breathe steadily throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '/exercise-images/plank.jpg',
   },
   {
     id: 'side-plank',
@@ -2061,7 +2061,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hold position engaging obliques',
       'Switch sides after time'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '/exercise-images/side-plank.jpg',
   },
   {
     id: 'crunches',
@@ -2080,7 +2080,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower back down with control',
       'Keep lower back on ground'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '/exercise-images/crunches.jpg',
   },
   {
     id: 'bicycle-crunches',
@@ -2099,7 +2099,7 @@ export const exerciseLibrary: Exercise[] = [
       'Alternate sides in cycling motion',
       'Keep core engaged throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/bicycle-crunches.jpg',
   },
   {
     id: 'russian-twist',
@@ -2118,7 +2118,7 @@ export const exerciseLibrary: Exercise[] = [
       'Touch ground beside hip each side',
       'Keep chest up throughout movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '/exercise-images/russian-twist.jpg',
   },
   {
     id: 'leg-raises',
@@ -2137,7 +2137,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower legs slowly with control',
       'Keep lower back pressed to floor'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'hanging-leg-raise',
@@ -2156,7 +2156,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower legs with control',
       'Avoid swinging or using momentum'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '/exercise-images/hanging-leg-raise.gif',
   },
   {
     id: 'cable-crunch',
@@ -2175,7 +2175,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to starting position slowly',
       'Keep hips stationary throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800',
+    imageUrl: '/exercise-images/cable-crunch.gif',
   },
   {
     id: 'ab-wheel',
@@ -2194,7 +2194,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pull wheel back to starting position',
       'Maintain straight line with body'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'deadbug',
@@ -2213,7 +2213,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to start and alternate sides',
       'Move slowly with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -2237,7 +2237,7 @@ export const exerciseLibrary: Exercise[] = [
       'Land softly and repeat',
       'Move quickly maintaining form'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/burpees.jpg',
   },
   {
     id: 'mountain-climbers',
@@ -2256,7 +2256,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep hips down and core tight',
       'Maintain steady breathing pace'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '/exercise-images/mountain-climbers.jpg',
   },
   {
     id: 'thrusters',
@@ -2275,7 +2275,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower dumbbells back to shoulders',
       'Immediately go into next squat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/thrusters.jpg',
   },
   {
     id: 'kettlebell-clean-press',
@@ -2295,7 +2295,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower back to shoulder then ground',
       'Repeat for reps then switch arms'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ========================================
@@ -2319,7 +2319,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep core engaged',
       'Adjust speed and incline as needed'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'treadmill-incline-walk',
@@ -2338,7 +2338,7 @@ export const exerciseLibrary: Exercise[] = [
       'Use rails only for balance if needed',
       'Maintain steady breathing'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'treadmill-sprint',
@@ -2357,7 +2357,7 @@ export const exerciseLibrary: Exercise[] = [
       'Recover for 60-90 seconds',
       'Repeat for desired intervals'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stationary-bike',
@@ -2376,7 +2376,7 @@ export const exerciseLibrary: Exercise[] = [
       'Pedal smoothly in circles',
       'Adjust resistance as needed'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'assault-bike',
@@ -2395,7 +2395,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain for interval duration',
       'Rest between intervals'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'rowing-machine',
@@ -2414,7 +2414,7 @@ export const exerciseLibrary: Exercise[] = [
       'Use legs first, then back, then arms',
       'Maintain smooth rhythmic motion'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'elliptical',
@@ -2433,7 +2433,7 @@ export const exerciseLibrary: Exercise[] = [
       'Adjust resistance for challenge',
       'Maintain steady pace'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stair-climber',
@@ -2452,7 +2452,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain consistent pace',
       'Adjust speed as needed'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1583454155184-870a1f63b6c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'jump-rope',
@@ -2471,7 +2471,7 @@ export const exerciseLibrary: Exercise[] = [
       'Use wrists to turn rope',
       'Maintain steady rhythm'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '/exercise-images/jump-rope.jpg',
   },
   {
     id: 'high-knees',
@@ -2490,7 +2490,7 @@ export const exerciseLibrary: Exercise[] = [
       'Land softly on balls of feet',
       'Move quickly maintaining form'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/high-knees.jpg',
   },
   {
     id: 'jumping-jacks',
@@ -2509,7 +2509,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain steady rhythm',
       'Keep core engaged throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '/exercise-images/jumping-jacks.jpg',
   },
   {
     id: 'box-jumps',
@@ -2528,7 +2528,7 @@ export const exerciseLibrary: Exercise[] = [
       'Step down carefully',
       'Reset and repeat'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '/exercise-images/box-jumps.jpg',
   },
 
   // ========================================
@@ -2552,7 +2552,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep arms straight throughout',
       'Feel shoulders warming up'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/arm-circles.jpg',
   },
   {
     id: 'leg-swings',
@@ -2571,7 +2571,7 @@ export const exerciseLibrary: Exercise[] = [
       'Switch to side-to-side swings',
       'Repeat on other leg'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'cat-cow-stretch',
@@ -2590,7 +2590,7 @@ export const exerciseLibrary: Exercise[] = [
       'Breathe deeply with each movement',
       'Feel spine mobilizing'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'worlds-greatest-stretch',
@@ -2628,7 +2628,7 @@ export const exerciseLibrary: Exercise[] = [
       'Stand up and repeat',
       'Keep legs as straight as possible'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/inchworms.jpg',
   },
   {
     id: 'hip-circles',
@@ -2647,7 +2647,7 @@ export const exerciseLibrary: Exercise[] = [
       'Reverse direction',
       'Increase range of motion gradually'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'childs-pose',
@@ -2685,7 +2685,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep knees together',
       'Hold for time then switch legs'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'hamstring-stretch',
@@ -2704,7 +2704,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hold position breathing deeply',
       'Switch to other leg'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'shoulder-dislocations',
@@ -2723,7 +2723,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to starting position',
       'Gradually narrow grip over time'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= CHEST STRETCHES =============
@@ -2744,7 +2744,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch across chest and shoulder',
       'Hold and breathe deeply'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-chest-corner',
@@ -2763,7 +2763,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch across entire chest',
       'Breathe and relax shoulders'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-chest-lying',
@@ -2782,7 +2782,7 @@ export const exerciseLibrary: Exercise[] = [
       'Take deep breaths',
       'Feel chest opening'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= BACK STRETCHES =============
@@ -2803,7 +2803,7 @@ export const exerciseLibrary: Exercise[] = [
       'Breathe deeply',
       'Feel lower back stretching'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-back-cat-cow',
@@ -2822,7 +2822,7 @@ export const exerciseLibrary: Exercise[] = [
       'Coordinate with breathing',
       'Feel entire spine mobilizing'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-back-thread-needle',
@@ -2841,7 +2841,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel twist through upper back',
       'Hold and breathe'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-back-seated-twist',
@@ -2860,7 +2860,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep spine tall',
       'Breathe into the twist'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= SHOULDER STRETCHES =============
@@ -2881,7 +2881,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in shoulder',
       'Hold steady'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-shoulder-overhead-tricep',
@@ -2900,7 +2900,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in tricep and shoulder',
       'Breathe evenly'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-shoulder-sleeper',
@@ -2919,7 +2919,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel deep shoulder stretch',
       'Hold gently'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= LEG STRETCHES =============
@@ -2940,7 +2940,7 @@ export const exerciseLibrary: Exercise[] = [
       'Stand tall and balanced',
       'Feel stretch in quad'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-leg-seated-hamstring',
@@ -2959,7 +2959,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hinge from hips',
       'Feel stretch in hamstring'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-leg-standing-calf',
@@ -2978,7 +2978,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in calf',
       'Keep back leg straight'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-leg-pigeon',
@@ -2997,7 +2997,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lean forward for deeper stretch',
       'Feel stretch in hip and glute'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-leg-figure-four',
@@ -3016,7 +3016,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in glute and hip',
       'Breathe deeply'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= GLUTE STRETCHES =============
@@ -3037,7 +3037,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch in glute',
       'Hold and breathe'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-glute-supine',
@@ -3056,7 +3056,7 @@ export const exerciseLibrary: Exercise[] = [
       'Relax head and shoulders',
       'Feel stretch in glute'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= CORE STRETCHES =============
@@ -3077,7 +3077,7 @@ export const exerciseLibrary: Exercise[] = [
       'Arch back gently',
       'Feel stretch in abs'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-core-side-bend',
@@ -3096,7 +3096,7 @@ export const exerciseLibrary: Exercise[] = [
       'Feel stretch along side',
       'Breathe into stretch'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-core-lying-twist',
@@ -3115,7 +3115,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep shoulders flat',
       'Feel stretch in spine and core'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= BICEP/TRICEP STRETCHES =============
@@ -3136,7 +3136,7 @@ export const exerciseLibrary: Exercise[] = [
       'Gently turn body away',
       'Feel stretch in bicep'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-tricep-overhead',
@@ -3155,7 +3155,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep shoulders down',
       'Feel stretch in tricep'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
 
   // ============= FULL BODY STRETCHES =============
@@ -3176,7 +3176,7 @@ export const exerciseLibrary: Exercise[] = [
       'Relax head between arms',
       'Feel stretch through whole body'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-fullbody-standing-forward-fold',
@@ -3195,7 +3195,7 @@ export const exerciseLibrary: Exercise[] = [
       'Bend knees slightly if needed',
       'Feel stretch in hamstrings and back'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'stretch-fullbody-worlds-greatest',
@@ -3214,7 +3214,7 @@ export const exerciseLibrary: Exercise[] = [
       'Sink hips forward',
       'Feel stretch throughout body'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=800',
+    imageUrl: '/exercise-images/stretch-fullbody-worlds-greatest.jpg',
   },
   {
     id: 'legs-pistol-squat',
@@ -3233,7 +3233,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive through heel to stand',
       'Maintain balance throughout'
     ],
-    imageUrl: 'https://img.youtube.com/vi/qDcniqddTeE/maxresdefault.jpg',
+    imageUrl: '/exercise-images/legs-pistol-squat.jpg',
     unilateral: true,
   },
   {
@@ -3253,7 +3253,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive through heels to stand',
       'Keep chest up throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800',
+    imageUrl: '/exercise-images/legs-barbell-box-squat.jpg',
   },
   {
     id: 'legs-dumbbell-step-ups',
@@ -3272,7 +3272,7 @@ export const exerciseLibrary: Exercise[] = [
       'Step down with control',
       'Alternate legs'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
     unilateral: true,
   },
   {
@@ -3292,7 +3292,7 @@ export const exerciseLibrary: Exercise[] = [
       'Push back to center',
       'Alternate sides'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'legs-barbell-good-mornings',
@@ -3311,7 +3311,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep back straight',
       'Return to standing'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800',
+    imageUrl: '/exercise-images/legs-barbell-good-mornings.jpg',
   },
   {
     id: 'legs-zercher-squat',
@@ -3330,7 +3330,7 @@ export const exerciseLibrary: Exercise[] = [
       'Drive through heels to stand',
       'Maintain core tension'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800',
+    imageUrl: '/exercise-images/legs-zercher-squat.jpg',
   },
   {
     id: 'legs-back-extensions',
@@ -3349,7 +3349,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze glutes at top',
       'Control the descent'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'legs-tibialis-raise',
@@ -3368,7 +3368,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Feel tension in front of shins'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'legs-jumping-lunges',
@@ -3387,7 +3387,7 @@ export const exerciseLibrary: Exercise[] = [
       'Absorb impact with control',
       'Maintain upright posture'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'back-rack-pulls',
@@ -3406,7 +3406,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades together',
       'Lower with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'back-inverted-row',
@@ -3425,7 +3425,7 @@ export const exerciseLibrary: Exercise[] = [
       'Squeeze shoulder blades',
       'Lower with control'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800',
+    imageUrl: '/exercise-images/back-inverted-row.jpg',
   },
   {
     id: 'back-renegade-row',
@@ -3444,7 +3444,7 @@ export const exerciseLibrary: Exercise[] = [
       'Alternate arms',
       'Maintain plank position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '/exercise-images/back-renegade-row.jpg',
     unilateral: true,
   },
   {
@@ -3464,7 +3464,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to chest',
       'Keep core engaged'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'chest-dumbbell-floor-press',
@@ -3483,7 +3483,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower until elbows touch floor',
       'Pause briefly at bottom'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '/exercise-images/chest-dumbbell-floor-press.jpg',
   },
   {
     id: 'chest-svend-press',
@@ -3502,7 +3502,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to chest',
       'Maintain squeeze throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'back-superman-hold',
@@ -3521,7 +3521,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep neck neutral',
       'Breathe steadily'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '/exercise-images/back-superman-hold.jpg',
   },
   {
     id: 'back-single-arm-lat-pulldown',
@@ -3540,7 +3540,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return with control',
       'Keep torso stable'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800',
+    imageUrl: '' // TODO: needs image,
     unilateral: true,
   },
   {
@@ -3560,7 +3560,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain straight body',
       'Control the movement'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'shoulders-cuban-press',
@@ -3579,7 +3579,7 @@ export const exerciseLibrary: Exercise[] = [
       'Reverse the movement',
       'Control throughout'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'shoulders-plate-front-raise',
@@ -3598,7 +3598,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Avoid swinging'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'arms-waiters-curl',
@@ -3617,7 +3617,7 @@ export const exerciseLibrary: Exercise[] = [
       'Curl back to start',
       'Feel squeeze in biceps'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'arms-bodyweight-tricep-extension',
@@ -3636,7 +3636,7 @@ export const exerciseLibrary: Exercise[] = [
       'Extend arms to push back',
       'Keep elbows tucked'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'core-pallof-press',
@@ -3655,7 +3655,7 @@ export const exerciseLibrary: Exercise[] = [
       'Return to chest',
       'Keep core braced'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800',
+    imageUrl: '/exercise-images/core-pallof-press.jpg',
   },
   {
     id: 'core-v-ups',
@@ -3674,7 +3674,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Keep movements smooth'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'core-hollow-body-hold',
@@ -3693,7 +3693,7 @@ export const exerciseLibrary: Exercise[] = [
       'Hold hollow position',
       'Breathe steadily'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=800',
+    imageUrl: '/exercise-images/core-hollow-body-hold.jpg',
   },
   {
     id: 'core-toes-to-bar',
@@ -3712,7 +3712,7 @@ export const exerciseLibrary: Exercise[] = [
       'Lower with control',
       'Avoid excessive swinging'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'core-windshield-wipers',
@@ -3731,7 +3731,7 @@ export const exerciseLibrary: Exercise[] = [
       'Control the movement',
       'Maintain core tension'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'fullbody-turkish-get-up',
@@ -3750,7 +3750,7 @@ export const exerciseLibrary: Exercise[] = [
       'Stand up while keeping weight overhead',
       'Reverse to return'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/fullbody-turkish-get-up.jpg',
     unilateral: true,
   },
   {
@@ -3770,7 +3770,7 @@ export const exerciseLibrary: Exercise[] = [
       'Take small, quick steps',
       'Maintain posture'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'fullbody-battle-ropes',
@@ -3789,7 +3789,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep core engaged',
       'Maintain consistent rhythm'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'fullbody-wall-balls',
@@ -3808,7 +3808,7 @@ export const exerciseLibrary: Exercise[] = [
       'Catch ball',
       'Go directly into next rep'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/fullbody-wall-balls.jpg',
   },
   {
     id: 'fullbody-sled-push',
@@ -3827,7 +3827,7 @@ export const exerciseLibrary: Exercise[] = [
       'Maintain forward lean',
       'Take powerful steps'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800',
+    imageUrl: '/exercise-images/fullbody-sled-push.jpg',
   },
   {
     id: 'fullbody-bear-crawl',
@@ -3846,7 +3846,7 @@ export const exerciseLibrary: Exercise[] = [
       'Keep hips low',
       'Maintain steady pace'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800',
+    imageUrl: '' // TODO: needs image,
   },
   {
     id: 'fullbody-power-clean',
@@ -3865,6 +3865,6 @@ export const exerciseLibrary: Exercise[] = [
       'Drop under bar',
       'Catch in front rack position'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=800',
+    imageUrl: '/exercise-images/fullbody-power-clean.jpg',
   },
 ];

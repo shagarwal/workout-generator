@@ -112,7 +112,8 @@ function selectExercisesForMuscles(
   muscles: MuscleGroup[],
   availableExercises: Exercise[],
   count: number,
-  type: 'weights' | 'cardio'
+  type: 'weights' | 'cardio',
+  userEquipment: string[] = []
 ): Exercise[] {
   const selected: Exercise[] = [];
   const usedIds = new Set<string>();
@@ -120,9 +121,33 @@ function selectExercisesForMuscles(
   // Filter by type
   const typeFiltered = availableExercises.filter(ex => ex.type === type);
 
+  // Separate exercises into equipment-specific and bodyweight-only
+  // Prioritize exercises that use equipment the user explicitly selected
+  const hasNonBodyweightEquipment = userEquipment.some(eq => eq !== 'Bodyweight');
+
+  const prioritizeEquipmentExercises = (exercises: Exercise[]): Exercise[] => {
+    if (!hasNonBodyweightEquipment) {
+      return shuffleArray(exercises);
+    }
+
+    // Split into equipment-requiring and bodyweight-only exercises
+    const equipmentExercises = exercises.filter(ex =>
+      ex.equipment.length > 0 &&
+      !ex.equipment.every(eq => eq === 'Bodyweight')
+    );
+    const bodyweightExercises = exercises.filter(ex =>
+      ex.equipment.length === 0 ||
+      ex.equipment.every(eq => eq === 'Bodyweight')
+    );
+
+    // Shuffle each group and put equipment exercises first
+    return [...shuffleArray(equipmentExercises), ...shuffleArray(bodyweightExercises)];
+  };
+
   // For each muscle group, try to add at least one exercise
+  // Prioritize equipment-specific exercises when user selected equipment
   for (const muscle of muscles) {
-    const muscleExercises = shuffleArray(
+    const muscleExercises = prioritizeEquipmentExercises(
       typeFiltered.filter(ex =>
         ex.muscles.includes(muscle) && !usedIds.has(ex.id)
       )
@@ -135,15 +160,15 @@ function selectExercisesForMuscles(
   }
 
   // Fill remaining slots with variety from SELECTED muscles only
-  const remaining = shuffleArray(
+  const remaining = prioritizeEquipmentExercises(
     typeFiltered.filter(ex =>
       !usedIds.has(ex.id) &&
       ex.muscles.some(muscle => muscles.includes(muscle))
     )
   );
 
-  while (selected.length < count && remaining.length > 0) {
-    const ex = remaining.pop()!;
+  for (const ex of remaining) {
+    if (selected.length >= count) break;
     selected.push(ex);
     usedIds.add(ex.id);
   }
@@ -375,12 +400,13 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
   const cardioExerciseCount = Math.floor(totalMainExercises * (cardioPercent / 100));
   const weightsExerciseCount = totalMainExercises - cardioExerciseCount;
 
-  // Select exercises
+  // Select exercises - pass equipment to prioritize equipment-specific exercises
   const weightExercises = selectExercisesForMuscles(
     selectedMuscles,
     availableExercises,
     weightsExerciseCount,
-    'weights'
+    'weights',
+    equipment
   );
 
   const cardioExercises = shuffleArray(

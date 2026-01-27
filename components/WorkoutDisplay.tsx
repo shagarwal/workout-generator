@@ -496,6 +496,10 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
                 src={item.imageUrl}
                 alt={item.name}
                 className="w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700"
+                onError={(e) => {
+                  console.error('Image failed to load:', item.imageUrl);
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
               />
             </div>
           )}

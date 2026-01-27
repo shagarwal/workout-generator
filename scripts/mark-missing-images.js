@@ -40,7 +40,7 @@ for (const ex of missingImages) {
     'g'
   );
 
-  const newContent = content.replace(regex, `$1$2'' // TODO: needs image`);
+  const newContent = content.replace(regex, `$1$2'', // TODO: needs image`);
 
   if (newContent !== content) {
     content = newContent;

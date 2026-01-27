@@ -345,6 +345,20 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
                 <li key={idx}>{step}</li>
               ))}
             </ol>
+            {/* Image */}
+            {item.imageUrl && (
+              <div className="mt-3">
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className="w-full max-w-sm rounded-lg border border-gray-700"
+                  onError={(e) => {
+                    console.error('Image failed to load:', item.imageUrl);
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
             {item.youtubeUrl && (
               <a
                 href={item.youtubeUrl}

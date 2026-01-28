@@ -1175,7 +1175,7 @@ export const exerciseLibrary: Exercise[] = [
     muscles: ['Biceps'],
     equipment: ['Barbell', 'Dumbbells'],
     type: 'weights',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     defaultRepRange: '21 total',
     youtubeQuery: 'https://www.youtube.com/watch?v=zMz7GBj9SUk',
     instructions: [
@@ -1631,7 +1631,7 @@ export const exerciseLibrary: Exercise[] = [
     muscles: ['Legs'],
     equipment: ['Barbell'],
     type: 'weights',
-    difficulty: 'intermediate',
+    difficulty: 'beginner',
     defaultRepRange: '8-12',
     youtubeQuery: 'https://www.youtube.com/watch?v=2SHsk9AzdjA',
     instructions: [
@@ -2346,7 +2346,7 @@ export const exerciseLibrary: Exercise[] = [
     muscles: ['Full Body'],
     equipment: ['Treadmill'],
     type: 'cardio',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     defaultRepRange: '30s intervals',
     youtubeQuery: 'https://www.youtube.com/watch?v=jq0S7xdyzA4',
     instructions: [
@@ -2384,7 +2384,7 @@ export const exerciseLibrary: Exercise[] = [
     muscles: ['Full Body'],
     equipment: ['Assault bike'],
     type: 'cardio',
-    difficulty: 'advanced',
+    difficulty: 'beginner',
     defaultRepRange: '30s-2 min',
     youtubeQuery: 'https://www.youtube.com/watch?v=pPHDhI787V4',
     instructions: [

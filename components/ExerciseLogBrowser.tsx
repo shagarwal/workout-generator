@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { X, Search, Filter, ChevronLeft, Dumbbell } from 'lucide-react';
+import { X, Search, Filter, ChevronDown, ChevronUp, Dumbbell } from 'lucide-react';
 import { Exercise, MuscleGroup, Equipment, WorkoutPerformance } from '@/lib/types';
 import { exerciseLibrary } from '@/lib/exercises';
 import ExerciseHistory from './ExerciseHistory';
@@ -28,14 +28,108 @@ const equipmentOptions: Equipment[] = [
   'Stair climber', 'Jump rope', 'Assault bike'
 ];
 
+// Individual expandable exercise card component
+function ExerciseLogCard({ exercise }: { exercise: Exercise }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [showPerformanceTracker, setShowPerformanceTracker] = useState(false);
+  const [historyKey, setHistoryKey] = useState(0); // Used to force refresh history
+
+  const handleSavePerformance = async (performance: Omit<WorkoutPerformance, 'id' | 'userId' | 'date'>) => {
+    const response = await fetch('/api/performance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(performance),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save performance');
+    }
+
+    // Close tracker and refresh history
+    setShowPerformanceTracker(false);
+    setHistoryKey(prev => prev + 1);
+  };
+
+  const handleDeleteEntry = async (entryId: string) => {
+    const response = await fetch(`/api/performance?id=${entryId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete entry');
+    }
+
+    // Refresh history
+    setHistoryKey(prev => prev + 1);
+  };
+
+  return (
+    <div className="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden transition-all">
+      {/* Header - Always visible */}
+      <button
+        onClick={() => {
+          setIsExpanded(!isExpanded);
+          if (isExpanded) {
+            setShowPerformanceTracker(false);
+          }
+        }}
+        className="w-full text-left p-3 hover:bg-gray-800 transition-all"
+      >
+        <div className="flex justify-between items-center">
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <h4 className={`font-bold transition-all ${isExpanded ? 'text-lime-400' : 'text-gray-100'}`}>
+                {exercise.name}
+              </h4>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded ${
+                exercise.difficulty === 'beginner' ? 'bg-green-500/20 text-green-400' :
+                exercise.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-400' :
+                'bg-red-500/20 text-red-400'
+              }`}>
+                {exercise.difficulty}
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {exercise.muscles.join(', ')} • {exercise.equipment.length > 0 ? exercise.equipment.join(', ') : 'Bodyweight'}
+            </p>
+          </div>
+          <div className={`p-1 rounded transition-all ${isExpanded ? 'bg-lime-500 text-gray-900' : 'text-gray-400'}`}>
+            {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </div>
+        </div>
+      </button>
+
+      {/* Expanded Content */}
+      {isExpanded && (
+        <div className="border-t border-gray-700 p-3 bg-gray-900/50">
+          {showPerformanceTracker ? (
+            <PerformanceTracker
+              exerciseName={exercise.name}
+              exerciseId={exercise.id}
+              onSave={handleSavePerformance}
+              onClose={() => setShowPerformanceTracker(false)}
+            />
+          ) : (
+            <ExerciseHistory
+              key={historyKey}
+              exerciseName={exercise.name}
+              onClose={() => setIsExpanded(false)}
+              onDeleteEntry={handleDeleteEntry}
+              onAddNew={() => setShowPerformanceTracker(true)}
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ExerciseLogBrowser({ isOpen, onClose }: ExerciseLogBrowserProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilterTab, setActiveFilterTab] = useState<'muscles' | 'equipment'>('muscles');
   const [selectedMuscles, setSelectedMuscles] = useState<MuscleGroup[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([]);
-  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
-  const [showPerformanceTracker, setShowPerformanceTracker] = useState(false);
 
   // Filter exercises based on search and filters
   const filteredExercises = useMemo(() => {
@@ -90,16 +184,6 @@ export default function ExerciseLogBrowser({ isOpen, onClose }: ExerciseLogBrows
     setSearchQuery('');
   };
 
-  const handleSelectExercise = (exercise: Exercise) => {
-    setSelectedExercise(exercise);
-    setShowPerformanceTracker(false);
-  };
-
-  const handleBack = () => {
-    setSelectedExercise(null);
-    setShowPerformanceTracker(false);
-  };
-
   const handleClose = () => {
     onClose();
     // Reset state
@@ -107,90 +191,12 @@ export default function ExerciseLogBrowser({ isOpen, onClose }: ExerciseLogBrows
     setSelectedMuscles([]);
     setSelectedEquipment([]);
     setShowFilters(false);
-    setSelectedExercise(null);
-    setShowPerformanceTracker(false);
-  };
-
-  const handleSavePerformance = async (performance: Omit<WorkoutPerformance, 'id' | 'userId' | 'date'>) => {
-    const response = await fetch('/api/performance', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(performance),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to save performance');
-    }
-
-    // Close tracker and show history
-    setShowPerformanceTracker(false);
-  };
-
-  const handleDeleteEntry = async (entryId: string) => {
-    const response = await fetch(`/api/performance?id=${entryId}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete entry');
-    }
   };
 
   if (!isOpen) return null;
 
   const activeFiltersCount = selectedMuscles.length + selectedEquipment.length;
 
-  // Exercise Detail View
-  if (selectedExercise) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-        <div className="bg-gray-900 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col border border-gray-700 shadow-2xl">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-700">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handleBack}
-                className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <div>
-                <h2 className="text-lg font-bold text-white">{selectedExercise.name}</h2>
-                <p className="text-sm text-gray-400">{selectedExercise.muscles.join(', ')}</p>
-              </div>
-            </div>
-            <button
-              onClick={handleClose}
-              className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all"
-            >
-              <X size={20} />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-4">
-            {showPerformanceTracker ? (
-              <PerformanceTracker
-                exerciseName={selectedExercise.name}
-                exerciseId={selectedExercise.id}
-                onSave={handleSavePerformance}
-                onClose={() => setShowPerformanceTracker(false)}
-              />
-            ) : (
-              <ExerciseHistory
-                exerciseName={selectedExercise.name}
-                onClose={handleBack}
-                onDeleteEntry={handleDeleteEntry}
-                onAddNew={() => setShowPerformanceTracker(true)}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Exercise List View
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
       <div className="bg-gray-900 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col border border-gray-700 shadow-2xl">
@@ -352,32 +358,7 @@ export default function ExerciseLogBrowser({ isOpen, onClose }: ExerciseLogBrows
           </p>
           <div className="space-y-2">
             {filteredExercises.map(exercise => (
-              <button
-                key={exercise.id}
-                onClick={() => handleSelectExercise(exercise)}
-                className="w-full text-left p-3 bg-gray-800/50 hover:bg-gray-800 border border-gray-700 hover:border-lime-500/50 rounded-xl transition-all group"
-              >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h4 className="font-bold text-gray-100 group-hover:text-lime-400 transition-all">
-                      {exercise.name}
-                    </h4>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      {exercise.muscles.join(', ')}
-                    </p>
-                    <p className="text-xs text-gray-600 mt-0.5">
-                      {exercise.equipment.length > 0 ? exercise.equipment.join(', ') : 'Bodyweight'}
-                    </p>
-                  </div>
-                  <span className={`text-xs font-medium px-2 py-1 rounded ${
-                    exercise.difficulty === 'beginner' ? 'bg-green-500/20 text-green-400' :
-                    exercise.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-400' :
-                    'bg-red-500/20 text-red-400'
-                  }`}>
-                    {exercise.difficulty}
-                  </span>
-                </div>
-              </button>
+              <ExerciseLogCard key={exercise.id} exercise={exercise} />
             ))}
             {filteredExercises.length === 0 && (
               <div className="text-center py-8 text-gray-500">

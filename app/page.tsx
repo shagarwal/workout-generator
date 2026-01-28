@@ -15,8 +15,9 @@ import EquipmentSelector from '@/components/EquipmentSelector';
 import WorkoutStyleSelector from '@/components/WorkoutStyleSelector';
 import SavedWorkoutsModal from '@/components/SavedWorkoutsModal';
 import SaveWorkoutModal from '@/components/SaveWorkoutModal';
+import ExerciseLogBrowser from '@/components/ExerciseLogBrowser';
 import AuthButton from '@/components/AuthButton';
-import { Dumbbell, Zap, FolderOpen } from 'lucide-react';
+import { Dumbbell, Zap, FolderOpen, ClipboardList } from 'lucide-react';
 
 const muscleOptions: MuscleGroup[] = [
   'Chest',
@@ -78,6 +79,24 @@ export default function Home() {
   const [validationError, setValidationError] = useState<string>('');
   const [showSavedWorkouts, setShowSavedWorkouts] = useState<boolean>(false);
   const [showSaveModal, setShowSaveModal] = useState<boolean>(false);
+  const [showExerciseLog, setShowExerciseLog] = useState<boolean>(false);
+
+  // Helper to save workout to recent history
+  const saveToRecentWorkouts = (plan: WorkoutPlan) => {
+    try {
+      const recentWorkouts = JSON.parse(localStorage.getItem('recentWorkouts') || '[]');
+      const newRecent = {
+        id: Date.now().toString(),
+        plan,
+        generatedAt: new Date().toISOString(),
+      };
+      // Add to front, keep only last 5
+      const updated = [newRecent, ...recentWorkouts].slice(0, 5);
+      localStorage.setItem('recentWorkouts', JSON.stringify(updated));
+    } catch (error) {
+      console.error('Error saving to recent workouts:', error);
+    }
+  };
 
   // Load shared workout from URL on mount
   useEffect(() => {
@@ -235,6 +254,7 @@ export default function Home() {
 
       const plan = generateWorkoutPlan(inputs);
       setWorkoutPlan(plan);
+      saveToRecentWorkouts(plan);
       setIsGenerating(false);
 
       // Scroll to results
@@ -371,6 +391,13 @@ export default function Home() {
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={() => setShowExerciseLog(true)}
+                className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 bg-gray-800 text-gray-200 rounded-lg font-bold text-sm hover:bg-gray-750 border border-gray-700 transition-all"
+              >
+                <ClipboardList size={16} className="sm:w-[18px] sm:h-[18px]" />
+                <span className="hidden sm:inline">LOG</span>
+              </button>
               <button
                 onClick={() => setShowSavedWorkouts(true)}
                 className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 bg-gray-800 text-gray-200 rounded-lg font-bold text-sm hover:bg-gray-750 border border-gray-700 transition-all"
@@ -530,6 +557,11 @@ export default function Home() {
         isOpen={showSavedWorkouts}
         onClose={() => setShowSavedWorkouts(false)}
         onLoad={handleLoadWorkout}
+      />
+
+      <ExerciseLogBrowser
+        isOpen={showExerciseLog}
+        onClose={() => setShowExerciseLog(false)}
       />
 
       {workoutPlan && (

@@ -504,21 +504,21 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
     // SUPERSET: Pair exercises, no rest between pairs
     const supersetRest = intensity === 'brutal' ? 30 : intensity === 'hard' ? 45 : 60;
 
-    // Weights first - mark pairs
+    // Weights first - group into superset pairs
     weightExercises.forEach((ex, index) => {
       const isLastInPair = index % 2 === 1;
+      const supersetId = `superset-${Math.floor(index / 2) + 1}`;
       const item = createWorkoutItem(
         ex,
         sets,
         `${ex.defaultRepRange} reps`,
         isLastInPair ? supersetRest : 0
       );
-      // Add superset marker to name
-      item.name = `${index % 2 === 0 ? '🔗 ' : ''}${ex.name}`;
+      item.supersetId = supersetId;
       mainItems.push(item);
     });
 
-    // Then cardio
+    // Then cardio (no supersetId - rendered individually)
     cardioExercises.forEach(ex => {
       mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 45));
     });

@@ -78,16 +78,7 @@ export default function PerformanceTracker({
 
   return (
     <div className="mt-3 p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
-      <div className="flex items-center justify-between">
-        <h4 className="font-bold text-lime-400">Log Performance</h4>
-        <button
-          onClick={onClose}
-          className="p-1 hover:bg-gray-700 rounded transition-colors"
-          aria-label="Close"
-        >
-          <X className="w-4 h-4 text-gray-400" />
-        </button>
-      </div>
+      <h4 className="font-bold text-lime-400">Log Performance</h4>
 
       <div className="space-y-2">
         {entries.map((entry, index) => (

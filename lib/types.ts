@@ -93,6 +93,7 @@ export interface WorkoutItem {
   imageUrl?: string;
   circuitId?: string; // For grouping exercises in circuits
   circuitRounds?: number; // How many times to repeat the circuit
+  supersetId?: string; // For grouping exercises in supersets
   muscles?: MuscleGroup[]; // Muscle groups targeted by this exercise
   exerciseId?: string; // ID of the exercise for swapping
 }

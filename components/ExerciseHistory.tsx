@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { History, TrendingUp, Trash2, X } from 'lucide-react'
+import { History, TrendingUp, Trash2 } from 'lucide-react'
 import { ExerciseHistory as ExerciseHistoryType, ExerciseHistoryEntry } from '@/lib/types'
 
 interface ExerciseHistoryProps {
@@ -78,16 +78,6 @@ export default function ExerciseHistory({
 
   return (
     <div className="mt-3 p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
-      <div className="flex items-center justify-between">
-        <button
-          onClick={onClose}
-          className="p-1 hover:bg-gray-700 rounded transition-colors ml-auto"
-          aria-label="Close"
-        >
-          <X className="w-4 h-4 text-gray-400" />
-        </button>
-      </div>
-
       {isLoading ? (
         <div className="flex items-center justify-center py-4">
           <div className="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>

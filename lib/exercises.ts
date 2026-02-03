@@ -421,23 +421,23 @@ export const exerciseLibrary: Exercise[] = [
   },
 
   {
-    id: 't-bar-row-machine',
-    name: 'T-Bar Row (Machine)',
+    id: 't-bar-row',
+    name: 'T-Bar Row',
     muscles: ['Back'],
-    equipment: ['Lat pulldown machine'], // Using machine variant, no barbell needed
+    equipment: ['Barbell'],
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '8-12',
     youtubeQuery: 'https://www.youtube.com/watch?v=j3Igk5xnlvg',
     instructions: [
-      'Stand on platform and straddle the machine',
-      'Bend at hips with flat back',
-      'Grip handles with both hands',
-      'Pull handles up toward chest',
+      'Anchor one end of barbell in a corner or landmine attachment',
+      'Straddle the barbell and bend at hips with flat back',
+      'Grip the bar with both hands near the loaded end',
+      'Pull the bar up toward chest',
       'Keep elbows close to body',
       'Lower with control and repeat'
     ],
-    imageUrl: '/exercise-images/t-bar-row-machine.jpg',
+    imageUrl: '/exercise-images/t-bar-row.jpg',
   },
 
   // Dumbbell Back

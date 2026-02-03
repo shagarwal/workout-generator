@@ -2,11 +2,29 @@
 
 import React, { useState } from 'react';
 import { WorkoutPlan, WorkoutPerformance, WorkoutItem, Exercise } from '@/lib/types';
-import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2, TrendingUp, Dumbbell, RefreshCw } from 'lucide-react';
+import { ExternalLink, Copy, ChevronDown, ChevronUp, Save, Share2, TrendingUp, Dumbbell, RefreshCw, GripVertical } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import PerformanceTracker from './PerformanceTracker';
 import ExerciseHistory from './ExerciseHistory';
 import ExerciseSwapModal from './ExerciseSwapModal';
+import {
+  DndContext,
+  DragOverlay,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragStartEvent,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface WorkoutDisplayProps {
   plan: WorkoutPlan;
@@ -14,9 +32,10 @@ interface WorkoutDisplayProps {
   onSave: () => void;
   onShare: () => void;
   onSwapExercise?: (sectionKey: 'stretching' | 'main', index: number, newExercise: Exercise) => void;
+  onReorder?: (newItems: WorkoutItem[]) => void;
 }
 
-export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShare, onSwapExercise }: WorkoutDisplayProps) {
+export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShare, onSwapExercise, onReorder }: WorkoutDisplayProps) {
   return (
     <div className="space-y-6">
       {/* Summary Card */}
@@ -64,7 +83,7 @@ export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShar
         {plan.summary.workoutStyle === 'superset' && (
           <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl p-4">
             <p className="text-purple-200 text-sm font-medium">
-              <span className="font-bold">Superset Instructions:</span> Exercises marked with 🔗 are paired together. Perform them back-to-back with no rest, then rest before the next pair.
+              <span className="font-bold">Superset Instructions:</span> Each superset pairs two exercises together. Perform them back-to-back with no rest, then rest before the next set.
             </p>
           </div>
         )}
@@ -126,27 +145,139 @@ export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShar
       )}
 
       {/* Main Workout Section */}
-      <WorkoutSection section={plan.sections.main} workoutStyle={plan.summary.workoutStyle} onSwapExercise={onSwapExercise} />
+      <WorkoutSection section={plan.sections.main} workoutStyle={plan.summary.workoutStyle} onSwapExercise={onSwapExercise} onReorder={onReorder} />
     </div>
   );
 }
 
-function WorkoutSection({ section, workoutStyle, onSwapExercise }: {
+function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes}>
+      <div className="flex items-stretch">
+        <button
+          {...listeners}
+          className="flex items-center px-1 cursor-grab active:cursor-grabbing text-gray-600 hover:text-gray-400 touch-manipulation"
+          aria-label="Drag to reorder"
+        >
+          <GripVertical size={16} />
+        </button>
+        <div className="flex-1 min-w-0">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DraggableGroupList({
+  groupIds,
+  onReorder,
+  children,
+  renderOverlay,
+}: {
+  groupIds: string[];
+  onReorder?: (reorderedIds: string[]) => void;
+  children: React.ReactNode;
+  renderOverlay: (activeId: string | null) => React.ReactNode;
+}) {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor)
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    setActiveId(null);
+    const { active, over } = event;
+    if (!over || active.id === over.id || !onReorder) return;
+
+    const oldIndex = groupIds.indexOf(active.id as string);
+    const newIndex = groupIds.indexOf(over.id as string);
+
+    if (oldIndex !== -1 && newIndex !== -1) {
+      onReorder(arrayMove(groupIds, oldIndex, newIndex));
+    }
+  };
+
+  if (!onReorder) {
+    return <>{children}</>;
+  }
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={(e) => setActiveId(e.active.id as string)}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext items={groupIds} strategy={verticalListSortingStrategy}>
+        {children}
+      </SortableContext>
+      <DragOverlay>
+        {renderOverlay(activeId)}
+      </DragOverlay>
+    </DndContext>
+  );
+}
+
+function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
   section: { title: string; items: any[] },
   workoutStyle?: string,
-  onSwapExercise?: (sectionKey: 'stretching' | 'main', index: number, newExercise: Exercise) => void
+  onSwapExercise?: (sectionKey: 'stretching' | 'main', index: number, newExercise: Exercise) => void,
+  onReorder?: (newItems: WorkoutItem[]) => void
 }) {
   // Group exercises by circuit if applicable
   if (workoutStyle === 'circuit') {
     const circuits: { [key: string]: { item: any; originalIndex: number }[] } = {};
+    const nonCircuitItems: { item: any; originalIndex: number }[] = [];
     section.items.forEach((item, index) => {
       if (item.circuitId) {
         if (!circuits[item.circuitId]) {
           circuits[item.circuitId] = [];
         }
         circuits[item.circuitId].push({ item, originalIndex: index });
+      } else {
+        nonCircuitItems.push({ item, originalIndex: index });
       }
     });
+
+    const circuitEntries = Object.entries(circuits);
+    const circuitIds = circuitEntries.map(([id]) => id);
+
+    const handleCircuitReorder = (reorderedIds: string[]) => {
+      if (!onReorder) return;
+      const newItems: any[] = [];
+      reorderedIds.forEach(circuitId => {
+        circuits[circuitId].forEach(({ item }) => {
+          newItems.push(item);
+        });
+      });
+      nonCircuitItems.forEach(({ item }) => {
+        newItems.push(item);
+      });
+      onReorder(newItems);
+    };
 
     return (
       <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-6 border border-gray-700">
@@ -155,27 +286,59 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise }: {
           <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
         </div>
 
-        {Object.entries(circuits).map(([circuitId, exerciseData], idx) => (
-          <div key={circuitId} className="bg-orange-900/20 border-2 border-orange-500/30 rounded-xl p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-black text-orange-400">CIRCUIT {idx + 1}</h4>
-              <span className="text-sm font-bold text-orange-300 bg-orange-900/40 px-3 py-1 rounded-lg">
-                {exerciseData[0].item.circuitRounds} ROUNDS
-              </span>
-            </div>
-            <p className="text-xs text-orange-200/80 mb-4">Complete all exercises, then repeat for {exerciseData[0].item.circuitRounds} total rounds</p>
-            <div className="space-y-2">
-              {exerciseData.map(({ item, originalIndex }) => (
-                <ExerciseCard
-                  key={originalIndex}
-                  item={item}
-                  isInCircuit={true}
-                  onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', originalIndex, newExercise) : undefined}
-                />
-              ))}
-            </div>
+        <DraggableGroupList
+          groupIds={circuitIds}
+          onReorder={onReorder ? handleCircuitReorder : undefined}
+          renderOverlay={(activeId) => {
+            if (!activeId) return null;
+            const exercises = circuits[activeId];
+            if (!exercises) return null;
+            const idx = circuitIds.indexOf(activeId);
+            return (
+              <div className="opacity-80 bg-orange-900/30 rounded-xl border-2 border-orange-400/50 p-4 shadow-2xl">
+                <h4 className="font-bold text-orange-400">CIRCUIT {idx + 1}</h4>
+                <p className="text-sm text-gray-400">{exercises.length} exercises</p>
+              </div>
+            );
+          }}
+        >
+          {circuitEntries.map(([circuitId, exerciseData], idx) => (
+            <SortableItem key={circuitId} id={circuitId}>
+              <div className="bg-orange-900/20 border-2 border-orange-500/30 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-black text-orange-400">CIRCUIT {idx + 1}</h4>
+                  <span className="text-sm font-bold text-orange-300 bg-orange-900/40 px-3 py-1 rounded-lg">
+                    {exerciseData[0].item.circuitRounds} ROUNDS
+                  </span>
+                </div>
+                <p className="text-xs text-orange-200/80 mb-4">Complete all exercises, then repeat for {exerciseData[0].item.circuitRounds} total rounds</p>
+                <div className="space-y-2">
+                  {exerciseData.map(({ item, originalIndex }) => (
+                    <ExerciseCard
+                      key={originalIndex}
+                      item={item}
+                      isInCircuit={true}
+                      onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', originalIndex, newExercise) : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            </SortableItem>
+          ))}
+        </DraggableGroupList>
+
+        {/* Non-circuit exercises (e.g., cardio) rendered individually below */}
+        {nonCircuitItems.length > 0 && (
+          <div className="space-y-3">
+            {nonCircuitItems.map(({ item, originalIndex }) => (
+              <ExerciseCard
+                key={originalIndex}
+                item={item}
+                onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', originalIndex, newExercise) : undefined}
+              />
+            ))}
           </div>
-        ))}
+        )}
       </div>
     );
   }
@@ -209,7 +372,115 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise }: {
     );
   }
 
-  // Traditional/Superset - display exercises individually
+  // SUPERSET: Group exercises by supersetId, similar to circuit rendering
+  if (workoutStyle === 'superset') {
+    const supersets: { [key: string]: { item: any; originalIndex: number }[] } = {};
+    const nonSupersetItems: { item: any; originalIndex: number }[] = [];
+
+    section.items.forEach((item, index) => {
+      if (item.supersetId) {
+        if (!supersets[item.supersetId]) {
+          supersets[item.supersetId] = [];
+        }
+        supersets[item.supersetId].push({ item, originalIndex: index });
+      } else {
+        nonSupersetItems.push({ item, originalIndex: index });
+      }
+    });
+
+    const supersetEntries = Object.entries(supersets);
+    const supersetIds = supersetEntries.map(([id]) => id);
+
+    const handleSupersetReorder = (reorderedIds: string[]) => {
+      if (!onReorder) return;
+      const newItems: any[] = [];
+      reorderedIds.forEach(supersetId => {
+        supersets[supersetId].forEach(({ item }) => {
+          newItems.push(item);
+        });
+      });
+      nonSupersetItems.forEach(({ item }) => {
+        newItems.push(item);
+      });
+      onReorder(newItems);
+    };
+
+    return (
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-6 border border-gray-700">
+        <div className="flex items-center gap-3">
+          <div className="h-1 w-8 bg-gradient-to-r from-purple-400 to-purple-500 rounded-full"></div>
+          <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
+        </div>
+
+        <DraggableGroupList
+          groupIds={supersetIds}
+          onReorder={onReorder ? handleSupersetReorder : undefined}
+          renderOverlay={(activeId) => {
+            if (!activeId) return null;
+            const exercises = supersets[activeId];
+            if (!exercises) return null;
+            const idx = supersetIds.indexOf(activeId);
+            return (
+              <div className="opacity-80 bg-purple-900/30 rounded-xl border-2 border-purple-400/50 p-4 shadow-2xl">
+                <h4 className="font-bold text-purple-400">SUPERSET {idx + 1}</h4>
+                <p className="text-sm text-gray-400">{exercises.length} exercises</p>
+              </div>
+            );
+          }}
+        >
+          {supersetEntries.map(([supersetId, exerciseData], idx) => (
+            <SortableItem key={supersetId} id={supersetId}>
+              <div className="bg-purple-900/20 border-2 border-purple-500/30 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-black text-purple-400">SUPERSET {idx + 1}</h4>
+                  <span className="text-sm font-bold text-purple-300 bg-purple-900/40 px-3 py-1 rounded-lg">
+                    {exerciseData[0].item.sets} SETS
+                  </span>
+                </div>
+                <p className="text-xs text-purple-200/80 mb-4">Perform exercises back-to-back with no rest, then rest between sets</p>
+                <div className="space-y-2">
+                  {exerciseData.map(({ item, originalIndex }) => (
+                    <ExerciseCard
+                      key={originalIndex}
+                      item={item}
+                      isInCircuit={true}
+                      onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', originalIndex, newExercise) : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            </SortableItem>
+          ))}
+        </DraggableGroupList>
+
+        {/* Non-superset exercises (e.g., cardio) rendered individually below */}
+        {nonSupersetItems.length > 0 && (
+          <div className="space-y-3">
+            {nonSupersetItems.map(({ item, originalIndex }) => (
+              <ExerciseCard
+                key={originalIndex}
+                item={item}
+                onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', originalIndex, newExercise) : undefined}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Traditional - display exercises individually with drag-and-drop
+  const exerciseIds = section.items.map((_, i) => `exercise-${i}`);
+
+  const handleTraditionalReorder = (reorderedIds: string[]) => {
+    if (!onReorder) return;
+    const newItems = reorderedIds.map(id => {
+      const idx = parseInt(id.replace('exercise-', ''));
+      return section.items[idx];
+    });
+    onReorder(newItems);
+  };
+
   return (
     <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-4 border border-gray-700">
       <div className="flex items-center gap-3">
@@ -217,15 +488,33 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise }: {
         <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
       </div>
 
-      <div className="space-y-3">
-        {section.items.map((item, index) => (
-          <ExerciseCard
-            key={index}
-            item={item}
-            onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', index, newExercise) : undefined}
-          />
-        ))}
-      </div>
+      <DraggableGroupList
+        groupIds={exerciseIds}
+        onReorder={onReorder ? handleTraditionalReorder : undefined}
+        renderOverlay={(activeId) => {
+          if (!activeId) return null;
+          const idx = parseInt(activeId.replace('exercise-', ''));
+          const item = section.items[idx];
+          if (!item) return null;
+          return (
+            <div className="opacity-80 bg-gray-800 rounded-xl border-2 border-lime-400/50 p-4 shadow-2xl">
+              <h4 className="font-bold text-gray-100">{item.name}</h4>
+              <p className="text-sm text-gray-400">{item.target}</p>
+            </div>
+          );
+        }}
+      >
+        <div className="space-y-3">
+          {section.items.map((item, index) => (
+            <SortableItem key={`exercise-${index}`} id={`exercise-${index}`}>
+              <ExerciseCard
+                item={item}
+                onSwap={onSwapExercise ? (newExercise) => onSwapExercise('main', index, newExercise) : undefined}
+              />
+            </SortableItem>
+          ))}
+        </div>
+      </DraggableGroupList>
     </div>
   );
 }
@@ -305,12 +594,13 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
                     setIsExpanded(false);
                     setShowPerformanceTracker(false);
                   }}
-                  className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                    showHistory
+                  className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-bold transition-all ${
+                    showHistory || showPerformanceTracker
                       ? 'bg-lime-500 text-gray-900'
                       : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
                   }`}
                 >
+                  {(showHistory || showPerformanceTracker) ? <ChevronDown size={12} /> : <Dumbbell size={12} />}
                   Log
                 </button>
               )}
@@ -451,13 +741,13 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
                   }}
                   className={`
                     flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold transition-all touch-manipulation whitespace-nowrap
-                    ${showHistory
+                    ${(showHistory || showPerformanceTracker)
                       ? 'bg-lime-500 text-gray-900'
                       : 'bg-lime-400/10 text-lime-400 border border-lime-400/30 hover:bg-lime-400/20'
                     }
                   `}
                 >
-                  <Dumbbell size={16} />
+                  {(showHistory || showPerformanceTracker) ? <ChevronDown size={16} /> : <Dumbbell size={16} />}
                   Log
                 </button>
               )}

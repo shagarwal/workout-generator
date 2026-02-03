@@ -356,6 +356,7 @@ export default function Home() {
       exerciseId: newExercise.id,
       circuitId: workoutPlan.sections[sectionKey].items[index].circuitId,
       circuitRounds: workoutPlan.sections[sectionKey].items[index].circuitRounds,
+      supersetId: workoutPlan.sections[sectionKey].items[index].supersetId,
     };
 
     // Update the workout plan with the new exercise
@@ -368,6 +369,23 @@ export default function Home() {
           items: workoutPlan.sections[sectionKey].items.map((item, i) =>
             i === index ? newItem : item
           ),
+        },
+      },
+    };
+
+    setWorkoutPlan(updatedPlan);
+  };
+
+  const handleReorderExercises = (newItems: WorkoutItem[]) => {
+    if (!workoutPlan) return;
+
+    const updatedPlan = {
+      ...workoutPlan,
+      sections: {
+        ...workoutPlan.sections,
+        main: {
+          ...workoutPlan.sections.main,
+          items: newItems,
         },
       },
     };
@@ -547,6 +565,7 @@ export default function Home() {
               onSave={handleSaveWorkout}
               onShare={handleShare}
               onSwapExercise={handleSwapExercise}
+              onReorder={handleReorderExercises}
             />
           </div>
         )}

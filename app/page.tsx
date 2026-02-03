@@ -68,7 +68,7 @@ export default function Home() {
   const [selectedMuscles, setSelectedMuscles] = useState<MuscleGroup[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment[]>([]);
   const [intensity, setIntensity] = useState<Intensity>('moderate');
-  const [cardioWeightSplit, setCardioWeightSplit] = useState<number>(30);
+  const [cardioWeightSplit, setCardioWeightSplit] = useState<number>(0);
   const [duration, setDuration] = useState<number>(30);
   const [workoutStyle, setWorkoutStyle] = useState<WorkoutStyle>('traditional');
   const [stretchingMinutes, setStretchingMinutes] = useState<number>(5);
@@ -492,19 +492,18 @@ export default function Home() {
             </div>
             {!stretchingOnly && (
               <SliderInput
-                label=""
+                label="Cardio"
                 value={cardioWeightSplit}
                 onChange={setCardioWeightSplit}
                 min={0}
                 max={100}
                 step={5}
-                showIcons={true}
                 formatLabel={(val) =>
                   val === 0
-                    ? '100% Weights'
+                    ? '0% (All Weights)'
                     : val === 100
-                    ? '100% Cardio'
-                    : `${val}% Cardio / ${100 - val}% Weights`
+                    ? '100% (All Cardio)'
+                    : `${val}%`
                 }
               />
             )}

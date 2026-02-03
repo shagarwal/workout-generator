@@ -2574,44 +2574,6 @@ export const exerciseLibrary: Exercise[] = [
     imageUrl: '', // TODO: needs image
   },
   {
-    id: 'cat-cow-stretch',
-    name: 'Cat-Cow Stretch',
-    muscles: ['Back'],
-    equipment: ['Bodyweight'],
-    type: 'mobility',
-    difficulty: 'beginner',
-    defaultRepRange: '10-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=kqnua4rHVVA',
-    instructions: [
-      'Start on hands and knees',
-      'Arch back looking up (cow)',
-      'Round back tucking chin (cat)',
-      'Move slowly between positions',
-      'Breathe deeply with each movement',
-      'Feel spine mobilizing'
-    ],
-    imageUrl: '', // TODO: needs image
-  },
-  {
-    id: 'worlds-greatest-stretch',
-    name: "World's Greatest Stretch",
-    muscles: ['Full Body'],
-    equipment: ['Bodyweight'],
-    type: 'mobility',
-    difficulty: 'beginner',
-    defaultRepRange: '5 each side',
-    youtubeQuery: 'https://www.youtube.com/watch?v=0GSe2joN8qE',
-    instructions: [
-      'Start in lunge position',
-      'Place hands on ground inside front foot',
-      'Drop back elbow toward ground',
-      'Rotate torso opening up to sky',
-      'Hold briefly then reset',
-      'Repeat on other side'
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800',
-  },
-  {
     id: 'inchworms',
     name: 'Inchworms',
     muscles: ['Full Body'],
@@ -2646,44 +2608,6 @@ export const exerciseLibrary: Exercise[] = [
       'Complete circles in one direction',
       'Reverse direction',
       'Increase range of motion gradually'
-    ],
-    imageUrl: '', // TODO: needs image
-  },
-  {
-    id: 'childs-pose',
-    name: "Child's Pose",
-    muscles: ['Back'],
-    equipment: ['Bodyweight'],
-    type: 'mobility',
-    difficulty: 'beginner',
-    defaultRepRange: '30-60s',
-    youtubeQuery: 'https://www.youtube.com/watch?v=2MTd6y7hGAs',
-    instructions: [
-      'Kneel on ground with big toes touching',
-      'Sit back on heels',
-      'Reach arms forward on ground',
-      'Lower chest toward ground',
-      'Relax shoulders and breathe deeply',
-      'Hold position feeling stretch'
-    ],
-    imageUrl: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=800',
-  },
-  {
-    id: 'quad-stretch',
-    name: 'Standing Quad Stretch',
-    muscles: ['Legs'],
-    equipment: ['Bodyweight'],
-    type: 'mobility',
-    difficulty: 'beginner',
-    defaultRepRange: '30s each',
-    youtubeQuery: 'https://www.youtube.com/watch?v=85dM9R0YMyA',
-    instructions: [
-      'Stand on one leg',
-      'Bend other knee bringing heel to glute',
-      'Hold ankle with hand',
-      'Pull heel closer to glute',
-      'Keep knees together',
-      'Hold for time then switch legs'
     ],
     imageUrl: '', // TODO: needs image
   },
@@ -3135,25 +3059,6 @@ export const exerciseLibrary: Exercise[] = [
       'Thumb pointing up',
       'Gently turn body away',
       'Feel stretch in bicep'
-    ],
-    imageUrl: '', // TODO: needs image
-  },
-  {
-    id: 'stretch-tricep-overhead',
-    name: 'Overhead Tricep Stretch',
-    muscles: ['Triceps'],
-    equipment: ['Bodyweight'],
-    type: 'mobility',
-    difficulty: 'beginner',
-    defaultRepRange: '30s each arm',
-    youtubeQuery: 'https://www.youtube.com/watch?v=U1sDU0YOBeo',
-    instructions: [
-      'Raise arm overhead',
-      'Bend at elbow',
-      'Hand reaches down back',
-      'Other hand pulls elbow gently',
-      'Keep shoulders down',
-      'Feel stretch in tricep'
     ],
     imageUrl: '', // TODO: needs image
   },

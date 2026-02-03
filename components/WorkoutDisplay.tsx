@@ -23,7 +23,9 @@ import {
   useSortable,
   arrayMove,
   verticalListSortingStrategy,
+  defaultAnimateLayoutChanges,
 } from '@dnd-kit/sortable';
+import type { AnimateLayoutChanges } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 interface WorkoutDisplayProps {
@@ -150,6 +152,14 @@ export default function WorkoutDisplay({ plan, onCopyToClipboard, onSave, onShar
   );
 }
 
+const animateLayoutChanges: AnimateLayoutChanges = (args) => {
+  const { isSorting, wasDragging } = args;
+  if (wasDragging) {
+    return false;
+  }
+  return defaultAnimateLayoutChanges(args);
+};
+
 function SortableItem({ id, children }: { id: string; children: React.ReactNode }) {
   const {
     attributes,
@@ -158,7 +168,7 @@ function SortableItem({ id, children }: { id: string; children: React.ReactNode 
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({ id, animateLayoutChanges });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -234,7 +244,7 @@ function DraggableGroupList({
       <SortableContext items={groupIds} strategy={verticalListSortingStrategy}>
         {children}
       </SortableContext>
-      <DragOverlay>
+      <DragOverlay dropAnimation={null}>
         {renderOverlay(activeId)}
       </DragOverlay>
     </DndContext>

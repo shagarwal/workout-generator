@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Dumbbell, Heart } from 'lucide-react';
 
 interface SliderInputProps {
   label: string;
@@ -11,7 +10,6 @@ interface SliderInputProps {
   max: number;
   step?: number;
   formatLabel?: (value: number) => string;
-  showIcons?: boolean;
 }
 
 export default function SliderInput({
@@ -22,7 +20,6 @@ export default function SliderInput({
   max,
   step = 1,
   formatLabel,
-  showIcons = false,
 }: SliderInputProps) {
   const percentage = ((value - min) / (max - min)) * 100;
 
@@ -35,22 +32,10 @@ export default function SliderInput({
         </span>
       </div>
       <div className="relative">
-        {showIcons && (
-          <div className="flex justify-between items-center mb-2 px-1">
-            <div className="flex items-center gap-2">
-              <Heart size={20} className="text-red-400" fill="currentColor" />
-              <span className="text-xs text-gray-400 font-medium">Cardio</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400 font-medium">Weights</span>
-              <Dumbbell size={20} className="text-purple-400" />
-            </div>
-          </div>
-        )}
         <div className="relative">
           <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-2 bg-gray-700 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-red-500 to-purple-500 transition-all duration-200"
+              className="h-full bg-gradient-to-r from-lime-500 to-lime-400 transition-all duration-200"
               style={{ width: `${percentage}%` }}
             />
           </div>

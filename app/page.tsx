@@ -17,7 +17,7 @@ import SavedWorkoutsModal from '@/components/SavedWorkoutsModal';
 import SaveWorkoutModal from '@/components/SaveWorkoutModal';
 import ExerciseLogBrowser from '@/components/ExerciseLogBrowser';
 import AuthButton from '@/components/AuthButton';
-import { Dumbbell, Zap, FolderOpen, ClipboardList } from 'lucide-react';
+import { Dumbbell, Zap, FolderOpen, ClipboardList, Heart } from 'lucide-react';
 
 const muscleOptions: MuscleGroup[] = [
   'Chest',
@@ -357,6 +357,7 @@ export default function Home() {
       circuitId: workoutPlan.sections[sectionKey].items[index].circuitId,
       circuitRounds: workoutPlan.sections[sectionKey].items[index].circuitRounds,
       supersetId: workoutPlan.sections[sectionKey].items[index].supersetId,
+      exerciseType: newExercise.type,
     };
 
     // Update the workout plan with the new exercise
@@ -493,6 +494,7 @@ export default function Home() {
             {!stretchingOnly && (
               <SliderInput
                 label="Cardio"
+                icon={<Heart className="w-4 h-4 text-red-400" />}
                 value={cardioWeightSplit}
                 onChange={setCardioWeightSplit}
                 min={0}
@@ -500,10 +502,10 @@ export default function Home() {
                 step={5}
                 formatLabel={(val) =>
                   val === 0
-                    ? '0% (All Weights)'
+                    ? '0% Cardio / 100% Weights'
                     : val === 100
-                    ? '100% (All Cardio)'
-                    : `${val}%`
+                    ? '100% Cardio / 0% Weights'
+                    : `${val}% Cardio / ${100 - val}% Weights`
                 }
               />
             )}

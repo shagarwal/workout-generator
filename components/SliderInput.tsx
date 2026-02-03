@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface SliderInputProps {
   label: string;
+  icon?: ReactNode;
   value: number;
   onChange: (value: number) => void;
   min: number;
@@ -14,6 +15,7 @@ interface SliderInputProps {
 
 export default function SliderInput({
   label,
+  icon,
   value,
   onChange,
   min,
@@ -26,7 +28,7 @@ export default function SliderInput({
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <label className="block text-sm font-bold text-gray-100">{label}</label>
+        <label className="flex items-center gap-1.5 text-sm font-bold text-gray-100">{icon}{label}</label>
         <span className="text-sm font-bold text-lime-400">
           {formatLabel ? formatLabel(value) : value}
         </span>

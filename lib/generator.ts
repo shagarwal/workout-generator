@@ -25,6 +25,7 @@ function createWorkoutItem(
     imageUrl: ex.imageUrl,
     muscles: ex.muscles,
     exerciseId: ex.id,
+    exerciseType: ex.type,
     circuitId,
     circuitRounds,
   };
@@ -54,6 +55,32 @@ function getSetsForIntensity(intensity: Intensity): number {
     case 'brutal':
       return 5;
   }
+}
+
+// Determines if a cardio exercise is long-duration (5+ min) based on its defaultRepRange
+// Long-duration: "10-20 min", "5-15 min", "15-30 min" → 1 set is fine
+// Short-duration: "30s", "30-60s", "10-15" (reps), "2-5 min" → needs multiple sets
+function isLongDurationCardio(defaultRepRange: string): boolean {
+  if (!defaultRepRange.includes('min')) return false;
+  // Extract the first number from ranges like "10-20 min" or "5-15 min"
+  const match = defaultRepRange.match(/(\d+)/);
+  if (!match) return false;
+  return parseInt(match[1]) >= 5;
+}
+
+function getCardioSets(ex: Exercise, intensity: Intensity): { sets: number; target: string; rest: number } {
+  if (isLongDurationCardio(ex.defaultRepRange)) {
+    // Long cardio (treadmill, bike, elliptical, etc.) - 1 set of the full duration
+    return { sets: 1, target: ex.defaultRepRange, rest: 60 };
+  }
+  // Short cardio (mountain climbers, bear crawl, burpees, etc.) - multiple sets
+  const sets = intensity === 'easy' ? 3 : intensity === 'moderate' ? 3 : intensity === 'hard' ? 4 : 4;
+  const rest = intensity === 'easy' ? 60 : intensity === 'moderate' ? 45 : intensity === 'hard' ? 30 : 20;
+  // For rep-based exercises, append "reps" if not already a time unit
+  const target = (ex.defaultRepRange.includes('s') || ex.defaultRepRange.includes('min'))
+    ? ex.defaultRepRange
+    : `${ex.defaultRepRange} reps`;
+  return { sets, target, rest };
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -496,7 +523,8 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
     // Instead, add cardio as a traditional finisher after the weight circuits
     if (cardioExercises.length > 0) {
       cardioExercises.forEach(ex => {
-        mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 60));
+        const cardio = getCardioSets(ex, intensity);
+        mainItems.push(createWorkoutItem(ex, cardio.sets, cardio.target, cardio.rest));
       });
     }
 
@@ -520,7 +548,8 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
 
     // Then cardio (no supersetId - rendered individually)
     cardioExercises.forEach(ex => {
-      mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 45));
+      const cardio = getCardioSets(ex, intensity);
+      mainItems.push(createWorkoutItem(ex, cardio.sets, cardio.target, cardio.rest));
     });
 
   } else if (workoutStyle === 'amrap') {
@@ -563,7 +592,8 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
 
     // CARDIO SECOND: Add cardio after weights for optimal fat burning
     cardioExercises.forEach(ex => {
-      mainItems.push(createWorkoutItem(ex, 1, ex.defaultRepRange, 60));
+      const cardio = getCardioSets(ex, intensity);
+      mainItems.push(createWorkoutItem(ex, cardio.sets, cardio.target, cardio.rest));
     });
   }
 

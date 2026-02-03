@@ -96,6 +96,7 @@ export interface WorkoutItem {
   supersetId?: string; // For grouping exercises in supersets
   muscles?: MuscleGroup[]; // Muscle groups targeted by this exercise
   exerciseId?: string; // ID of the exercise for swapping
+  exerciseType?: ExerciseType; // weights, cardio, or mobility
 }
 
 export interface WorkoutSection {

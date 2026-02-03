@@ -575,7 +575,9 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
           <div className="flex-1">
             <h4 className="font-bold text-gray-100 text-sm">{item.name}</h4>
             <p className="text-xs text-gray-400 mt-0.5 font-medium">{item.target}</p>
-            {item.muscles && item.muscles.length > 0 && (
+            {item.exerciseType === 'cardio' ? (
+              <p className="text-xs mt-0.5"><span className="text-red-400 font-semibold">Cardio</span>{item.muscles && item.muscles.length > 0 && !item.muscles.every((m: string) => m === 'Full Body') && <span className="text-gray-500"> · {item.muscles.join(', ')}</span>}</p>
+            ) : item.muscles && item.muscles.length > 0 && (
               <p className="text-xs text-gray-500 mt-0.5">{item.muscles.join(', ')}</p>
             )}
           </div>
@@ -715,7 +717,9 @@ function ExerciseCard({ item, isInCircuit = false, showPerformanceTracking = tru
                 {item.sets > 1 ? `${item.sets} sets × ` : ''}
                 {item.target}
               </p>
-              {item.muscles && item.muscles.length > 0 && (
+              {item.exerciseType === 'cardio' ? (
+                <p><span className="text-red-400 font-semibold">Cardio</span>{item.muscles && item.muscles.length > 0 && !item.muscles.every((m: string) => m === 'Full Body') && <span className="text-gray-500"> · {item.muscles.join(', ')}</span>}</p>
+              ) : item.muscles && item.muscles.length > 0 && (
                 <p className="text-gray-500">{item.muscles.join(', ')}</p>
               )}
             </div>

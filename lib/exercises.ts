@@ -130,7 +130,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '8-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=LVl_01Qw7xU',
+    youtubeQuery: 'https://www.youtube.com/watch?v=5pDbtYmX5fM',
     instructions: [
       'Set bench to decline position and secure feet',
       'Sit with dumbbells on thighs then lie back',
@@ -168,7 +168,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '10-15',
-    youtubeQuery: 'https://www.youtube.com/watch?v=0UwbCwTkL44',
+    youtubeQuery: 'https://www.youtube.com/watch?v=beazxb8q-SA',
     instructions: [
       'Set bench to 30-45 degree incline',
       'Lie back with dumbbells above chest',
@@ -428,7 +428,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '8-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=j3Igk5xnlvg',
+    youtubeQuery: 'https://www.youtube.com/watch?v=gJSov9rHIf0',
     instructions: [
       'Anchor one end of barbell in a corner or landmine attachment',
       'Straddle the barbell and bend at hips with flat back',
@@ -449,7 +449,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '10-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=XQqrn8R6BZc',
+    youtubeQuery: 'https://www.youtube.com/watch?v=YZgVEy6cmaY',
     unilateral: true,
     instructions: [
       'Place one knee and hand on bench',
@@ -547,7 +547,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '6-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=brhvw9c_f4Q',
+    youtubeQuery: 'https://www.youtube.com/watch?v=1EJ3A3rEtlo',
     instructions: [
       'Grip bar with hands shoulder-width, palms facing you',
       'Hang with arms fully extended',
@@ -606,7 +606,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '10-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=O5RQf3k_tHA',
+    youtubeQuery: 'https://www.youtube.com/watch?v=uAyrz5GTEHg',
     instructions: [
       'Attach V-bar or close grip handle',
       'Sit and secure thighs under pad',
@@ -665,7 +665,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '12-15',
-    youtubeQuery: 'https://www.youtube.com/watch?v=orzM5xZJRqs',
+    youtubeQuery: 'https://www.youtube.com/watch?v=gDtXrJWPdlY',
     instructions: [
       'Stand facing cable machine with bar at face height',
       'Grip bar with arms extended overhead',
@@ -1043,7 +1043,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '10-15',
-    youtubeQuery: 'https://www.youtube.com/watch?v=Jvj3MGSHuVw',
+    youtubeQuery: 'https://www.youtube.com/watch?v=LHDwya1KY8M',
     unilateral: true,
     instructions: [
       'Sit on bench with legs spread',
@@ -1120,7 +1120,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '10-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=ZrpRH5a70Z8',
+    youtubeQuery: 'https://www.youtube.com/watch?v=rVEwDJdHE2c',
     instructions: [
       'Stand with dumbbells at sides',
       'Curl dumbbells up with palms up',
@@ -1316,7 +1316,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '12-15',
-    youtubeQuery: 'https://www.youtube.com/watch?v=vB7CTWkBxg4',
+    youtubeQuery: 'https://www.youtube.com/watch?v=LzwgB15UdO8',
     instructions: [
       'Attach rope to high cable',
       'Grip rope with neutral grip',
@@ -1473,7 +1473,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '10-15',
-    youtubeQuery: 'https://www.youtube.com/watch?v=MeHQ_xDMp3k',
+    youtubeQuery: 'https://www.youtube.com/watch?v=5Y3KW5rWMh4',
     instructions: [
       'Hold dumbbell or kettlebell at chest',
       'Stand with feet slightly wider than shoulders',
@@ -1590,7 +1590,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '12-15',
-    youtubeQuery: 'https://www.youtube.com/watch?v=YyvSfEjZIJw',
+    youtubeQuery: 'https://www.youtube.com/watch?v=0fl1RRgJ83I',
     instructions: [
       'Sit in machine with back against pad',
       'Place ankles under padded lever',
@@ -1652,7 +1652,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '10-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=B3ku8y2LWok',
+    youtubeQuery: 'https://www.youtube.com/watch?v=-m45n1_x32E',
     instructions: [
       'Hold dumbbells in front of thighs',
       'Keep slight bend in knees',
@@ -1709,7 +1709,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'advanced',
     defaultRepRange: '5-8',
-    youtubeQuery: 'https://www.youtube.com/watch?v=bLMDSaP-BGk',
+    youtubeQuery: 'https://www.youtube.com/watch?v=rzK7glg8OnA',
     instructions: [
       'Kneel with ankles secured under pad or partner',
       'Keep body straight from knees to head',
@@ -1791,7 +1791,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '12-15 each',
-    youtubeQuery: 'https://www.youtube.com/watch?v=YY8fPLydFZU',
+    youtubeQuery: 'https://www.youtube.com/watch?v=aX0U98L4Ywk',
     unilateral: true,
     instructions: [
       'Attach ankle strap to low cable',
@@ -2008,7 +2008,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'beginner',
     defaultRepRange: '15-20',
-    youtubeQuery: 'https://www.youtube.com/watch?v=JbyjNymZA4Q',
+    youtubeQuery: 'https://www.youtube.com/watch?v=Yh5TXz99xwY',
     instructions: [
       'Sit in machine with balls of feet on platform',
       'Place knees under pads',
@@ -3302,7 +3302,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '6-10',
-    youtubeQuery: 'https://www.youtube.com/watch?v=ZWi6cGGDxio',
+    youtubeQuery: 'https://www.youtube.com/watch?v=hgEb76YkU04',
     instructions: [
       'Set barbell on rack at knee height',
       'Grip bar with hands outside knees',
@@ -3340,7 +3340,7 @@ export const exerciseLibrary: Exercise[] = [
     type: 'weights',
     difficulty: 'intermediate',
     defaultRepRange: '8-12',
-    youtubeQuery: 'https://www.youtube.com/watch?v=wIeTdtRWG-c',
+    youtubeQuery: 'https://www.youtube.com/watch?v=dFbU1qd62Fo',
     instructions: [
       'Start in plank on dumbbells',
       'Row one dumbbell to hip',

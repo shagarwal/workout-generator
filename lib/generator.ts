@@ -92,6 +92,32 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
+// Exercises that can be performed on a Smith machine (vertical/fixed-path movements only).
+// Exercises requiring lateral movement, arcing motions, or free bar paths are excluded.
+const SMITH_MACHINE_COMPATIBLE: Set<string> = new Set([
+  // Chest (pressing movements)
+  'barbell-bench-press',
+  'incline-barbell-bench',
+  'decline-barbell-bench',
+  'close-grip-bench',
+  // Shoulders (vertical pressing/pulling)
+  'overhead-press',
+  'seated-barbell-press',
+  'barbell-upright-row',
+  // Legs/Glutes (squat and hinge patterns)
+  'barbell-squat',
+  'front-squat',
+  'romanian-deadlift',
+  'deadlift',
+  'sumo-deadlift',
+  'hip-thrust',
+  'legs-barbell-box-squat',
+  'legs-barbell-good-mornings',
+  // Back (vertical pull)
+  'back-rack-pulls',
+  'back-inverted-row',
+]);
+
 function filterExercisesByEquipment(exercises: Exercise[], userEquipment: string[]): Exercise[] {
   // If user selected "Bodyweight" only, only return bodyweight exercises
   if (userEquipment.includes('Bodyweight') && userEquipment.length === 1) {
@@ -106,15 +132,16 @@ function filterExercisesByEquipment(exercises: Exercise[], userEquipment: string
     if (ex.equipment.length === 0) return true; // No equipment needed
     if (ex.equipment.includes('Bodyweight')) return true; // Bodyweight is always available
 
-    // Smith machine can substitute for Barbell + Bench combinations
+    // Smith machine can substitute for Barbell in compatible exercises only.
+    // Not all barbell exercises work on a Smith machine — exercises requiring
+    // lateral movement, arcing motions, or free bar paths (e.g. skull crushers,
+    // curls, landmine press, power cleans) cannot be done on a Smith machine.
     const hasSmithMachine = userEquipment.includes('Smith machine');
     const needsBarbell = ex.equipment.includes('Barbell');
-    const needsBench = ex.equipment.includes('Bench');
 
-    if (hasSmithMachine && needsBarbell && needsBench) {
-      // Smith machine can do barbell+bench exercises
-      // Check if all OTHER equipment (besides barbell and bench) is available
-      const otherEquipment = ex.equipment.filter(eq => eq !== 'Barbell' && eq !== 'Bench');
+    if (hasSmithMachine && needsBarbell && SMITH_MACHINE_COMPATIBLE.has(ex.id)) {
+      // Check if all OTHER equipment (besides barbell) is available or substituted
+      const otherEquipment = ex.equipment.filter(eq => eq !== 'Barbell');
       return otherEquipment.every(eq => userEquipment.includes(eq));
     }
 

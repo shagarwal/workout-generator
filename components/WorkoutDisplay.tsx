@@ -181,7 +181,8 @@ function SortableItem({ id, children }: { id: string; children: React.ReactNode 
       <div className="flex items-stretch">
         <button
           {...listeners}
-          className="flex items-center px-1 cursor-grab active:cursor-grabbing text-gray-600 hover:text-gray-400 touch-manipulation"
+          className="flex items-center px-0.5 sm:px-1 cursor-grab active:cursor-grabbing text-gray-600 hover:text-gray-400"
+          style={{ touchAction: 'none' }}
           aria-label="Drag to reorder"
         >
           <GripVertical size={16} />
@@ -210,8 +211,7 @@ function DraggableGroupList({
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        delay: 200,
-        tolerance: 5,
+        distance: 8,
       },
     }),
     useSensor(KeyboardSensor)
@@ -230,6 +230,10 @@ function DraggableGroupList({
     }
   };
 
+  const handleDragCancel = () => {
+    setActiveId(null);
+  };
+
   if (!onReorder) {
     return <>{children}</>;
   }
@@ -240,6 +244,7 @@ function DraggableGroupList({
       collisionDetection={closestCenter}
       onDragStart={(e) => setActiveId(e.active.id as string)}
       onDragEnd={handleDragEnd}
+      onDragCancel={handleDragCancel}
     >
       <SortableContext items={groupIds} strategy={verticalListSortingStrategy}>
         {children}
@@ -290,7 +295,7 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
     };
 
     return (
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-6 border border-gray-700">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-3 sm:p-6 space-y-4 sm:space-y-6 border border-gray-700">
         <div className="flex items-center gap-3">
           <div className="h-1 w-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full"></div>
           <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
@@ -312,11 +317,12 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
             );
           }}
         >
+          <div className="space-y-4">
           {circuitEntries.map(([circuitId, exerciseData], idx) => (
             <SortableItem key={circuitId} id={circuitId}>
-              <div className="bg-orange-900/20 border-2 border-orange-500/30 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-lg font-black text-orange-400">CIRCUIT {idx + 1}</h4>
+              <div className="bg-orange-900/20 border-2 border-orange-500/30 rounded-xl p-3 sm:p-5">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <h4 className="text-base sm:text-lg font-black text-orange-400">CIRCUIT {idx + 1}</h4>
                   <span className="text-sm font-bold text-orange-300 bg-orange-900/40 px-3 py-1 rounded-lg">
                     {exerciseData[0].item.circuitRounds} ROUNDS
                   </span>
@@ -335,6 +341,7 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
               </div>
             </SortableItem>
           ))}
+          </div>
         </DraggableGroupList>
 
         {/* Non-circuit exercises (e.g., cardio) rendered individually below */}
@@ -356,15 +363,15 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
   // AMRAP - group all exercises as one repeatable round
   if (workoutStyle === 'amrap' && section.items[0]?.circuitId === 'amrap-round') {
     return (
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-4 border border-gray-700">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-3 sm:p-6 space-y-4 border border-gray-700">
         <div className="flex items-center gap-3">
           <div className="h-1 w-8 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full"></div>
           <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
         </div>
 
-        <div className="bg-red-900/20 border-2 border-red-500/30 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="text-lg font-black text-red-400">AMRAP - AS MANY ROUNDS AS POSSIBLE</h4>
+        <div className="bg-red-900/20 border-2 border-red-500/30 rounded-xl p-3 sm:p-5">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h4 className="text-sm sm:text-lg font-black text-red-400">AMRAP - AS MANY ROUNDS AS POSSIBLE</h4>
           </div>
           <p className="text-xs text-red-200/80 mb-4">Complete all exercises in order, then repeat as many times as possible in the allotted time. No rest between exercises!</p>
           <div className="space-y-2">
@@ -416,7 +423,7 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
     };
 
     return (
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-6 space-y-6 border border-gray-700">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl p-3 sm:p-6 space-y-4 sm:space-y-6 border border-gray-700">
         <div className="flex items-center gap-3">
           <div className="h-1 w-8 bg-gradient-to-r from-purple-400 to-purple-500 rounded-full"></div>
           <h3 className="text-xl font-black text-white">{section.title.toUpperCase()}</h3>
@@ -438,11 +445,12 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
             );
           }}
         >
+          <div className="space-y-4">
           {supersetEntries.map(([supersetId, exerciseData], idx) => (
             <SortableItem key={supersetId} id={supersetId}>
-              <div className="bg-purple-900/20 border-2 border-purple-500/30 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-lg font-black text-purple-400">SUPERSET {idx + 1}</h4>
+              <div className="bg-purple-900/20 border-2 border-purple-500/30 rounded-xl p-3 sm:p-5">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <h4 className="text-base sm:text-lg font-black text-purple-400">SUPERSET {idx + 1}</h4>
                   <span className="text-sm font-bold text-purple-300 bg-purple-900/40 px-3 py-1 rounded-lg">
                     {exerciseData[0].item.sets} SETS
                   </span>
@@ -461,6 +469,7 @@ function WorkoutSection({ section, workoutStyle, onSwapExercise, onReorder }: {
               </div>
             </SortableItem>
           ))}
+          </div>
         </DraggableGroupList>
 
         {/* Non-superset exercises (e.g., cardio) rendered individually below */}

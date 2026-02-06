@@ -759,6 +759,26 @@ export const exerciseLibrary: Exercise[] = [
     imageUrl: '/exercise-images/barbell-upright-row.jpg',
   },
 
+  {
+    id: 'dumbbell-upright-row',
+    name: 'Dumbbell Upright Row',
+    muscles: ['Shoulders'],
+    equipment: ['Dumbbells'],
+    type: 'weights',
+    difficulty: 'intermediate',
+    defaultRepRange: '10-12',
+    youtubeQuery: 'https://www.youtube.com/watch?v=FO9V5tyESeA',
+    instructions: [
+      'Stand holding dumbbells in front of thighs',
+      'Pull dumbbells up along body to chest height',
+      'Lead with elbows high and wide',
+      'Pause at top with elbows above hands',
+      'Allows more natural wrist rotation than barbell version',
+      'Lower slowly to starting position'
+    ],
+    imageUrl: '',
+  },
+
   // Dumbbell Shoulders
   {
     id: 'dumbbell-shoulder-press',
@@ -979,6 +999,26 @@ export const exerciseLibrary: Exercise[] = [
     imageUrl: '/exercise-images/preacher-curl.jpg',
   },
   {
+    id: 'dumbbell-preacher-curl',
+    name: 'Dumbbell Preacher Curl',
+    muscles: ['Biceps'],
+    equipment: ['Dumbbells', 'Bench'],
+    type: 'weights',
+    difficulty: 'intermediate',
+    defaultRepRange: '10-12',
+    youtubeQuery: 'https://www.youtube.com/watch?v=ioCMgelMqzk',
+    unilateral: true,
+    instructions: [
+      'Sit at preacher bench with arm over pad',
+      'Hold dumbbell with underhand grip',
+      'Curl dumbbell up keeping tricep on pad',
+      'Squeeze bicep at top of movement',
+      'Lower dumbbell until arm fully extended',
+      'Complete all reps then switch arms'
+    ],
+    imageUrl: '',
+  },
+  {
     id: 'dumbbell-curl',
     name: 'Dumbbell Bicep Curl',
     muscles: ['Biceps'],
@@ -1151,6 +1191,25 @@ export const exerciseLibrary: Exercise[] = [
     imageUrl: '/exercise-images/reverse-curl.jpg',
   },
   {
+    id: 'dumbbell-reverse-curl',
+    name: 'Dumbbell Reverse Curl',
+    muscles: ['Biceps'],
+    equipment: ['Dumbbells'],
+    type: 'weights',
+    difficulty: 'beginner',
+    defaultRepRange: '10-12',
+    youtubeQuery: 'https://www.youtube.com/watch?v=YZGO0yijQXU',
+    instructions: [
+      'Stand holding dumbbells with overhand (pronated) grip',
+      'Keep elbows locked at sides',
+      'Curl dumbbells up toward shoulders',
+      'Keep wrists straight throughout',
+      'Focus on forearms and brachialis',
+      'Lower with control to starting position'
+    ],
+    imageUrl: '',
+  },
+  {
     id: 'cable-rope-curl',
     name: 'Cable Rope Hammer Curl',
     muscles: ['Biceps'],
@@ -1230,6 +1289,25 @@ export const exerciseLibrary: Exercise[] = [
       'Control weight carefully throughout'
     ],
     imageUrl: '', // TODO: needs image
+  },
+  {
+    id: 'dumbbell-skull-crushers',
+    name: 'Dumbbell Skull Crushers (Lying Dumbbell Tricep Extension)',
+    muscles: ['Triceps'],
+    equipment: ['Dumbbells', 'Bench'],
+    type: 'weights',
+    difficulty: 'intermediate',
+    defaultRepRange: '10-12',
+    youtubeQuery: 'https://www.youtube.com/watch?v=ir5PsbniVSc',
+    instructions: [
+      'Lie on bench holding a dumbbell in each hand above chest',
+      'Keep upper arms perpendicular to floor',
+      'Lower dumbbells toward temples by bending elbows',
+      'Keep upper arms stationary throughout',
+      'Extend arms back to starting position',
+      'Can also be done with a single dumbbell held in both hands'
+    ],
+    imageUrl: '',
   },
   {
     id: 'overhead-tricep-extension',
@@ -1975,6 +2053,26 @@ export const exerciseLibrary: Exercise[] = [
       'Lower bar with control to ground'
     ],
     imageUrl: '', // TODO: needs image
+  },
+
+  {
+    id: 'dumbbell-sumo-squat',
+    name: 'Dumbbell Sumo Squat',
+    muscles: ['Glutes'],
+    equipment: ['Dumbbells'],
+    type: 'weights',
+    difficulty: 'beginner',
+    defaultRepRange: '10-15',
+    youtubeQuery: 'https://www.youtube.com/watch?v=7sSRwGPinII',
+    instructions: [
+      'Stand with wide stance, toes pointed out at 45 degrees',
+      'Hold a single dumbbell vertically between legs with both hands',
+      'Keep chest up and back straight',
+      'Squat down until thighs are parallel to floor',
+      'Drive through heels to stand, squeezing glutes at top',
+      'Keep knees tracking over toes throughout'
+    ],
+    imageUrl: '',
   },
 
   // ========================================

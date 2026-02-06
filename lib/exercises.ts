@@ -9,6 +9,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'barbell-bench-press',
     name: 'Barbell Bench Press',
+    anchor: true,
     muscles: ['Chest'],
     equipment: ['Barbell', 'Bench'],
     type: 'weights',
@@ -87,6 +88,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'dumbbell-bench-press',
     name: 'Dumbbell Bench Press',
+    anchor: true,
     muscles: ['Chest'],
     equipment: ['Dumbbells', 'Bench'],
     type: 'weights',
@@ -106,6 +108,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'incline-dumbbell-press',
     name: 'Incline Dumbbell Press',
+    anchor: true,
     muscles: ['Chest'],
     equipment: ['Dumbbells', 'Bench'],
     type: 'weights',
@@ -365,6 +368,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'deadlift',
     name: 'Barbell Deadlift',
+    anchor: true,
     muscles: ['Back'],
     equipment: ['Barbell'],
     type: 'weights',
@@ -384,6 +388,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'bent-over-barbell-row',
     name: 'Bent Over Barbell Row',
+    anchor: true,
     muscles: ['Back'],
     equipment: ['Barbell'],
     type: 'weights',
@@ -523,6 +528,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'pull-ups',
     name: 'Pull-ups',
+    anchor: true,
     muscles: ['Back'],
     equipment: ['Pull-up bar'],
     type: 'weights',
@@ -704,6 +710,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'overhead-press',
     name: 'Overhead Barbell Press',
+    anchor: true,
     muscles: ['Shoulders'],
     equipment: ['Barbell'],
     type: 'weights',
@@ -783,6 +790,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'dumbbell-shoulder-press',
     name: 'Dumbbell Shoulder Press',
+    anchor: true,
     muscles: ['Shoulders'],
     equipment: ['Dumbbells'],
     type: 'weights',
@@ -821,6 +829,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'lateral-raises',
     name: 'Lateral Raises',
+    anchor: true,
     muscles: ['Shoulders'],
     equipment: ['Dumbbells'],
     type: 'weights',
@@ -944,6 +953,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'barbell-curl',
     name: 'Barbell Bicep Curl',
+    anchor: true,
     muscles: ['Biceps'],
     equipment: ['Barbell'],
     type: 'weights',
@@ -1021,6 +1031,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'dumbbell-curl',
     name: 'Dumbbell Bicep Curl',
+    anchor: true,
     muscles: ['Biceps'],
     equipment: ['Dumbbells'],
     type: 'weights',
@@ -1040,6 +1051,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'hammer-curl',
     name: 'Hammer Curls',
+    anchor: true,
     muscles: ['Biceps'],
     equipment: ['Dumbbells'],
     type: 'weights',
@@ -1274,6 +1286,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'skull-crushers',
     name: 'Skull Crushers (Lying Tricep Extension)',
+    anchor: true,
     muscles: ['Triceps'],
     equipment: ['Barbell', 'Bench'],
     type: 'weights',
@@ -1312,6 +1325,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'overhead-tricep-extension',
     name: 'Overhead Dumbbell Tricep Extension',
+    anchor: true,
     muscles: ['Triceps'],
     equipment: ['Dumbbells'],
     type: 'weights',
@@ -1351,6 +1365,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'cable-tricep-pushdown',
     name: 'Cable Tricep Pushdown',
+    anchor: true,
     muscles: ['Triceps'],
     equipment: ['Cable machine'],
     type: 'weights',
@@ -1508,6 +1523,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'barbell-squat',
     name: 'Barbell Back Squat',
+    anchor: true,
     muscles: ['Legs'],
     equipment: ['Barbell'],
     type: 'weights',
@@ -1546,6 +1562,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'goblet-squat',
     name: 'Goblet Squat',
+    anchor: true,
     muscles: ['Legs'],
     equipment: ['Dumbbells', 'Kettlebell'],
     type: 'weights',
@@ -1706,6 +1723,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'romanian-deadlift',
     name: 'Romanian Deadlift',
+    anchor: true,
     muscles: ['Legs'],
     equipment: ['Barbell'],
     type: 'weights',
@@ -1806,6 +1824,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'hip-thrust',
     name: 'Barbell Hip Thrust',
+    anchor: true,
     muscles: ['Glutes'],
     equipment: ['Barbell', 'Bench'],
     type: 'weights',
@@ -1825,6 +1844,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'glute-bridge',
     name: 'Glute Bridge',
+    anchor: true,
     muscles: ['Glutes'],
     equipment: ['Bodyweight'],
     type: 'weights',
@@ -1903,6 +1923,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'kettlebell-swing',
     name: 'Kettlebell Swing',
+    anchor: true,
     muscles: ['Glutes'],
     equipment: ['Kettlebell'],
     type: 'weights',
@@ -2125,6 +2146,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'plank',
     name: 'Plank',
+    anchor: true,
     muscles: ['Core'],
     equipment: ['Bodyweight'],
     type: 'weights',
@@ -2240,6 +2262,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'hanging-leg-raise',
     name: 'Hanging Leg Raises',
+    anchor: true,
     muscles: ['Core'],
     equipment: ['Pull-up bar'],
     type: 'weights',
@@ -2259,6 +2282,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'cable-crunch',
     name: 'Cable Crunches',
+    anchor: true,
     muscles: ['Core'],
     equipment: ['Cable machine'],
     type: 'weights',
@@ -2359,6 +2383,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'thrusters',
     name: 'Dumbbell Thrusters',
+    anchor: true,
     muscles: ['Full Body'],
     equipment: ['Dumbbells'],
     type: 'weights',
@@ -2378,6 +2403,7 @@ export const exerciseLibrary: Exercise[] = [
   {
     id: 'kettlebell-clean-press',
     name: 'Kettlebell Clean & Press',
+    anchor: true,
     muscles: ['Full Body'],
     equipment: ['Kettlebell'],
     type: 'weights',

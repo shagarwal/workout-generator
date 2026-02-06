@@ -68,6 +68,7 @@ export interface Exercise {
   instructions?: string[];
   imageUrl?: string;
   unilateral?: boolean;
+  anchor?: boolean;
   notes?: string;
 }
 

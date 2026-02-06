@@ -150,17 +150,12 @@ function filterExercisesByEquipment(exercises: Exercise[], userEquipment: string
   });
 }
 
-function getMuscleCategory(muscle: MuscleGroup): 'push' | 'pull' | 'legs' | 'core' {
-  // Categorize muscles into push/pull/legs for smart pairing
-  const pushMuscles: MuscleGroup[] = ['Chest', 'Shoulders', 'Triceps'];
-  const pullMuscles: MuscleGroup[] = ['Back', 'Biceps'];
-  const legsMuscles: MuscleGroup[] = ['Legs', 'Glutes'];
-
-  if (pushMuscles.includes(muscle)) return 'push';
-  if (pullMuscles.includes(muscle)) return 'pull';
-  if (legsMuscles.includes(muscle)) return 'legs';
-  return 'core';
-}
+// Opposing muscle groups placed adjacent for optimal superset pairing
+// and circuit alternation. Round-robin through this order ensures
+// consecutive exercises target different muscles.
+const MUSCLE_INTERLEAVE_ORDER: MuscleGroup[] = [
+  'Chest', 'Back', 'Biceps', 'Triceps', 'Shoulders', 'Legs', 'Glutes', 'Core', 'Full Body'
+];
 
 function selectExercisesForMuscles(
   muscles: MuscleGroup[],
@@ -198,72 +193,103 @@ function selectExercisesForMuscles(
     return [...shuffleArray(equipmentExercises), ...shuffleArray(bodyweightExercises)];
   };
 
-  // For each muscle group, try to add at least one exercise
-  // Prioritize equipment-specific exercises when user selected equipment
+  // PHASE 0: For each muscle group, pick ONE anchor exercise if available.
+  // Anchors are shuffled so different anchors appear across regenerations.
   for (const muscle of muscles) {
-    const muscleExercises = prioritizeEquipmentExercises(
+    if (selected.length >= count) break;
+
+    const anchorExercises = prioritizeEquipmentExercises(
       typeFiltered.filter(ex =>
-        ex.muscles.includes(muscle) && !usedIds.has(ex.id)
+        ex.anchor && ex.muscles.includes(muscle) && !usedIds.has(ex.id)
       )
     );
 
-    if (muscleExercises.length > 0) {
-      selected.push(muscleExercises[0]);
-      usedIds.add(muscleExercises[0].id);
+    if (anchorExercises.length > 0) {
+      selected.push(anchorExercises[0]);
+      usedIds.add(anchorExercises[0].id);
+    } else {
+      // No anchors available for this muscle — pick any exercise as fallback
+      const fallback = prioritizeEquipmentExercises(
+        typeFiltered.filter(ex =>
+          ex.muscles.includes(muscle) && !usedIds.has(ex.id)
+        )
+      );
+      if (fallback.length > 0) {
+        selected.push(fallback[0]);
+        usedIds.add(fallback[0].id);
+      }
     }
   }
 
-  // Fill remaining slots with variety from SELECTED muscles only
-  const remaining = prioritizeEquipmentExercises(
-    typeFiltered.filter(ex =>
-      !usedIds.has(ex.id) &&
-      ex.muscles.some(muscle => muscles.includes(muscle))
-    )
-  );
+  // PHASE 1: Fill additional slots with remaining anchor exercises for selected muscles.
+  // This adds more core exercises before falling back to random variety.
+  if (selected.length < count) {
+    const remainingAnchors = prioritizeEquipmentExercises(
+      typeFiltered.filter(ex =>
+        ex.anchor &&
+        !usedIds.has(ex.id) &&
+        ex.muscles.some(muscle => muscles.includes(muscle))
+      )
+    );
 
-  for (const ex of remaining) {
-    if (selected.length >= count) break;
-    selected.push(ex);
-    usedIds.add(ex.id);
+    for (const ex of remainingAnchors) {
+      if (selected.length >= count) break;
+      selected.push(ex);
+      usedIds.add(ex.id);
+    }
+  }
+
+  // PHASE 2: Fill remaining slots with any exercises for selected muscles.
+  if (selected.length < count) {
+    const remaining = prioritizeEquipmentExercises(
+      typeFiltered.filter(ex =>
+        !usedIds.has(ex.id) &&
+        ex.muscles.some(muscle => muscles.includes(muscle))
+      )
+    );
+
+    for (const ex of remaining) {
+      if (selected.length >= count) break;
+      selected.push(ex);
+      usedIds.add(ex.id);
+    }
   }
 
   return selected.slice(0, count);
 }
 
-function organizeExercisesForCircuits(exercises: Exercise[]): Exercise[] {
-  // Group exercises by muscle category
-  const byCategory: { [key: string]: Exercise[] } = {
-    push: [],
-    pull: [],
-    legs: [],
-    core: []
-  };
+function interleaveByMuscleGroup(exercises: Exercise[]): Exercise[] {
+  // Group exercises by their primary muscle group
+  const byMuscle: Map<string, Exercise[]> = new Map();
 
   exercises.forEach(ex => {
-    // Find primary muscle group
     const primaryMuscle = ex.muscles[0];
-    const category = getMuscleCategory(primaryMuscle);
-    byCategory[category].push(ex);
+    if (!byMuscle.has(primaryMuscle)) {
+      byMuscle.set(primaryMuscle, []);
+    }
+    byMuscle.get(primaryMuscle)!.push(ex);
   });
 
-  // Build circuits alternating between categories for optimal recovery
-  // Pattern: Upper Push -> Upper Pull -> Lower -> Core (repeat)
-  const organized: Exercise[] = [];
-  const maxLength = Math.max(
-    byCategory.push.length,
-    byCategory.pull.length,
-    byCategory.legs.length,
-    byCategory.core.length
-  );
+  // Order muscle groups so opposing muscles are adjacent.
+  // This ensures superset pairs hit different muscles (Chest+Back, Biceps+Triceps)
+  // and circuit exercises alternate to give each muscle recovery time.
+  const orderedMuscles = MUSCLE_INTERLEAVE_ORDER.filter(m => byMuscle.has(m));
 
-  for (let i = 0; i < maxLength; i++) {
-    if (byCategory.push[i]) organized.push(byCategory.push[i]);
-    if (byCategory.pull[i]) organized.push(byCategory.pull[i]);
-    if (byCategory.legs[i]) organized.push(byCategory.legs[i]);
-    if (byCategory.core[i]) organized.push(byCategory.core[i]);
+  // Round-robin through muscle groups
+  const result: Exercise[] = [];
+  let added = true;
+  while (added) {
+    added = false;
+    for (const muscle of orderedMuscles) {
+      const group = byMuscle.get(muscle);
+      if (group && group.length > 0) {
+        result.push(group.shift()!);
+        added = true;
+      }
+    }
   }
 
-  return organized;
+  return result;
 }
 
 function generateWarmup(availableExercises: Exercise[], durationMinutes: number): WorkoutItem[] {
@@ -486,8 +512,8 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
 
     // WEIGHT CIRCUITS FIRST - keep weights together
     if (weightExercises.length > 0) {
-      // Organize exercises for optimal pairing (push/pull/legs alternating)
-      const organizedWeights = organizeExercisesForCircuits(weightExercises);
+      // Interleave exercises by muscle group so consecutive exercises target different muscles
+      const organizedWeights = interleaveByMuscleGroup(weightExercises);
 
       // Determine circuit size (2-5 exercises per circuit)
       let circuitSize: number;
@@ -559,8 +585,12 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
     // SUPERSET: Pair exercises, no rest between pairs
     const supersetRest = intensity === 'brutal' ? 30 : intensity === 'hard' ? 45 : 60;
 
+    // Interleave by muscle group so superset pairs target different muscles
+    // e.g., Biceps+Triceps, Chest+Back rather than Bicep+Bicep
+    const interleavedWeights = interleaveByMuscleGroup(weightExercises);
+
     // Weights first - group into superset pairs
-    weightExercises.forEach((ex, index) => {
+    interleavedWeights.forEach((ex, index) => {
       const isLastInPair = index % 2 === 1;
       const supersetId = `superset-${Math.floor(index / 2) + 1}`;
       const item = createWorkoutItem(

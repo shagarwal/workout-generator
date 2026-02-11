@@ -1,4 +1,4 @@
-import { WorkoutInputs, WorkoutPlan, WorkoutItem, Exercise, Intensity, MuscleGroup } from './types';
+import { WorkoutInputs, WorkoutPlan, WorkoutItem, Exercise, Intensity, MuscleGroup, FitnessLevel, WorkoutStyle } from './types';
 import { exerciseLibrary } from './exercises';
 
 function getYoutubeUrl(url: string): string {
@@ -44,19 +44,6 @@ function getRestTime(intensity: Intensity): number {
   }
 }
 
-function getSetsForIntensity(intensity: Intensity): number {
-  switch (intensity) {
-    case 'easy':
-      return 2;
-    case 'moderate':
-      return 3;
-    case 'hard':
-      return 4;
-    case 'brutal':
-      return 5;
-  }
-}
-
 // Determines if a cardio exercise is long-duration (5+ min) based on its defaultRepRange
 // Long-duration: "10-20 min", "5-15 min", "15-30 min" → 1 set is fine
 // Short-duration: "30s", "30-60s", "10-15" (reps), "2-5 min" → needs multiple sets
@@ -68,19 +55,31 @@ function isLongDurationCardio(defaultRepRange: string): boolean {
   return parseInt(match[1]) >= 5;
 }
 
-function getCardioSets(ex: Exercise, intensity: Intensity): { sets: number; target: string; rest: number } {
+// Time-based cardio set calculation. Returns sets derived from allocated time.
+function getCardioTimeBudget(
+  ex: Exercise,
+  intensity: Intensity,
+  availableCardioSeconds: number,
+  cardioExerciseCount: number
+): { sets: number; target: string; rest: number; secondsConsumed: number } {
   if (isLongDurationCardio(ex.defaultRepRange)) {
-    // Long cardio (treadmill, bike, elliptical, etc.) - 1 set of the full duration
-    return { sets: 1, target: ex.defaultRepRange, rest: 60 };
+    // Long cardio (treadmill, bike, elliptical): 1 set of full duration
+    const match = ex.defaultRepRange.match(/(\d+)/);
+    const minDuration = match ? parseInt(match[1]) : 10;
+    return { sets: 1, target: ex.defaultRepRange, rest: 60, secondsConsumed: minDuration * 60 };
   }
-  // Short cardio (mountain climbers, bear crawl, burpees, etc.) - multiple sets
-  const sets = intensity === 'easy' ? 3 : intensity === 'moderate' ? 3 : intensity === 'hard' ? 4 : 4;
+
+  // Short cardio: calculate sets from allocated time
   const rest = intensity === 'easy' ? 60 : intensity === 'moderate' ? 45 : intensity === 'hard' ? 30 : 20;
-  // For rep-based exercises, append "reps" if not already a time unit
+  const secondsPerCardioSet = SECONDS_PER_SET + rest;
+  const perExerciseSeconds = Math.floor(availableCardioSeconds / Math.max(1, cardioExerciseCount));
+  const sets = Math.max(MIN_SETS_PER_EXERCISE, Math.floor(perExerciseSeconds / secondsPerCardioSet));
+
   const target = (ex.defaultRepRange.includes('s') || ex.defaultRepRange.includes('min'))
     ? ex.defaultRepRange
     : `${ex.defaultRepRange} reps`;
-  return { sets, target, rest };
+
+  return { sets, target, rest, secondsConsumed: sets * secondsPerCardioSet };
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -157,12 +156,112 @@ const MUSCLE_INTERLEAVE_ORDER: MuscleGroup[] = [
   'Chest', 'Back', 'Biceps', 'Triceps', 'Shoulders', 'Legs', 'Glutes', 'Core', 'Full Body'
 ];
 
+// Time-based set calculation constants
+const SECONDS_PER_SET = 45;
+const MIN_SETS_PER_EXERCISE = 2;
+const MIN_EXERCISES = 4;
+const MAX_EXERCISES = 12;
+
+// Soft-target difficulty mix: what fraction of non-anchor exercise slots
+// should target each difficulty level per intensity setting.
+const DIFFICULTY_MIX: Record<Intensity, Record<FitnessLevel, number>> = {
+  easy:     { beginner: 0.70, intermediate: 0.25, advanced: 0.05 },
+  moderate: { beginner: 0.35, intermediate: 0.50, advanced: 0.15 },
+  hard:     { beginner: 0.15, intermediate: 0.40, advanced: 0.45 },
+  brutal:   { beginner: 0.05, intermediate: 0.30, advanced: 0.65 },
+};
+
+interface TimeBudget {
+  totalSets: number;
+  exerciseCount: number;
+  circuitRounds?: number;
+  circuitSize?: number;
+  supersetRounds?: number;
+  amrapRounds?: number;
+}
+
+function calculateTimeBudget(
+  availableSeconds: number,
+  restSeconds: number,
+  workoutStyle: WorkoutStyle,
+  intensity: Intensity
+): TimeBudget {
+  if (availableSeconds <= 0) {
+    return { totalSets: 0, exerciseCount: 0 };
+  }
+
+  if (workoutStyle === 'traditional') {
+    const secondsPerSet = SECONDS_PER_SET + restSeconds;
+    const totalSets = Math.floor(availableSeconds / secondsPerSet);
+    const maxExercises = Math.floor(totalSets / MIN_SETS_PER_EXERCISE);
+    const exerciseCount = Math.max(
+      Math.min(MIN_EXERCISES, maxExercises),
+      Math.min(MAX_EXERCISES, Math.round(totalSets / 3))
+    );
+    return { totalSets, exerciseCount };
+  }
+
+  if (workoutStyle === 'superset') {
+    const supersetRest = intensity === 'brutal' ? 30 : intensity === 'hard' ? 45 : 60;
+    // One round of a superset pair = 2 exercises + rest after pair
+    const secondsPerPairRound = 2 * SECONDS_PER_SET + supersetRest;
+    const totalPairRounds = Math.floor(availableSeconds / secondsPerPairRound);
+    const totalSets = totalPairRounds * 2;
+    // Determine number of pairs, targeting ~3 rounds per pair
+    const numPairs = Math.max(2, Math.min(
+      Math.floor(MAX_EXERCISES / 2),
+      Math.round(totalPairRounds / 3)
+    ));
+    const exerciseCount = Math.max(MIN_EXERCISES, Math.min(MAX_EXERCISES, numPairs * 2));
+    const actualPairs = Math.floor(exerciseCount / 2);
+    const supersetRounds = Math.max(MIN_SETS_PER_EXERCISE, Math.floor(totalPairRounds / actualPairs));
+    return { totalSets, exerciseCount, supersetRounds };
+  }
+
+  if (workoutStyle === 'circuit') {
+    const circuitRest = intensity === 'brutal' ? 15 : intensity === 'hard' ? 20 : 30;
+    const secondsPerExercise = SECONDS_PER_SET + circuitRest;
+    // Target circuit size of 3-5 exercises
+    const circuitSize = intensity === 'brutal' || intensity === 'hard' ? 4 : 3;
+    // Estimate exercises: aim for ~3 rounds worth of work
+    const prelimExerciseCount = Math.max(MIN_EXERCISES, Math.min(MAX_EXERCISES,
+      Math.round(availableSeconds / (secondsPerExercise * 3))
+    ));
+    const numCircuits = Math.max(1, Math.ceil(prelimExerciseCount / circuitSize));
+    const exerciseCount = Math.max(MIN_EXERCISES, Math.min(MAX_EXERCISES, numCircuits * circuitSize));
+    const secondsPerRound = circuitSize * secondsPerExercise;
+    const rounds = Math.max(2, Math.min(5,
+      Math.floor(availableSeconds / (numCircuits * secondsPerRound))
+    ));
+    const totalSets = exerciseCount * rounds;
+    return { totalSets, exerciseCount, circuitRounds: rounds, circuitSize };
+  }
+
+  if (workoutStyle === 'amrap') {
+    // Target 5-8 exercises for AMRAP
+    const exerciseCount = Math.max(MIN_EXERCISES, Math.min(8,
+      Math.round(availableSeconds / (SECONDS_PER_SET * 5))
+    ));
+    const secondsPerRound = exerciseCount * SECONDS_PER_SET;
+    const amrapRounds = Math.max(1, Math.floor(availableSeconds / secondsPerRound));
+    const totalSets = exerciseCount * amrapRounds;
+    return { totalSets, exerciseCount, amrapRounds };
+  }
+
+  // Fallback
+  const secondsPerSet = SECONDS_PER_SET + restSeconds;
+  const totalSets = Math.floor(availableSeconds / secondsPerSet);
+  const exerciseCount = Math.max(MIN_EXERCISES, Math.min(MAX_EXERCISES, Math.round(totalSets / 3)));
+  return { totalSets, exerciseCount };
+}
+
 function selectExercisesForMuscles(
   muscles: MuscleGroup[],
   availableExercises: Exercise[],
   count: number,
   type: 'weights' | 'cardio',
-  userEquipment: string[] = []
+  userEquipment: string[] = [],
+  intensity: Intensity = 'moderate'
 ): Exercise[] {
   const selected: Exercise[] = [];
   const usedIds = new Set<string>();
@@ -239,19 +338,67 @@ function selectExercisesForMuscles(
     }
   }
 
-  // PHASE 2: Fill remaining slots with any exercises for selected muscles.
+  // PHASE 2: Difficulty-weighted fill for remaining slots.
+  // Uses DIFFICULTY_MIX to target the right proportion of beginner/intermediate/advanced
+  // exercises based on the selected intensity. Soft targets: falls back if a pool is empty.
   if (selected.length < count) {
-    const remaining = prioritizeEquipmentExercises(
-      typeFiltered.filter(ex =>
-        !usedIds.has(ex.id) &&
-        ex.muscles.some(muscle => muscles.includes(muscle))
-      )
-    );
+    const slotsRemaining = count - selected.length;
+    const mix = DIFFICULTY_MIX[intensity];
 
-    for (const ex of remaining) {
-      if (selected.length >= count) break;
-      selected.push(ex);
-      usedIds.add(ex.id);
+    // Calculate target counts per difficulty
+    const targetCounts: Record<FitnessLevel, number> = {
+      beginner: Math.round(slotsRemaining * mix.beginner),
+      intermediate: Math.round(slotsRemaining * mix.intermediate),
+      advanced: Math.round(slotsRemaining * mix.advanced),
+    };
+
+    // Fix rounding errors so sum == slotsRemaining
+    const sum = targetCounts.beginner + targetCounts.intermediate + targetCounts.advanced;
+    if (sum !== slotsRemaining) {
+      const levels: FitnessLevel[] = ['beginner', 'intermediate', 'advanced'];
+      const sorted = levels.sort((a, b) => mix[b] - mix[a]);
+      targetCounts[sorted[0]] += slotsRemaining - sum;
+    }
+
+    // Build candidate pools per difficulty
+    const muscleFilter = (ex: Exercise) =>
+      !usedIds.has(ex.id) && ex.muscles.some(muscle => muscles.includes(muscle));
+
+    const pools: Record<FitnessLevel, Exercise[]> = {
+      beginner: prioritizeEquipmentExercises(typeFiltered.filter(ex => ex.difficulty === 'beginner' && muscleFilter(ex))),
+      intermediate: prioritizeEquipmentExercises(typeFiltered.filter(ex => ex.difficulty === 'intermediate' && muscleFilter(ex))),
+      advanced: prioritizeEquipmentExercises(typeFiltered.filter(ex => ex.difficulty === 'advanced' && muscleFilter(ex))),
+    };
+
+    // Fill scarcest pools first (advanced has fewest exercises globally)
+    const fillOrder: FitnessLevel[] = ['advanced', 'intermediate', 'beginner'];
+    for (const diff of fillOrder) {
+      let needed = targetCounts[diff];
+      const pool = pools[diff];
+      let idx = 0;
+      while (needed > 0 && idx < pool.length) {
+        if (!usedIds.has(pool[idx].id)) {
+          selected.push(pool[idx]);
+          usedIds.add(pool[idx].id);
+          needed--;
+        }
+        idx++;
+      }
+      targetCounts[diff] = needed; // track unfilled
+    }
+
+    // Soft fallback: fill any remaining from any difficulty
+    if (selected.length < count) {
+      const fallbackPool = prioritizeEquipmentExercises(
+        typeFiltered.filter(muscleFilter)
+      );
+      for (const ex of fallbackPool) {
+        if (selected.length >= count) break;
+        if (!usedIds.has(ex.id)) {
+          selected.push(ex);
+          usedIds.add(ex.id);
+        }
+      }
     }
   }
 
@@ -289,6 +436,38 @@ function interleaveByMuscleGroup(exercises: Exercise[]): Exercise[] {
     }
   }
 
+  return result;
+}
+
+// Distributes a total set budget across exercises evenly.
+// Max difference between any two exercises is 1 set ("card dealing").
+// The +1 bonus sets go to beginner exercises first, then intermediate, then advanced —
+// so easier exercises get slightly more volume while keeping the workout feeling consistent.
+function distributeSets(exercises: Exercise[], totalSetBudget: number): Map<string, number> {
+  if (exercises.length === 0) return new Map();
+
+  const n = exercises.length;
+  const baseSets = Math.max(MIN_SETS_PER_EXERCISE, Math.floor(totalSetBudget / n));
+  const remainder = Math.max(0, totalSetBudget - baseSets * n);
+
+  // Sort by difficulty so bonus sets go to beginner first, then intermediate, then advanced
+  const indexed = exercises.map((ex, i) => ({ ex, originalIndex: i }));
+  const prioritized = [
+    ...indexed.filter(e => e.ex.difficulty === 'beginner'),
+    ...indexed.filter(e => e.ex.difficulty === 'intermediate'),
+    ...indexed.filter(e => e.ex.difficulty === 'advanced'),
+  ];
+
+  // Deal out: first `remainder` exercises (by priority) get baseSets+1, rest get baseSets
+  const setsArray = new Array(n).fill(baseSets);
+  for (let i = 0; i < remainder && i < prioritized.length; i++) {
+    setsArray[prioritized[i].originalIndex] = baseSets + 1;
+  }
+
+  const result = new Map<string, number>();
+  exercises.forEach((ex, i) => {
+    result.set(ex.id, setsArray[i]);
+  });
   return result;
 }
 
@@ -464,29 +643,29 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
   // Filter exercises by equipment
   const availableExercises = filterExercisesByEquipment(exerciseLibrary, equipment);
 
-  // Determine exercise counts based on duration
-  let totalMainExercises: number;
-  if (durationMinutes <= 20) {
-    totalMainExercises = 5;
-  } else if (durationMinutes <= 45) {
-    totalMainExercises = 8;
-  } else if (durationMinutes <= 75) {
-    totalMainExercises = 10;
-  } else {
-    totalMainExercises = 14;
-  }
+  // Time-based budget: derive exercise count and total sets from available seconds
+  const restSeconds = getRestTime(intensity);
+  const weightsSeconds = weightsMinutes * 60;
+  const cardioSeconds = cardioMinutes * 60;
 
-  // Split exercises between cardio and weights
-  const cardioExerciseCount = Math.floor(totalMainExercises * (cardioPercent / 100));
-  const weightsExerciseCount = totalMainExercises - cardioExerciseCount;
+  const weightsBudget = calculateTimeBudget(weightsSeconds, restSeconds, workoutStyle, intensity);
+  const weightsExerciseCount = weightsBudget.exerciseCount;
 
-  // Select exercises - pass equipment to prioritize equipment-specific exercises
+  // Cardio exercise count: proportional to weights, capped at 4
+  const cardioExerciseCount = cardioPercent > 0 && weightsPercent > 0
+    ? Math.max(1, Math.min(4, Math.round(weightsExerciseCount * (cardioPercent / weightsPercent))))
+    : cardioPercent > 0
+      ? Math.max(1, Math.min(4, Math.round(cardioSeconds / (SECONDS_PER_SET * 3 + restSeconds * 3))))
+      : 0;
+
+  // Select exercises with difficulty-weighted selection
   const weightExercises = selectExercisesForMuscles(
     selectedMuscles,
     availableExercises,
     weightsExerciseCount,
     'weights',
-    equipment
+    equipment,
+    intensity
   );
 
   const cardioExercises = shuffleArray(
@@ -496,165 +675,124 @@ export function generateWorkoutPlan(inputs: WorkoutInputs): WorkoutPlan {
   // Generate stretching (pre-workout warmup)
   const stretchingItems = generateMuscleStretchSession(selectedMuscles, availableExercises, stretchingMinutes);
 
-  // Create main workout items based on workout style
-  const sets = getSetsForIntensity(intensity);
-  const restSeconds = getRestTime(intensity);
+  // Distribute weight sets across exercises with difficulty scaling
+  const setsMap = distributeSets(weightExercises, weightsBudget.totalSets);
 
   const mainItems: WorkoutItem[] = [];
 
   // Apply workout style-specific logic
   if (workoutStyle === 'circuit') {
-    // CIRCUIT: Create weight circuits, then cardio circuit separately
     const circuitRest = intensity === 'brutal' ? 15 : intensity === 'hard' ? 20 : 30;
+    const circuitSize = weightsBudget.circuitSize ?? 4;
+    const rounds = weightsBudget.circuitRounds ?? 3;
 
-    // Calculate time per exercise (assuming ~40 seconds per set + rest)
-    const timePerExercise = 40 + circuitRest; // seconds
-
-    // WEIGHT CIRCUITS FIRST - keep weights together
     if (weightExercises.length > 0) {
-      // Interleave exercises by muscle group so consecutive exercises target different muscles
       const organizedWeights = interleaveByMuscleGroup(weightExercises);
 
-      // Determine circuit size (2-5 exercises per circuit)
-      let circuitSize: number;
+      // Determine actual circuit size based on exercise count
+      let actualCircuitSize: number;
       if (organizedWeights.length === 1) {
-        // Skip circuit format if only 1 exercise - use traditional instead
-        circuitSize = 1;
-      } else if (organizedWeights.length <= 4) {
-        // Small workout: use all as one circuit
-        circuitSize = organizedWeights.length;
+        actualCircuitSize = 1;
+      } else if (organizedWeights.length <= circuitSize) {
+        actualCircuitSize = organizedWeights.length;
       } else {
-        // Calculate optimal circuit size based on total exercises
-        // Aim for circuits of 3-4 exercises
-        const numCircuits = Math.ceil(organizedWeights.length / 4);
-        circuitSize = Math.ceil(organizedWeights.length / numCircuits);
-        // Clamp to 2-5 range
-        circuitSize = Math.max(2, Math.min(5, circuitSize));
+        actualCircuitSize = circuitSize;
       }
 
-      // Calculate how many rounds we can fit in the available weight time
-      const numCircuits = Math.ceil(organizedWeights.length / circuitSize);
-      const timePerWeightCircuit = circuitSize * timePerExercise; // seconds per round
-      const availableWeightSeconds = weightsMinutes * 60;
-      const maxRoundsPerCircuit = Math.max(2, Math.floor(availableWeightSeconds / (numCircuits * timePerWeightCircuit)));
-      const rounds = Math.min(4, maxRoundsPerCircuit); // Cap at 4 rounds max
-
       let circuitNum = 1;
-      for (let i = 0; i < organizedWeights.length; i += circuitSize) {
-        const circuitExercises = organizedWeights.slice(i, i + circuitSize);
+      for (let i = 0; i < organizedWeights.length; i += actualCircuitSize) {
+        const circuitExercises = organizedWeights.slice(i, i + actualCircuitSize);
 
-        // Only create circuit if we have at least 2 exercises
         if (circuitExercises.length >= 2) {
           const circuitId = `circuit-${circuitNum}`;
-
           circuitExercises.forEach(ex => {
             mainItems.push(createWorkoutItem(
-              ex,
-              1,
-              `${ex.defaultRepRange} reps`,
-              circuitRest,
-              circuitId,
-              rounds
+              ex, 1, `${ex.defaultRepRange} reps`, circuitRest, circuitId, rounds
             ));
           });
-
           circuitNum++;
         } else if (circuitExercises.length === 1) {
-          // Single exercise - add as traditional set instead
+          // Single leftover: use traditional with distributed sets
+          const exerciseSets = setsMap.get(circuitExercises[0].id) ?? MIN_SETS_PER_EXERCISE;
           mainItems.push(createWorkoutItem(
-            circuitExercises[0],
-            sets,
-            `${circuitExercises[0].defaultRepRange} reps`,
-            restSeconds
+            circuitExercises[0], exerciseSets,
+            `${circuitExercises[0].defaultRepRange} reps`, restSeconds
           ));
         }
       }
     }
 
-    // CARDIO SEPARATE - if there's cardio, add it AFTER circuits as traditional cardio
-    // In circuits, we want minimal equipment changes, so cardio machines don't fit well
-    // Instead, add cardio as a traditional finisher after the weight circuits
+    // Cardio finisher after circuits
     if (cardioExercises.length > 0) {
+      let remainingCardioSeconds = cardioSeconds;
       cardioExercises.forEach(ex => {
-        const cardio = getCardioSets(ex, intensity);
+        const cardio = getCardioTimeBudget(ex, intensity, remainingCardioSeconds, cardioExercises.length);
         mainItems.push(createWorkoutItem(ex, cardio.sets, cardio.target, cardio.rest));
+        remainingCardioSeconds -= cardio.secondsConsumed;
       });
     }
 
   } else if (workoutStyle === 'superset') {
-    // SUPERSET: Pair exercises, no rest between pairs
     const supersetRest = intensity === 'brutal' ? 30 : intensity === 'hard' ? 45 : 60;
+    const supersetRounds = weightsBudget.supersetRounds ?? 3;
 
-    // Interleave by muscle group so superset pairs target different muscles
-    // e.g., Biceps+Triceps, Chest+Back rather than Bicep+Bicep
+    // Interleave by muscle group for opposing-muscle pairs
     const interleavedWeights = interleaveByMuscleGroup(weightExercises);
 
-    // Weights first - group into superset pairs
+    // Both exercises in a superset pair must have the same number of sets
     interleavedWeights.forEach((ex, index) => {
       const isLastInPair = index % 2 === 1;
       const supersetId = `superset-${Math.floor(index / 2) + 1}`;
+
       const item = createWorkoutItem(
-        ex,
-        sets,
-        `${ex.defaultRepRange} reps`,
+        ex, supersetRounds, `${ex.defaultRepRange} reps`,
         isLastInPair ? supersetRest : 0
       );
       item.supersetId = supersetId;
       mainItems.push(item);
     });
 
-    // Then cardio (no supersetId - rendered individually)
+    // Cardio after supersets
+    let remainingCardioSeconds = cardioSeconds;
     cardioExercises.forEach(ex => {
-      const cardio = getCardioSets(ex, intensity);
+      const cardio = getCardioTimeBudget(ex, intensity, remainingCardioSeconds, cardioExercises.length);
       mainItems.push(createWorkoutItem(ex, cardio.sets, cardio.target, cardio.rest));
+      remainingCardioSeconds -= cardio.secondsConsumed;
     });
 
   } else if (workoutStyle === 'amrap') {
-    // AMRAP: As Many Rounds As Possible - specific rep counts, no rest
+    const amrapRounds = weightsBudget.amrapRounds ?? 3;
     const allExercises = [...weightExercises, ...cardioExercises];
 
     allExercises.forEach(ex => {
-      // Convert rep range to specific rep count for AMRAP
       let specificReps = ex.defaultRepRange;
       if (ex.defaultRepRange.includes('-')) {
-        // Take the middle value of the range
         const parts = ex.defaultRepRange.split('-');
         const low = parseInt(parts[0]);
         const high = parseInt(parts[1]);
         specificReps = `${Math.round((low + high) / 2)} reps`;
       }
 
-      mainItems.push(createWorkoutItem(
-        ex,
-        1,
-        specificReps,
-        0,
-        'amrap-round',
-        0
-      ));
+      mainItems.push(createWorkoutItem(ex, 1, specificReps, 0, 'amrap-round', amrapRounds));
     });
 
   } else {
     // TRADITIONAL: Complete all sets before moving to next exercise
-    // WEIGHTS FIRST: Add all weight exercises before cardio
-    // Research shows lifting first optimizes strength performance and reduces injury risk
     weightExercises.forEach(ex => {
+      const exerciseSets = setsMap.get(ex.id) ?? MIN_SETS_PER_EXERCISE;
       mainItems.push(createWorkoutItem(
-        ex,
-        sets,
-        `${ex.defaultRepRange} reps`,
-        restSeconds
+        ex, exerciseSets, `${ex.defaultRepRange} reps`, restSeconds
       ));
     });
 
-    // CARDIO SECOND: Add cardio after weights for optimal fat burning
+    // Cardio after weights
+    let remainingCardioSeconds = cardioSeconds;
     cardioExercises.forEach(ex => {
-      const cardio = getCardioSets(ex, intensity);
+      const cardio = getCardioTimeBudget(ex, intensity, remainingCardioSeconds, cardioExercises.length);
       mainItems.push(createWorkoutItem(ex, cardio.sets, cardio.target, cardio.rest));
+      remainingCardioSeconds -= cardio.secondsConsumed;
     });
   }
-
-  // Don't shuffle - maintain weights-first order for optimal performance
 
   return {
     summary: {
